@@ -1,3 +1,3 @@
 abstract class AppStrings {
-  static const String = "Hello World";
+  static const hello = "Hello World";
 }
