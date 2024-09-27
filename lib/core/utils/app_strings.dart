@@ -1,3 +1,22 @@
 abstract class AppStrings {
-  static const hello = "Hello World";
+  static const mandopy = "مندوبي",
+      creatNewAccount = "انشاء حساب جديد !",
+      signIn = "تسجيل الدخول",
+      hintName = "ادخل اسمك ثلاثي",
+      emailHint = " ادخل البريد الالكتروني",
+      hintPassword = "ادخل كلمة المرور",
+      hintConfirmPassword = "ادخل كلمة المرور مرة اخري",
+      email = "البريد الالكتروني",
+      name = "الاسم",
+      password = "كلمة المرور",
+      confirmPassword = "تأكيد كلمة المرور",
+      forgetPassword = "هل نسيت كلمة المرور ؟",
+      confirmationCode = "كود التسجيل",
+      typeOfRepersentative = "نوع المندوب",
+      scienstific = "علمي",
+      sales = "تجاري",
+      creatAccount = "انشئ حساب",
+      haveAnAccoun = "لديك حساب بالفعل ؟ ",
+      signInNow = "تسجيل الدخول ",
+      hintConfirmationCode = "ادخل كود التسجيل الخاص بك";
 }

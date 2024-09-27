@@ -6,7 +6,6 @@ class AppTheme {
     brightness: Brightness.light,
     primaryColor: AppColors.primaryColor,
     hintColor: AppColors.accentColor,
-    scaffoldBackgroundColor: AppColors.backgroundColor,
     fontFamily: "Cairo",
     appBarTheme: const AppBarTheme(
       backgroundColor: AppColors.primaryColor,

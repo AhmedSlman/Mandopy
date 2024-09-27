@@ -1,16 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:mandopy/core/theme/app_colors.dart';
 
 class AppStyles {
-  static const TextStyle headline1 = TextStyle(
-    fontSize: 32.0,
-    fontWeight: FontWeight.bold,
-    color: Colors.black,
+  static TextStyle s24 = TextStyle(
+    fontSize: 24.sp,
+    fontWeight: FontWeight.w600,
+    color: AppColors.primaryColor,
   );
 
-  static const TextStyle headline2 = TextStyle(
-    fontSize: 24.0,
-    fontWeight: FontWeight.w600,
-    color: Colors.black87,
+  static TextStyle s20 = TextStyle(
+    fontSize: 20.0.sp,
+    fontWeight: FontWeight.w400,
+    color: AppColors.white,
   );
 
   static const TextStyle subtitle1 = TextStyle(
@@ -19,15 +21,19 @@ class AppStyles {
     color: Colors.black54,
   );
 
-  static const TextStyle bodyText1 = TextStyle(
-    fontSize: 16.0,
-    fontWeight: FontWeight.normal,
-    color: Colors.black,
+  static TextStyle s16 = TextStyle(
+    fontSize: 16.0.sp,
+    fontWeight: FontWeight.w500,
+    color: AppColors.greyForText,
   );
-
-  static const TextStyle caption = TextStyle(
-    fontSize: 12.0,
-    fontWeight: FontWeight.normal,
-    color: Colors.grey,
+  static TextStyle s14 = TextStyle(
+    fontSize: 14.0.sp,
+    fontWeight: FontWeight.w500,
+    color: AppColors.greyForText,
+  );
+  static TextStyle s12 = TextStyle(
+    fontSize: 12.0.sp,
+    fontWeight: FontWeight.w500,
+    color: AppColors.grey,
   );
 }
