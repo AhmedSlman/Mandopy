@@ -1,7 +1,10 @@
 abstract class AppStrings {
   static const mandopy = "مندوبي",
       creatNewAccount = "انشاء حساب جديد !",
+      welcom = "مرحبا بك  ",
       signIn = "تسجيل الدخول",
+      donotHaveAnAccount = "ليس لديك حساب ؟ ",
+      creatAcount = "انشئ حساب",
       hintName = "ادخل اسمك ثلاثي",
       emailHint = " ادخل البريد الالكتروني",
       hintPassword = "ادخل كلمة المرور",

@@ -11,12 +11,17 @@ class SiginUpView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const Scaffold(
-      body: Column(
-        children: [
-          CustomAppBar(title: AppStrings.creatNewAccount),
-          SignUpFormSection(),
-          HaveAnAccountWidget()
-        ],
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            CustomAppBar(title: AppStrings.creatNewAccount),
+            SignUpFormSection(),
+            HaveAnAccountWidget(
+              text1: AppStrings.haveAnAccoun,
+              text2: AppStrings.signIn,
+            )
+          ],
+        ),
       ),
     );
   }

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:mandopy/core/common/widgets/custom_text_form_field.dart';
-import 'package:mandopy/core/utils/app_strings.dart';
 import 'package:mandopy/core/utils/app_styles.dart';
 
 class AuthTextFormField extends StatelessWidget {
