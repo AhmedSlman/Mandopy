@@ -23,7 +23,9 @@ class LoginForm extends StatelessWidget {
           hintText: AppStrings.hintPassword,
           validator: Validator.validatePassword,
         ),
-        const ForgetPasswordWidget(),
+        const CustomTextButton(
+          text: AppStrings.forgetPassword,
+        ),
         CustomButton(
           text: AppStrings.signIn,
           onPressed: () {},

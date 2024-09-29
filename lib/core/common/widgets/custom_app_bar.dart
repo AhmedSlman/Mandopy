@@ -11,16 +11,18 @@ class CustomAppBar extends StatelessWidget {
     this.iconright,
     this.onPressedLeft,
     this.onPressedRight,
+    this.padding,
   });
   final String title;
   final IconData? iconleft;
   final IconData? iconright;
   final VoidCallback? onPressedLeft;
   final VoidCallback? onPressedRight;
+  final double? padding;
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.only(top: 70.h),
+      padding: EdgeInsets.only(top: padding ?? 70.h, bottom: 16.h),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [

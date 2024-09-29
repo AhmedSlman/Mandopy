@@ -3,17 +3,20 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:mandopy/core/utils/app_strings.dart';
 
-class ForgetPasswordWidget extends StatelessWidget {
-  const ForgetPasswordWidget({super.key});
-
+class CustomTextButton extends StatelessWidget {
+  const CustomTextButton(
+      {super.key, this.onPressed, required this.text, this.alignment});
+  final VoidCallback? onPressed;
+  final String text;
+  final AlignmentGeometry? alignment;
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: EdgeInsets.symmetric(vertical: 8.0.h, horizontal: 16.0.w),
-      child: const Align(
-        alignment: Alignment.centerLeft,
+      child: Align(
+        alignment: alignment ?? Alignment.centerLeft,
         child: Text(
-          AppStrings.forgetPassword,
+          text,
         ),
       ),
     );
