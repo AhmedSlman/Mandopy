@@ -14,16 +14,18 @@ class LoginView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const Scaffold(
-      body: Column(
-        children: [
-          CustomAppBar(title: AppStrings.welcom),
-          AppLogoWidget(),
-          LoginForm(),
-          HaveAnAccountWidget(
-            text1: AppStrings.donotHaveAnAccount,
-            text2: AppStrings.creatAccount,
-          ),
-        ],
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            CustomAppBar(title: AppStrings.welcom),
+            AppLogoWidget(),
+            LoginForm(),
+            HaveAnAccountWidget(
+              text1: AppStrings.donotHaveAnAccount,
+              text2: AppStrings.creatAccount,
+            ),
+          ],
+        ),
       ),
     );
   }
