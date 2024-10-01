@@ -9,10 +9,13 @@ class AuthTextFormField extends StatelessWidget {
     this.validator,
     this.hintText,
     required this.titleOfField,
+    this.controller,
   });
   final FormFieldValidator<String>? validator;
   final String? hintText;
   final String titleOfField;
+  final TextEditingController? controller;
+
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -31,6 +34,7 @@ class AuthTextFormField extends StatelessWidget {
             ),
           ),
           CustomTextFormField(
+            controller: controller,
             hintText: hintText,
             validator: validator,
           )

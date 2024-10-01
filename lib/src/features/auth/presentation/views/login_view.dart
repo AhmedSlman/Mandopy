@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:mandopy/core/common/widgets/custom_app_bar.dart';
 import 'package:mandopy/core/common/widgets/custom_btn.dart';
+import 'package:mandopy/core/routes/router_names.dart';
 import 'package:mandopy/core/utils/app_assets.dart';
 import 'package:mandopy/core/utils/app_strings.dart';
 import 'package:mandopy/src/features/auth/presentation/componants/login_form.dart';
@@ -13,14 +15,15 @@ class LoginView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
+    return Scaffold(
       body: SingleChildScrollView(
         child: Column(
           children: [
-            CustomAppBar(title: AppStrings.welcom),
-            AppLogoWidget(),
+            const CustomAppBar(title: AppStrings.welcom),
+            const AppLogoWidget(),
             LoginForm(),
             HaveAnAccountWidget(
+              onTap: () => context.go(RouterNames.signup),
               text1: AppStrings.donotHaveAnAccount,
               text2: AppStrings.creatAccount,
             ),

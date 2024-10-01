@@ -17,6 +17,7 @@ class NotificationsList extends StatelessWidget {
     return SizedBox(
       height: 250.h,
       child: ListView.builder(
+        padding: EdgeInsets.zero,
         shrinkWrap: true,
         itemCount: notifications.length,
         itemBuilder: (context, index) {

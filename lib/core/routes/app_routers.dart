@@ -1,10 +1,14 @@
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:mandopy/core/routes/router_names.dart';
+import 'package:mandopy/core/services/service_locator.dart';
+import 'package:mandopy/src/features/auth/presentation/cubit/auth_cubit.dart';
 import 'package:mandopy/src/features/auth/presentation/views/forget_password.dart';
 import 'package:mandopy/src/features/auth/presentation/views/login_view.dart';
 import 'package:mandopy/src/features/auth/presentation/views/otp_code.dart';
 import 'package:mandopy/src/features/auth/presentation/views/reset_password.dart';
 import 'package:mandopy/src/features/auth/presentation/views/sigin_up_view.dart';
+import 'package:mandopy/src/features/dailyPlane/presentation/views/daily_plane_view.dart';
 import 'package:mandopy/src/features/home/presentation/view/home_view.dart';
 import 'package:mandopy/src/splach.dart';
 
@@ -16,11 +20,17 @@ final GoRouter router = GoRouter(
     ),
     GoRoute(
       path: RouterNames.signup,
-      builder: (context, state) => const SiginUpView(),
+      builder: (context, state) => BlocProvider(
+        create: (context) => getIt<AuthCubit>(),
+        child: const SiginUpView(),
+      ),
     ),
     GoRoute(
       path: RouterNames.login,
-      builder: (context, state) => const LoginView(),
+      builder: (context, state) => BlocProvider(
+        create: (context) => getIt<AuthCubit>(),
+        child: const LoginView(),
+      ),
     ),
     GoRoute(
       path: RouterNames.forgetPassword,
@@ -38,5 +48,9 @@ final GoRouter router = GoRouter(
       path: RouterNames.home,
       builder: (context, state) => const HomeView(),
     ),
+    GoRoute(
+      path: RouterNames.dailyPlane,
+      builder: (context, state) => const DailyPlaneView(),
+    )
   ],
 );

@@ -1,3 +1,3 @@
 abstract class AppConstants {
-  static const baseUrl = "";
+  static const baseUrl = "https://mandoby.legendsagencystuff.com/api/";
 }

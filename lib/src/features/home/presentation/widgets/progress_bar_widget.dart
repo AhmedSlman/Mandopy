@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:mandopy/core/theme/app_colors.dart';
 import 'package:mandopy/core/utils/app_strings.dart';
+import 'package:mandopy/core/utils/app_styles.dart';
 
 class ProgressBarWidget extends StatelessWidget {
   const ProgressBarWidget({
@@ -29,12 +30,25 @@ class ProgressBarWidget extends StatelessWidget {
           ),
           Padding(
             padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 8.h),
-            child: LinearProgressIndicator(
-              borderRadius: BorderRadius.circular(8),
-              minHeight: 30.h,
-              value: progress,
-              backgroundColor: AppColors.yellow,
-              color: Colors.teal,
+            child: Stack(
+              children: [
+                LinearProgressIndicator(
+                  minHeight: 30.h,
+                  value: progress,
+                  backgroundColor: AppColors.yellow,
+                  color: AppColors.primaryColor,
+                ),
+                Positioned(
+                  right: 90.w,
+                  top: 5,
+                  child: Text(
+                    '60% مكتمل',
+                    style: AppStyles.s12.copyWith(
+                      color: AppColors.white,
+                    ),
+                  ),
+                ),
+              ],
             ),
           ),
         ],

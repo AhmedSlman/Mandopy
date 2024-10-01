@@ -6,7 +6,6 @@ abstract class AppAssets {
   static const String pharmacyCover = "assets/images/pharmacy_cover.png";
   static const String userProfile = "assets/images/user_profile.png";
   static const String profileStatic = "assets/images/profile_image.png";
-
   // icons
   static const String compleatedIcon = "assets/images/compleated_icon.png";
   static const String waitingIcon = "assets/images/waiting.png";

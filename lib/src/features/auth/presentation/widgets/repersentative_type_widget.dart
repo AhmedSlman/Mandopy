@@ -26,7 +26,7 @@ class _RepresentativeTypeState extends State<RepresentativeType> {
   @override
   void initState() {
     super.initState();
-    _selectedType = widget.initialSelectedType ?? 'تجاري';
+    _selectedType = widget.initialSelectedType ?? 'commercial';
   }
 
   @override
@@ -47,7 +47,7 @@ class _RepresentativeTypeState extends State<RepresentativeType> {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
-              _buildRadioOption(AppStrings.sales, 'تجاري'),
+              _buildRadioOption(AppStrings.sales, 'commercial'),
               _buildRadioOption(AppStrings.scienstific, 'علمي'),
             ],
           ),
