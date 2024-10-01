@@ -15,9 +15,9 @@ class AppStyles {
     color: AppColors.white,
   );
 
-  static const TextStyle subtitle1 = TextStyle(
+  static const TextStyle s18 = TextStyle(
     fontSize: 18.0,
-    fontWeight: FontWeight.w500,
+    fontWeight: FontWeight.w600,
     color: Colors.black54,
   );
 

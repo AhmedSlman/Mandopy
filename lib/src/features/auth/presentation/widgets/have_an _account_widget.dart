@@ -1,10 +1,8 @@
 // ignore_for_file: file_names
 
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:mandopy/core/theme/app_colors.dart';
-import 'package:mandopy/core/utils/app_strings.dart';
 import 'package:mandopy/core/utils/app_styles.dart';
 
 class HaveAnAccountWidget extends StatelessWidget {

@@ -4,5 +4,6 @@ abstract class RouterNames {
   static const String signup = '/2';
   static const String forgetPassword = '/32';
   static const String resetPassword = '/g';
-  static const String otp = '/';
+  static const String otp = '/g';
+  static const String home = '/';
 }

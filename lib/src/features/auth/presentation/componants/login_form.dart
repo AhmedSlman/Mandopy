@@ -17,6 +17,7 @@ class LoginForm extends StatelessWidget {
           titleOfField: AppStrings.email,
           hintText: AppStrings.emailHint,
           validator: Validator.validateEmail,
+          
         ),
         const AuthTextFormField(
           titleOfField: AppStrings.password,

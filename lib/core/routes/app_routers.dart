@@ -5,6 +5,7 @@ import 'package:mandopy/src/features/auth/presentation/views/login_view.dart';
 import 'package:mandopy/src/features/auth/presentation/views/otp_code.dart';
 import 'package:mandopy/src/features/auth/presentation/views/reset_password.dart';
 import 'package:mandopy/src/features/auth/presentation/views/sigin_up_view.dart';
+import 'package:mandopy/src/features/home/presentation/view/home_view.dart';
 import 'package:mandopy/src/splach.dart';
 
 final GoRouter router = GoRouter(
@@ -32,6 +33,10 @@ final GoRouter router = GoRouter(
     GoRoute(
       path: RouterNames.otp,
       builder: (context, state) => OtpCodeView(),
+    ),
+    GoRoute(
+      path: RouterNames.home,
+      builder: (context, state) => const HomeView(),
     ),
   ],
 );
