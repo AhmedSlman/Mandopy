@@ -5,7 +5,7 @@ class VisitCardModel {
   final String time;
   final String status;
   final Color statusColor;
-  final IconData icon; // إضافة حقل للأيقونة
+  final IconData icon; 
 
   VisitCardModel({
     required this.doctorName,

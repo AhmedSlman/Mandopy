@@ -1,5 +1,6 @@
 import 'package:dartz/dartz.dart';
 import 'package:mandopy/core/data/api/api_consumer.dart';
+import 'package:mandopy/core/data/cached/cache_helper.dart';
 import 'package:mandopy/core/errors/error_model.dart';
 import 'package:mandopy/core/errors/exceptions.dart';
 import 'package:mandopy/src/features/auth/data/models/user_model.dart';
@@ -61,6 +62,8 @@ class AuthRepoImplementation implements AuthRepoAbstract {
         isFormData: true,
       );
       final userResponse = LoginResponse.fromJson(response);
+      CacheHelper.saveToken(value: userResponse.token);
+
       return Right(userResponse);
     } on ServerException catch (e) {
       return Left(e.errorModel);
