@@ -10,4 +10,7 @@ abstract class AppAssets {
   static const String compleatedIcon = "assets/images/compleated_icon.png";
   static const String waitingIcon = "assets/images/waiting.png";
   static const String inVisit = "assets/images/in_visit.png";
+  static const String pharmcyIcon = "assets/images/pharmacy_icon.svg";
+  static const String drugIcon = "assets/images/drug_icon.svg";
+  
 }

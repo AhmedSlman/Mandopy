@@ -8,9 +8,13 @@ import 'package:mandopy/src/features/auth/presentation/views/login_view.dart';
 import 'package:mandopy/src/features/auth/presentation/views/otp_code.dart';
 import 'package:mandopy/src/features/auth/presentation/views/reset_password.dart';
 import 'package:mandopy/src/features/auth/presentation/views/sigin_up_view.dart';
+import 'package:mandopy/src/features/dailyPlane/presentation/views/add_daily_plan_view.dart';
 import 'package:mandopy/src/features/dailyPlane/presentation/views/daily_plane_view.dart';
 import 'package:mandopy/src/features/home/presentation/view/home_view.dart';
 import 'package:mandopy/src/splach.dart';
+
+import '../../src/features/doctorprofile/presentation/views/doctor_profile_view.dart';
+import '../../src/features/pharmacyprofile/presentation/views/pharmacy_profile_view.dart';
 
 final GoRouter router = GoRouter(
   routes: [
@@ -51,6 +55,18 @@ final GoRouter router = GoRouter(
     GoRoute(
       path: RouterNames.dailyPlane,
       builder: (context, state) => const DailyPlaneView(),
-    )
+    ),
+    GoRoute(
+      path: RouterNames.addDailyPlan,
+      builder: (context, state) => const AddDailyPlanView(),
+    ),
+    GoRoute(
+      path: RouterNames.doctorProfile,
+      builder: (context, state) => const DoctorProfileView(),
+    ),
+    GoRoute(
+      path: RouterNames.pharmacyProfile,
+      builder: (context, state) => const PharmacyProfileView(),
+    ),
   ],
 );

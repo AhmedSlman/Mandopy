@@ -12,6 +12,7 @@ abstract class AppStrings {
       dailyMissonsDone = "قمت بتحقيق 60% من هدفك اليومي",
       monthlyMissonsDone = "قمت بتحقيق 60% من هدفك الشهري",
       dailuPlane = "الخطه اليوميه",
+      addDailyPlan = "اضافة الخطة اليومية",
       creatAcount = "انشئ حساب",
       hintName = "ادخل اسمك ثلاثي",
       addNewVisit = 'اضف زياره جديده',
@@ -40,5 +41,12 @@ abstract class AppStrings {
       creatAccount = "انشئ حساب",
       haveAnAccoun = "لديك حساب بالفعل ؟ ",
       signInNow = "تسجيل الدخول ",
-      hintConfirmationCode = "ادخل كود التسجيل الخاص بك";
+      hintConfirmationCode = "ادخل كود التسجيل الخاص بك",
+      selectPurpose = "حدد نوع الهدف",
+      selectActiveIngredient = "حدد المادة الفعالة",
+      selectAppointment = "حدد الموعد"
+      ,visitDate ="تاريخ الزيارة"
+      ,time ="الوقت",
+      addPurposeOfplan ="اضف الهدف من الخطة",addToPlan="اضف الي الخطه"
+      ,choosePlans="اختار الاهداف",details="الملاحظات",addYourDetails ="ادخل ملاحظاتك هنا",saveDetails="حفظ الملاحظات";
 }

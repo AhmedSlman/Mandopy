@@ -8,5 +8,7 @@ Future<void> main() async {
   setupLocator();
   await getIt<CacheHelper>().init();
 
-  runApp(const Mandopy());
+  runApp(
+    const Mandopy(),
+  );
 }
