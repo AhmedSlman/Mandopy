@@ -19,9 +19,9 @@ class CustomOTPFields extends StatelessWidget {
       padding: EdgeInsets.symmetric(horizontal: 16.0.w, vertical: 16.0.h),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: List.generate(4, (index) {
+        children: List.generate(6, (index) {
           return SizedBox(
-            width: 60.w,
+            width: 50.w,
             child: TextFormField(
               controller: controllers[index],
               obscureText: false,
@@ -47,6 +47,11 @@ class CustomOTPFields extends StatelessWidget {
               ),
               keyboardType: TextInputType.number,
               validator: validator ?? (value) => null,
+              onChanged: (value) {
+                if (value.isNotEmpty && index < controllers.length - 1) {
+                  FocusScope.of(context).nextFocus();
+                }
+              },
             ),
           );
         }),

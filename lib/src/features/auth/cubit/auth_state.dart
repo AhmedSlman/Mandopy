@@ -32,3 +32,17 @@ final class LoginFailureState extends AuthState {
 
   LoginFailureState({required this.errorMessage});
 }
+
+final class VerifyEmailLoadingState extends AuthState {}
+
+final class VerifyEmailSuccessState extends AuthState {
+  final String userModel;
+
+  VerifyEmailSuccessState({required this.userModel});
+}
+
+final class VerifyEmailFailureState extends AuthState {
+  final ErrorModel errorMessage;
+
+  VerifyEmailFailureState({required this.errorMessage});
+}

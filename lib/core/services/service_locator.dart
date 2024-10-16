@@ -5,7 +5,7 @@ import 'package:mandopy/core/data/api/dio_consumer.dart';
 import 'package:mandopy/core/data/cached/cache_helper.dart';
 import 'package:mandopy/src/features/auth/data/repos/auth_repo_abstract.dart';
 import 'package:mandopy/src/features/auth/data/repos/auth_repo_implementation.dart';
-import 'package:mandopy/src/features/auth/presentation/cubit/auth_cubit.dart';
+import 'package:mandopy/src/features/auth/cubit/auth_cubit.dart';
 
 final GetIt getIt = GetIt.instance;
 void setupLocator() {

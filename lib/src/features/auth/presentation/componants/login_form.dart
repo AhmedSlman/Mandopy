@@ -5,7 +5,7 @@ import 'package:mandopy/core/common/functions/validator.dart';
 import 'package:mandopy/core/common/widgets/custom_btn.dart';
 import 'package:mandopy/core/routes/router_names.dart';
 import 'package:mandopy/core/utils/app_strings.dart';
-import 'package:mandopy/src/features/auth/presentation/cubit/auth_cubit.dart';
+import 'package:mandopy/src/features/auth/cubit/auth_cubit.dart';
 import 'package:mandopy/src/features/auth/presentation/widgets/auth_text_form_field.dart';
 import 'package:mandopy/src/features/auth/presentation/widgets/forget_password.dart';
 

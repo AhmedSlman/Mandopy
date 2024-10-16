@@ -7,6 +7,5 @@ Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   setupLocator();
   await getIt<CacheHelper>().init();
-
   runApp(const Mandopy());
 }

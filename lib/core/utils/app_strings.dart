@@ -3,6 +3,7 @@ abstract class AppStrings {
       creatNewAccount = "انشاء حساب جديد !",
       welcom = "مرحبا بك  ",
       signIn = "تسجيل الدخول",
+      verifyEmail = "تأكيد البريد الاكتروني",
       donotHaveAnAccount = "ليس لديك حساب ؟ ",
       resendCode = "إعادة إرسال الرمز",
       home = "الرئيسية",

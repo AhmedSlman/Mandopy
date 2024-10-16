@@ -70,4 +70,22 @@ class AuthCubit extends Cubit<AuthState> {
       (userResponse) => emit(LoginSuccessState(userModel: userResponse.user)),
     );
   }
+
+  Future<void> verifyEmail({
+    required String email,
+    required String code,
+  }) async {
+    emit(VerifyEmailLoadingState());
+
+    final result = await authRepo.verifyEmail(
+      email: email,
+      code: code,
+    );
+
+    result.fold(
+      (error) => emit(VerifyEmailFailureState(errorMessage: error)),
+      (userResponse) =>
+          emit(VerifyEmailSuccessState(userModel: userResponse.message)),
+    );
+  }
 }

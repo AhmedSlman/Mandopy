@@ -16,4 +16,6 @@ abstract class AuthRepoAbstract {
     required String email,
     required String password,
   });
+  Future<Either<ErrorModel, VerifyEmailResponse>> verifyEmail(
+      {required String email, required String code});
 }

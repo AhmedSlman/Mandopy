@@ -69,4 +69,30 @@ class AuthRepoImplementation implements AuthRepoAbstract {
       return Left(e.errorModel);
     }
   }
+
+  @override
+  Future<Either<ErrorModel, VerifyEmailResponse>> verifyEmail({
+    required String email,
+    required String code,
+  }) async {
+    try {
+      final response = await api.post(
+        "verify-email",
+        headers: {
+          'Accept': 'application/vnd.api+json',
+          'Content-Type': 'application/vnd.api+json'
+        },
+        data: {
+          'email': email,
+          'verification_code': code,
+        },
+        isFormData: true,
+      );
+      final userResponse = VerifyEmailResponse.fromJson(response);
+
+      return Right(userResponse);
+    } on ServerException catch (e) {
+      return Left(e.errorModel);
+    }
+  }
 }

@@ -2,12 +2,13 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:mandopy/core/routes/router_names.dart';
 import 'package:mandopy/core/services/service_locator.dart';
-import 'package:mandopy/src/features/auth/presentation/cubit/auth_cubit.dart';
+import 'package:mandopy/src/features/auth/cubit/auth_cubit.dart';
 import 'package:mandopy/src/features/auth/presentation/views/forget_password.dart';
 import 'package:mandopy/src/features/auth/presentation/views/login_view.dart';
 import 'package:mandopy/src/features/auth/presentation/views/otp_code.dart';
 import 'package:mandopy/src/features/auth/presentation/views/reset_password.dart';
 import 'package:mandopy/src/features/auth/presentation/views/sigin_up_view.dart';
+import 'package:mandopy/src/features/auth/presentation/views/vreify_email_view.dart';
 import 'package:mandopy/src/features/dailyPlane/presentation/views/daily_plane_view.dart';
 import 'package:mandopy/src/features/home/presentation/view/home_view.dart';
 import 'package:mandopy/src/splach.dart';
@@ -51,6 +52,18 @@ final GoRouter router = GoRouter(
     GoRoute(
       path: RouterNames.dailyPlane,
       builder: (context, state) => const DailyPlaneView(),
-    )
+    ),
+    GoRoute(
+      path: RouterNames.verifyEmail,
+      builder: (context, state) {
+        final email = state.extra is String ? state.extra as String : '';
+        return BlocProvider(
+          create: (context) => getIt<AuthCubit>(),
+          child: VerifyEmailView(
+            email: email,
+          ),
+        );
+      },
+    ),
   ],
 );
