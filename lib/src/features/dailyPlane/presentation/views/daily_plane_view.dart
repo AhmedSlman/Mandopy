@@ -5,7 +5,6 @@ import 'package:mandopy/core/routes/router_names.dart';
 import 'package:mandopy/core/utils/app_strings.dart';
 import 'package:mandopy/src/features/dailyPlane/presentation/componats/daily_palne_list_view_section.dart';
 import 'package:mandopy/src/features/dailyPlane/presentation/widgets/floating_button_widget.dart';
-import 'package:mandopy/src/features/dailyPlane/presentation/widgets/visit_card_widget.dart';
 
 class DailyPlaneView extends StatelessWidget {
   const DailyPlaneView({super.key});

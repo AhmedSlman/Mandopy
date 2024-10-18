@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:mandopy/src/features/dailyPlane/data/visit_model.dart';
 import 'package:mandopy/src/features/dailyPlane/presentation/widgets/visit_card_widget.dart';
 

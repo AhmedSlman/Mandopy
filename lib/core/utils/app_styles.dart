@@ -42,4 +42,10 @@ class AppStyles {
     fontWeight: FontWeight.w500,
     color: AppColors.grey,
   );
+  static TextStyle s10 = TextStyle(
+    fontFamily: 'Cairo',
+    fontSize: 10.0.sp,
+    fontWeight: FontWeight.w600,
+    color: AppColors.white,
+  );
 }

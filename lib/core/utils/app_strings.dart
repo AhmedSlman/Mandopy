@@ -44,9 +44,17 @@ abstract class AppStrings {
       hintConfirmationCode = "ادخل كود التسجيل الخاص بك",
       selectPurpose = "حدد نوع الهدف",
       selectActiveIngredient = "حدد المادة الفعالة",
-      selectAppointment = "حدد الموعد"
-      ,visitDate ="تاريخ الزيارة"
-      ,time ="الوقت",
-      addPurposeOfplan ="اضف الهدف من الخطة",addToPlan="اضف الي الخطه"
-      ,choosePlans="اختار الاهداف",details="الملاحظات",addYourDetails ="ادخل ملاحظاتك هنا",saveDetails="حفظ الملاحظات";
+      selectAppointment = "حدد الموعد",
+      visitDate = "تاريخ الزيارة",
+      time = "الوقت",
+      addPurposeOfplan = "اضف الهدف من الخطة",
+      addToPlan = "اضف الي الخطه",
+      choosePlans = "اختار الاهداف",
+      details = "الملاحظات",
+      addYourDetails = "ادخل ملاحظاتك هنا",
+      saveDetails = "حفظ الملاحظات",
+      reports = "التقارير",
+      showDetails = "عرض التفاصيل",
+      prizes = "المكافـأت",
+      rewardedPrizes = "المكافـأت المكتسبة";
 }

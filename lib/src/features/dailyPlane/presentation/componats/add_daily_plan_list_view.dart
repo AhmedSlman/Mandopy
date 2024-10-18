@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:mandopy/src/features/dailyPlane/presentation/views/add_daily_plan_view.dart';
 import 'package:mandopy/src/features/dailyPlane/presentation/widgets/daily_plan_card.dart';
 
 class AddDailyPlanListView extends StatelessWidget {

@@ -11,6 +11,8 @@ import 'package:mandopy/src/features/auth/presentation/views/sigin_up_view.dart'
 import 'package:mandopy/src/features/dailyPlane/presentation/views/add_daily_plan_view.dart';
 import 'package:mandopy/src/features/dailyPlane/presentation/views/daily_plane_view.dart';
 import 'package:mandopy/src/features/home/presentation/view/home_view.dart';
+import 'package:mandopy/src/features/prizes/presentation/views/prizes_view.dart';
+import 'package:mandopy/src/features/reports/presentation/views/resports_view.dart';
 import 'package:mandopy/src/splach.dart';
 
 import '../../src/features/doctorprofile/presentation/views/doctor_profile_view.dart';
@@ -67,6 +69,14 @@ final GoRouter router = GoRouter(
     GoRoute(
       path: RouterNames.pharmacyProfile,
       builder: (context, state) => const PharmacyProfileView(),
+    ),
+    GoRoute(
+      path: RouterNames.reportsView,
+      builder: (context, state) => const ReportsView(),
+    ),
+    GoRoute(
+      path: RouterNames.prizesView,
+      builder: (context, state) => const PrizesView(),
     ),
   ],
 );
