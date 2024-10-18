@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:mandopy/core/utils/app_strings.dart';
-import 'package:mandopy/src/features/home/data/models/visit_card_model.dart';
 
 import 'package:mandopy/src/features/home/presentation/widgets/daily_goals_title.dart';
 import 'package:mandopy/src/features/home/presentation/widgets/progress_bar_widget.dart';

@@ -6,11 +6,13 @@ abstract class AppColors {
   static const Color scaffoldColor = Color(0xFFE8F5E9);
   static const Color accentColor = Color(0xFFFBBC04);
   static const Color yellow = Color(0xFFFFFEE2);
+  static const Color moreYellower = Color(0xFFfff9c4);
   static const Color notificationCardColor = Color(0xFFFFFC97);
   static const Color lightGreen = Color(0xFFD8ECD7);
   static const Color textColor = Color(0xFF333333);
   static const Color greyForBackground = Color(0xFFECEBEB);
   static const Color grey = Color(0xFFB8B8B8);
+  static const Color openGrey = Color(0xFFf9f9f9);
   static const Color greyForText = Color(0xFF838383);
   static const Color lightGrey = Color(0xFFF5F5F5);
   static const Color backgroundColor = Color(0xFFF3F5F7);

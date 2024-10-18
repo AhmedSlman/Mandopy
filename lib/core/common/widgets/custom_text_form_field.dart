@@ -8,6 +8,8 @@ class CustomTextFormField extends StatelessWidget {
   final bool obscureText;
   final TextEditingController? controller;
   final FormFieldValidator<String>? validator;
+  final int? maxLines;
+  final Widget? suffixIcon;
 
   const CustomTextFormField({
     super.key,
@@ -15,6 +17,8 @@ class CustomTextFormField extends StatelessWidget {
     this.obscureText = false,
     this.controller,
     this.validator,
+    this.maxLines,
+    this.suffixIcon,
   });
 
   @override
@@ -33,6 +37,7 @@ class CustomTextFormField extends StatelessWidget {
           hintStyle: AppStyles.s12,
           fillColor: AppColors.lightGrey,
           filled: true,
+          suffixIcon: suffixIcon,
           border: InputBorder.none,
           enabledBorder: OutlineInputBorder(
             borderSide: const BorderSide(color: AppColors.lightGrey),
@@ -44,6 +49,7 @@ class CustomTextFormField extends StatelessWidget {
           ),
         ),
         validator: validator ?? (value) => null,
+        maxLines: maxLines,
       ),
     );
   }
