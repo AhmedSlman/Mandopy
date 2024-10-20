@@ -17,6 +17,9 @@ abstract class AppColors {
   static const Color lightGrey = Color(0xFFF5F5F5);
   static const Color backgroundColor = Color(0xFFF3F5F7);
   static const Color errorColor = Color(0xFFFF5E5E);
+  static const Color navBarGrey = Color(0xFFF7F7F7);
+
+  static const Color navBarGreyIcon = Color(0xFFB1B1B1);
 
   static const Color dailyPlaneItem = Color(0xFFE8F5E9);
 

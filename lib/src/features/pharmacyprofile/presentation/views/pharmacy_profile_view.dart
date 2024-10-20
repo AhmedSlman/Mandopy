@@ -30,7 +30,7 @@ class PharmacyProfileView extends StatelessWidget {
           SizedBox(
             height: 33.h,
           ),
-          const PharmacyAddDetailsSection(),
+           PharmacyAddDetailsSection(),
         ],
       )),
     );

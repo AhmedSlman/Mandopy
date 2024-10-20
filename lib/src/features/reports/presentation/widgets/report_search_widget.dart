@@ -16,14 +16,14 @@ class ReportSearchWidget extends StatelessWidget {
     return Row(
       children: [
         SizedBox(
-          height: 30.h,
+          height: 50.h,
           width: 360.w,
           child: CustomTextFormField(
             hintText: 'بحث',
             suffixIcon: SvgPicture.asset(
               AppAssets.searchIcon,
-              width: 14.w,
-              height: 14.h,
+              width: 12.w,
+              height: 12.h,
             ),
           ),
         ),
@@ -32,7 +32,7 @@ class ReportSearchWidget extends StatelessWidget {
         ),
         Container(
           width: 42.w,
-          height: 30.h,
+          height: 50.h,
           decoration: BoxDecoration(
             color: AppColors.greyForBackground,
             borderRadius: BorderRadius.circular(

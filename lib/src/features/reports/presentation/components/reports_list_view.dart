@@ -9,6 +9,7 @@ class ReportsListView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Expanded(
       child: ListView.separated(
+        padding: EdgeInsets.zero,
         itemCount: 3,
         itemBuilder: (context, index) {
           return ReportCardWidget(

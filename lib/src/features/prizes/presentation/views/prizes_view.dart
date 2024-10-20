@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_svg/flutter_svg.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:mandopy/app.dart';
 import 'package:mandopy/core/common/widgets/custom_app_bar.dart';
 import 'package:mandopy/core/theme/app_colors.dart';

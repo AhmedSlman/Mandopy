@@ -41,7 +41,7 @@ class _DatePickerWidgetState extends State<DatePickerWidget> {
       onTap: () => _selectDate(context),
       child: Container(
         width: 186.w,
-        height: 33.h,
+        height: 40.h,
         decoration: BoxDecoration(
           color: widget.containerColor,
           borderRadius: BorderRadius.circular(2.0),
