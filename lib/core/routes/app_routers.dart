@@ -12,6 +12,8 @@ import 'package:mandopy/src/features/dailyPlane/presentation/views/add_daily_pla
 import 'package:mandopy/src/features/dailyPlane/presentation/views/daily_plane_view.dart';
 import 'package:mandopy/src/features/home/presentation/view/home_view.dart';
 import 'package:mandopy/src/features/prizes/presentation/views/prizes_view.dart';
+import 'package:mandopy/src/features/profile/presentation/views/edit_profile_view.dart';
+import 'package:mandopy/src/features/profile/presentation/views/profile_view.dart';
 import 'package:mandopy/src/features/reports/presentation/views/resports_view.dart';
 import 'package:mandopy/src/splach.dart';
 
@@ -77,6 +79,14 @@ final GoRouter router = GoRouter(
     GoRoute(
       path: RouterNames.prizesView,
       builder: (context, state) => const PrizesView(),
+    ),
+    GoRoute(
+      path: RouterNames.profileView,
+      builder: (context, state) => const ProfileView(),
+    ),
+    GoRoute(
+      path: RouterNames.editProfileView,
+      builder: (context, state) => const EditProfileView(),
     ),
   ],
 );

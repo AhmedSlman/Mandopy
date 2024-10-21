@@ -11,5 +11,7 @@ abstract class RouterNames {
   static const String doctorProfile = '/fff';
   static const String pharmacyProfile = '/adfsadfs';
   static const String reportsView = '/reportView';
-  static const String prizesView = '/';
+  static const String prizesView = '/prizeView';
+  static const String profileView = '/';
+  static const String editProfileView = '/editProfileView';
 }

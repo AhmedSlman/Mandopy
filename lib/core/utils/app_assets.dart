@@ -16,4 +16,7 @@ abstract class AppAssets {
   static const String dropDownIcon = "assets/images/drop_down_icon.svg";
   static const String searchIcon = "assets/images/search.svg";
   static const String medalIcon = "assets/images/third-medal.svg";
+  static const String banIcon = "assets/images/ban_icon.svg";
+  static const String flagIcon = "assets/images/flag_icon.svg";
+  static const String visitsIcon = "assets/images/visits_icon.svg";
 }

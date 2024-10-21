@@ -56,5 +56,16 @@ abstract class AppStrings {
       reports = "التقارير",
       showDetails = "عرض التفاصيل",
       prizes = "المكافـأت",
-      rewardedPrizes = "المكافـأت المكتسبة";
+      rewardedPrizes = "المكافـأت المكتسبة",
+      viewRewards = "عرض المكافئات",
+      previousRewards = " المكافئات السابقة",
+      profile = "الملف الشخصى",
+      performanceDetails = "احصائيات الاداء",
+      editProfile = "تعديل الملف الشخصى",
+      phoneHint = "ادخل رقم الهاتف",
+      visitsHint = "ادخل عدد الزيارات المكتملة",
+      goalsHint = "ادخل عدد الاهداف المحققة",
+      activeSubstanceHint = "ادخل افضل مادة فعالة",
+      uncompletedVisitsHint = "ادخل عدد الزيارات الغير مكتملة",
+      save = "حفظ";
 }
