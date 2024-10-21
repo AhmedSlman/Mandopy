@@ -14,4 +14,8 @@ abstract class RouterNames {
   static const String prizesView = '/0';
   static const String verifyEmail = "/cc";
   static const String navigatiomBarButton = '/';
+  // static const String reportsView = '/reportView';
+  // static const String prizesView = '/prizeView';
+  static const String profileView = '/';
+  static const String editProfileView = '/editProfileView';
 }
