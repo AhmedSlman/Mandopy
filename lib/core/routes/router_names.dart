@@ -7,11 +7,11 @@ abstract class RouterNames {
   static const String otp = '/g';
   static const String home = '/f';
   static const String dailyPlane = '/e';
-  static const String addDailyPlan = '/addDailyPlan';
+  static const String addDailyPlan = '/';
   static const String doctorProfile = '/fff';
   static const String pharmacyProfile = '/adfsadfs';
   static const String reportsView = '/5555';
   static const String prizesView = '/0';
   static const String verifyEmail = "/cc";
-  static const String navigatiomBarButton = '/';
+  static const String navigatiomBarButton = '/00';
 }
