@@ -48,4 +48,10 @@ class AppStyles {
     fontWeight: FontWeight.w600,
     color: AppColors.white,
   );
+  static TextStyle s8 = const TextStyle(
+    fontFamily: 'Cairo',
+    fontSize: 8.0,
+    fontWeight: FontWeight.w600,
+    color: AppColors.white,
+  );
 }

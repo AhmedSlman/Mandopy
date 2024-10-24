@@ -6,6 +6,8 @@ import 'package:mandopy/src/features/home/presentation/view/home_view.dart';
 import 'package:mandopy/src/features/prizes/presentation/views/prizes_view.dart';
 import 'package:mandopy/src/features/reports/presentation/views/resports_view.dart';
 
+import 'features/profile/presentation/views/profile_view.dart';
+
 class NavigationBarButton extends StatefulWidget {
   const NavigationBarButton({super.key});
 
@@ -21,7 +23,7 @@ class _NavigationBarButtonState extends State<NavigationBarButton> {
     const DailyPlaneView(),
     const ReportsView(),
     const PrizesView(),
-    const ProfileView()
+    const ProfileView(),
   ];
 
   @override
@@ -66,19 +68,6 @@ class _NavigationBarButtonState extends State<NavigationBarButton> {
             _currentIndex = index;
           });
         },
-      ),
-    );
-  }
-}
-
-class ProfileView extends StatelessWidget {
-  const ProfileView({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return const Scaffold(
-      body: Center(
-        child: Text("Profile View"),
       ),
     );
   }

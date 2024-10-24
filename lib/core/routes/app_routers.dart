@@ -13,12 +13,15 @@ import 'package:mandopy/src/features/dailyPlane/presentation/views/add_daily_pla
 import 'package:mandopy/src/features/dailyPlane/presentation/views/daily_plane_view.dart';
 import 'package:mandopy/src/features/home/presentation/view/home_view.dart';
 import 'package:mandopy/src/features/prizes/presentation/views/prizes_view.dart';
+import 'package:mandopy/src/features/profile/presentation/views/edit_profile_view.dart';
+
 import 'package:mandopy/src/features/reports/presentation/views/resports_view.dart';
 import 'package:mandopy/src/nav_bar.dart';
 import 'package:mandopy/src/splach.dart';
 
 import '../../src/features/doctorprofile/presentation/views/doctor_profile_view.dart';
 import '../../src/features/pharmacyprofile/presentation/views/pharmacy_profile_view.dart';
+import '../../src/features/profile/presentation/views/profile_view.dart';
 
 final GoRouter router = GoRouter(
   routes: [
@@ -95,6 +98,14 @@ final GoRouter router = GoRouter(
           ),
         );
       },
+    ),
+    GoRoute(
+      path: RouterNames.profileView,
+      builder: (context, state) => const ProfileView(),
+    ),
+    GoRoute(
+      path: RouterNames.editProfileView,
+      builder: (context, state) => const EditProfileView(),
     ),
   ],
 );
