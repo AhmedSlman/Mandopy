@@ -8,7 +8,7 @@ import 'package:mandopy/src/features/location/data/repo/location_repo_abstract.d
 class LocationRepoImplementation implements LocationRepoAbstract {
   final ApiConsumer api;
 
-  LocationRepoImplementation({required this.api});
+  LocationRepoImplementation(this.api);
 
   @override
   Future<Either<ErrorModel, LocationModel>> saveDoctorLocation({

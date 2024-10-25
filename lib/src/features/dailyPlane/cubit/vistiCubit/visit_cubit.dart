@@ -5,7 +5,7 @@ import 'visit_state.dart';
 class VisitCubit extends Cubit<VisitState> {
   final VisitRepoAbstract visitRepo;
 
-  VisitCubit({required this.visitRepo}) : super(VisitInitial());
+  VisitCubit(this.visitRepo) : super(VisitInitial());
 
   Future<void> addVisit({
     required String date,

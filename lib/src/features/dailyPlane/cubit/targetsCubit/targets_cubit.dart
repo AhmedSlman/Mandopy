@@ -6,7 +6,7 @@ import 'package:mandopy/src/features/dailyPlane/data/repo/targetsAndMedecineREpo
 class TargetsCubit extends Cubit<TargetsState> {
   final TargatsRepoAbstract targatsRepoAbstract;
 
-  TargetsCubit({required this.targatsRepoAbstract}) : super(TargtesInitial());
+  TargetsCubit(this.targatsRepoAbstract) : super(TargtesInitial());
 
   Future<void> fetchDoctors() async {
     emit(TargetsLoading());

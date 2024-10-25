@@ -10,7 +10,7 @@ import 'package:mandopy/src/features/dailyPlane/data/repo/targetsAndMedecineREpo
 class TargetsRepoImplementation implements TargatsRepoAbstract {
   final ApiConsumer api;
 
-  TargetsRepoImplementation({required this.api});
+  TargetsRepoImplementation(this.api);
 
   @override
   Future<Either<ErrorModel, List<DoctorModel>>> getDoctors() async {

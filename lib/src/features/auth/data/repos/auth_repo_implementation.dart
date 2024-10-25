@@ -9,7 +9,7 @@ import 'package:mandopy/src/features/auth/data/repos/auth_repo_abstract.dart';
 class AuthRepoImplementation implements AuthRepoAbstract {
   final ApiConsumer api;
 
-  AuthRepoImplementation({required this.api});
+  AuthRepoImplementation( this.api);
   @override
   Future<Either<ErrorModel, RegisterResponse>> register({
     required String email,

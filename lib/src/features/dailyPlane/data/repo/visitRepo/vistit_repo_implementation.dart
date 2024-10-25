@@ -8,7 +8,7 @@ import 'package:mandopy/src/features/dailyPlane/data/repo/visitRepo/vistit_repo.
 class VisitRepoImplementation implements VisitRepoAbstract {
   final ApiConsumer api;
 
-  VisitRepoImplementation({required this.api});
+  VisitRepoImplementation(this.api);
 
   @override
   Future<Either<ErrorModel, VisitModel>> addVisit({
