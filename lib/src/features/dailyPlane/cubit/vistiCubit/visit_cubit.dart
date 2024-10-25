@@ -27,7 +27,7 @@ class VisitCubit extends Cubit<VisitState> {
     result.fold(
       (error) => emit(VisitError(error)),
       (visitResponse) {
-        emit(VisitLoaded([visitResponse]));
+        emit(VisitsLoaded([visitResponse]));
       },
     );
   }
@@ -39,7 +39,7 @@ class VisitCubit extends Cubit<VisitState> {
 
     result.fold(
       (error) => emit(VisitError(error)),
-      (visits) => emit(VisitLoaded(visits)),
+      (visits) => emit(VisitsLoaded(visits)),
     );
   }
 
@@ -51,6 +51,37 @@ class VisitCubit extends Cubit<VisitState> {
     result.fold(
       (error) => emit(VisitError(error)),
       (visit) => emit(VisitDetailsLoaded(visit)),
+    );
+  }
+
+  Future<void> updateVisit({
+    required String visitId,
+    required String status,
+  }) async {
+    emit(VisitLoading());
+
+    final result = await visitRepo.updateVisit(
+      visitId: visitId,
+      status: status,
+    );
+
+    result.fold(
+      (error) => emit(VisitError(error)),
+      (visitResponse) => emit(VisitsLoaded([visitResponse])),
+    );
+  }
+
+  Future<void> deleteVisit(String visitId) async {
+    emit(VisitLoading());
+
+    final result = await visitRepo.deleteVisit(visitId);
+
+    result.fold(
+      (error) => emit(VisitError(error)),
+      (success) {
+        getAllVisits();
+        emit(VisitDeleted(message: 'تم حذف الزيارة بنجاح'));
+      },
     );
   }
 }

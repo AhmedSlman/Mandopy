@@ -10,8 +10,13 @@ abstract class VisitRepoAbstract {
     required String pharmacyId,
     required bool isSold,
   });
+  Future<Either<ErrorModel, VisitModel>> updateVisit({
+    required String visitId,
+    required String status,
+  });
 
   Future<Either<ErrorModel, List<VisitModel>>> getAllVisits();
 
   Future<Either<ErrorModel, VisitModel>> getVisitDetails(String visitId);
+  Future<Either<ErrorModel, bool>> deleteVisit(String visitId);
 }

@@ -7,16 +7,28 @@ class VisitInitial extends VisitState {}
 
 class VisitLoading extends VisitState {}
 
-class VisitLoaded extends VisitState {
+class VisitsLoaded extends VisitState {
   final List<VisitModel> visits;
 
-  VisitLoaded(this.visits);
+  VisitsLoaded(this.visits);
 }
 
 class VisitDetailsLoaded extends VisitState {
   final VisitModel visit;
 
   VisitDetailsLoaded(this.visit);
+}
+
+class VisitUpdated extends VisitState {
+  final VisitModel visit;
+
+  VisitUpdated(this.visit);
+}
+
+class VisitDeleted extends VisitState {
+  final String message;
+
+  VisitDeleted({required this.message});
 }
 
 class VisitError extends VisitState {

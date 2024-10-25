@@ -1,5 +1,6 @@
 import 'package:dartz/dartz.dart';
 import 'package:mandopy/core/data/api/api_consumer.dart';
+import 'package:mandopy/core/data/cached/cache_helper.dart';
 import 'package:mandopy/core/errors/error_model.dart';
 import 'package:mandopy/core/errors/exceptions.dart';
 import 'package:mandopy/src/features/dailyPlane/data/models/visit_model.dart';
@@ -76,6 +77,41 @@ class VisitRepoImplementation implements VisitRepoAbstract {
 
       final visitResponse = VisitModel.fromJson(response);
       return Right(visitResponse);
+    } on ServerException catch (e) {
+      return Left(e.errorModel);
+    }
+  }
+
+  @override
+  Future<Either<ErrorModel, VisitModel>> updateVisit(
+      {required String visitId, required String status}) async {
+    try {
+      final response = await api.put(
+        "visits/$visitId",
+        headers: {
+          'Accept': 'application/vnd.api+json',
+          'Content-Type': 'application/x-www-form-urlencoded',
+          'Authorization': CacheHelper.getToken(),
+        },
+        data: {
+          'status': status,
+        },
+      );
+      final visitResponse = VisitModel.fromJson(response);
+      return Right(visitResponse);
+    } on ServerException catch (e) {
+      return Left(e.errorModel);
+    }
+  }
+
+  @override
+  Future<Either<ErrorModel, bool>> deleteVisit(String visitId) async {
+    try {
+      await api.delete("visits/$visitId", headers: {
+        'Accept': 'application/vnd.api+json',
+        'Content-Type': 'application/vnd.api+json',
+      });
+      return const Right(true);
     } on ServerException catch (e) {
       return Left(e.errorModel);
     }
