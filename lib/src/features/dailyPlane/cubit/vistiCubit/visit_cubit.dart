@@ -11,7 +11,9 @@ class VisitCubit extends Cubit<VisitState> {
     required String date,
     required String time,
     required String medicationId,
-    required String pharmacyId,
+    String? pharmacyId,
+    String? doctorId,
+    required String notes,
     required bool isSold,
   }) async {
     emit(VisitLoading());
@@ -21,6 +23,8 @@ class VisitCubit extends Cubit<VisitState> {
       time: time,
       medicationId: medicationId,
       pharmacyId: pharmacyId,
+      doctorId: doctorId,
+      notes: notes,
       isSold: isSold,
     );
 
@@ -82,6 +86,28 @@ class VisitCubit extends Cubit<VisitState> {
         getAllVisits();
         emit(VisitDeleted(message: 'تم حذف الزيارة بنجاح'));
       },
+    );
+  }
+
+  Future<void> startVisit(String visitId) async {
+    emit(VisitLoading());
+
+    final result = await visitRepo.startVisit(visitId);
+
+    result.fold(
+      (error) => emit(VisitError(error)),
+      (success) => emit(VisitStarted(message: 'زيارة بدأت بنجاح')),
+    );
+  }
+
+  Future<void> endVisit(String visitId, String isSold) async {
+    emit(VisitLoading());
+
+    final result = await visitRepo.endVisit(visitId, isSold);
+
+    result.fold(
+      (error) => emit(VisitError(error)),
+      (endVisitResponse) => emit(VisitEnded(endVisitResponse)),
     );
   }
 }

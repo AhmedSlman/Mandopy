@@ -1,8 +1,8 @@
 class MedicationModel {
   final int id;
   final String name;
-  final DateTime? createdAt; // يمكن أن تكون null
-  final DateTime? updatedAt; // يمكن أن تكون null
+  final DateTime? createdAt; 
+  final DateTime? updatedAt; 
 
   MedicationModel({
     required this.id,

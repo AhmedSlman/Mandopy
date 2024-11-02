@@ -45,6 +45,7 @@ abstract class AppStrings {
       hintConfirmationCode = "ادخل كود التسجيل الخاص بك",
       selectPurpose = "حدد نوع الهدف",
       selectActiveIngredient = "حدد المادة الفعالة",
+      
       selectAppointment = "حدد الموعد",
       visitDate = "تاريخ الزيارة",
       time = "الوقت",

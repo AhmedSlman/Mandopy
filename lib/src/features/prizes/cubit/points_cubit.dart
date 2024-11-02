@@ -2,7 +2,6 @@ import 'package:bloc/bloc.dart';
 import 'package:mandopy/core/errors/error_model.dart';
 import 'package:mandopy/src/features/prizes/data/models/points_model.dart';
 import 'package:mandopy/src/features/prizes/data/repo/bouns_repo.dart';
-import 'package:meta/meta.dart';
 
 part 'points_state.dart';
 

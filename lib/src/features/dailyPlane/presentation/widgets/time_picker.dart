@@ -1,11 +1,22 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../../../../core/utils/app_strings.dart';
 
-class TimePicker extends StatelessWidget {
-  const TimePicker({super.key});
+class TimePicker extends StatefulWidget {
+  const TimePicker({
+    super.key,
+    required this.onTimeSelected,
+  });
+  final ValueChanged<TimeOfDay?> onTimeSelected;
 
+  @override
+  State<TimePicker> createState() => _TimePickerState();
+}
+
+class _TimePickerState extends State<TimePicker> {
+  TimeOfDay? _selectedTime;
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -14,6 +25,12 @@ class TimePicker extends StatelessWidget {
           context: context,
           initialTime: TimeOfDay.now(),
         );
+        if (pickedTime != null) {
+          setState(() {
+            _selectedTime = pickedTime;
+          });
+          widget.onTimeSelected(pickedTime);
+        }
       },
       child: Container(
         width: 133.w,
@@ -25,14 +42,16 @@ class TimePicker extends StatelessWidget {
           color: Colors.white,
           borderRadius: BorderRadius.circular(5),
         ),
-        child: const Row(
+        child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text(
-              AppStrings.time,
-              style: TextStyle(color: Colors.black54),
+              _selectedTime != null
+                  ? _selectedTime!.format(context)
+                  : AppStrings.time,
+              style: const TextStyle(color: Colors.black54),
             ),
-            Icon(
+            const Icon(
               Icons.access_time,
               color: Colors.black54,
             ),

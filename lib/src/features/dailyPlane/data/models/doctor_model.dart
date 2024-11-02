@@ -10,6 +10,7 @@ class DoctorModel {
   final double longitude;
   final DateTime createdAt;
   final DateTime updatedAt;
+  
 
   DoctorModel({
     required this.id,

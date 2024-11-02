@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:mandopy/src/features/reports/data/models/report_model.dart';
 
 import '../../../../../core/common/widgets/custom_btn.dart';
 import '../../../../../core/theme/app_colors.dart';
@@ -10,9 +11,12 @@ import 'report_card_info.dart';
 
 class ReportCardWidget extends StatelessWidget {
   final int index;
+  final ReportModel? reports;
+
   const ReportCardWidget({
     super.key,
     required this.index,
+    required this.reports,
   });
 
   @override
@@ -20,13 +24,8 @@ class ReportCardWidget extends StatelessWidget {
     return Container(
       width: 394.w,
       height: 300.h,
-      margin: EdgeInsets.symmetric(
-        horizontal: 16.w,
-      ),
-      padding: EdgeInsets.symmetric(
-        horizontal: 10.h,
-        vertical: 8.h,
-      ),
+      margin: EdgeInsets.symmetric(horizontal: 16.w),
+      padding: EdgeInsets.symmetric(horizontal: 10.h, vertical: 8.h),
       decoration: BoxDecoration(
         color: AppColors.greyForBackground,
         borderRadius: BorderRadius.circular(5),
@@ -43,66 +42,48 @@ class ReportCardWidget extends StatelessWidget {
         children: [
           Text(
             'تقرير ${index + 1}',
-            style: AppStyles.s16.copyWith(
-              color: AppColors.accentColor,
-            ),
+            style: AppStyles.s16.copyWith(color: AppColors.accentColor),
           ),
-          SizedBox(
-            height: 4.h,
-          ),
+          SizedBox(height: 4.h),
           Padding(
             padding: EdgeInsets.only(right: 10.w),
             child: Column(
               children: [
-                const ReportCardInfo(
+                ReportCardInfo(
                   title: 'اسم الطبيب/ الصيدلية:',
-                  value: 'صيدلية العزبي',
+                  value: reports?.pharmacy?.name ?? 'N/A',
                 ),
-                SizedBox(
-                  height: 2.h,
-                ),
-                const ReportCardInfo(
+                SizedBox(height: 2.h),
+                ReportCardInfo(
                   title: 'الموقع:',
-                  value: ' حي الجامعة ',
+                  value: reports?.pharmacy?.address ?? 'N/A',
                 ),
-                SizedBox(
-                  height: 2.h,
-                ),
-                const ReportCardInfo(
+                SizedBox(height: 2.h),
+                ReportCardInfo(
                   title: 'التاريخ:',
-                  value: ' 20يناير 2024',
+                  value: reports?.date ?? 'N/A',
                 ),
-                SizedBox(
-                  height: 2.h,
+                SizedBox(height: 2.h),
+                ReportCardInfo(
+                  title: 'الوقت:',
+                  value: reports?.time ?? 'N/A',
                 ),
-                const ReportCardInfo(
-                  title: 'الوقت: ',
-                  value: ' 3:30 AM',
-                ),
-                SizedBox(
-                  height: 2.h,
-                ),
-                const ReportCardInfo(
+                SizedBox(height: 2.h),
+                ReportCardInfo(
                   title: 'المادة الفعالة/الدواء المسوق:',
-                  value: ' إراستابيكس كو',
+                  value: reports?.medication?.name ?? 'N/A',
                 ),
-                SizedBox(
-                  height: 2.h,
-                ),
+                SizedBox(height: 2.h),
                 const ReportCardInfo(
                   title: 'مدة الزيارة:',
                   value: ' 3:30 AM',
                 ),
-                SizedBox(
-                  height: 2.h,
-                ),
-                const ReportCardInfo(
+                SizedBox(height: 2.h),
+                ReportCardInfo(
                   title: 'الملاحظات:',
-                  value: '  ملاحظات............',
+                  value: reports?.pharmacy?.details ?? 'N/A',
                 ),
-                SizedBox(
-                  height: 8.h,
-                ),
+                SizedBox(height: 8.h),
                 const RatingInfo(),
               ],
             ),
@@ -112,9 +93,7 @@ class ReportCardWidget extends StatelessWidget {
             child: CustomButton(
               width: 85.w,
               height: 30.h,
-              borderRadius: BorderRadius.circular(
-                2,
-              ),
+              borderRadius: BorderRadius.circular(2),
               textStyle: AppStyles.s10,
               text: AppStrings.showDetails,
               onPressed: () {},

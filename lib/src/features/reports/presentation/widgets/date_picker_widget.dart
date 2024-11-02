@@ -8,9 +8,12 @@ import '../../../../../core/utils/app_styles.dart';
 
 class DatePickerWidget extends StatefulWidget {
   final Color containerColor;
+  final Function(DateTime) onDateSelected;
+
   const DatePickerWidget({
     super.key,
     required this.containerColor,
+    required this.onDateSelected,
   });
 
   @override
@@ -32,6 +35,7 @@ class _DatePickerWidgetState extends State<DatePickerWidget> {
       setState(() {
         selectedDate = picked;
       });
+      widget.onDateSelected(selectedDate);
     }
   }
 
@@ -48,31 +52,23 @@ class _DatePickerWidgetState extends State<DatePickerWidget> {
         ),
         child: Row(
           children: [
-            SizedBox(
-              width: 5.w,
-            ),
+            SizedBox(width: 5.w),
             Text(
               "${selectedDate.day} ${DateFormat('MMMM', 'ar').format(selectedDate)} ${selectedDate.year}",
               style: AppStyles.s14,
             ),
-            SizedBox(
-              width: 5.w,
-            ),
+            SizedBox(width: 5.w),
             SvgPicture.asset(
               AppAssets.calenderIcon,
               width: 16.w,
               height: 17.h,
             ),
-            SizedBox(
-              width: 15.w,
-            ),
+            SizedBox(width: 15.w),
             const VerticalDivider(
               color: Color.fromRGBO(175, 181, 175, 0.2),
               thickness: 1.0,
             ),
-            SizedBox(
-              width: 5.w,
-            ),
+            SizedBox(width: 5.w),
             SvgPicture.asset(AppAssets.dropDownIcon),
           ],
         ),

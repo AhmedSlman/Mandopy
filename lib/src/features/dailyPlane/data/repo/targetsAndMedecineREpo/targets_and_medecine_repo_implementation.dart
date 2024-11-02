@@ -19,10 +19,12 @@ class TargetsRepoImplementation implements TargatsRepoAbstract {
         "doctors",
         headers: {
           'Accept': 'application/vnd.api+json',
+          'Authorization':
+              'Bearer 6|1U6J0ZvrTaaSWe9h2lyyVoLzOYir3c8ZUt0oKTCue7686e99',
         },
       );
 
-      List<DoctorModel> doctors = (response as List)
+      List<DoctorModel> doctors = (response['doctors'] as List)
           .map((doctor) => DoctorModel.fromJson(doctor))
           .toList();
       return Right(doctors);
@@ -38,10 +40,12 @@ class TargetsRepoImplementation implements TargatsRepoAbstract {
         "pharmacies",
         headers: {
           'Accept': 'application/vnd.api+json',
+          'Authorization':
+              'Bearer 6|1U6J0ZvrTaaSWe9h2lyyVoLzOYir3c8ZUt0oKTCue7686e99',
         },
       );
 
-      List<PharmacyModel> pharmacies = (response as List)
+      List<PharmacyModel> pharmacies = (response['pharmacies'] as List)
           .map((pharmacy) => PharmacyModel.fromJson(pharmacy))
           .toList();
       return Right(pharmacies);
@@ -57,10 +61,12 @@ class TargetsRepoImplementation implements TargatsRepoAbstract {
         "medications",
         headers: {
           'Accept': 'application/vnd.api+json',
+          'Authorization':
+              'Bearer 6|1U6J0ZvrTaaSWe9h2lyyVoLzOYir3c8ZUt0oKTCue7686e99',
         },
       );
 
-      List<MedicationModel> medications = (response as List)
+      List<MedicationModel> medications = (response['medications'] as List)
           .map((medication) => MedicationModel.fromJson(medication))
           .toList();
       return Right(medications);
