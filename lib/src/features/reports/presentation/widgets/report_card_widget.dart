@@ -51,13 +51,13 @@ class ReportCardWidget extends StatelessWidget {
               children: [
                 ReportCardInfo(
                   title: 'اسم الطبيب/ الصيدلية:',
-                  value: reports?.pharmacy?.name ?? 'N/A',
+                  value: reports?.doctorOrPharmacyName ?? 'N/A',
                 ),
-                SizedBox(height: 2.h),
-                ReportCardInfo(
-                  title: 'الموقع:',
-                  value: reports?.pharmacy?.address ?? 'N/A',
-                ),
+                // SizedBox(height: 2.h),
+                // ReportCardInfo(
+                //   title: 'الموقع:',
+                //   value: reports?.pharmacy?.address ?? 'N/A',
+                // ),
                 SizedBox(height: 2.h),
                 ReportCardInfo(
                   title: 'التاريخ:',
@@ -71,7 +71,7 @@ class ReportCardWidget extends StatelessWidget {
                 SizedBox(height: 2.h),
                 ReportCardInfo(
                   title: 'المادة الفعالة/الدواء المسوق:',
-                  value: reports?.medication?.name ?? 'N/A',
+                  value: reports?.medicationName ?? 'N/A',
                 ),
                 SizedBox(height: 2.h),
                 const ReportCardInfo(
@@ -81,7 +81,7 @@ class ReportCardWidget extends StatelessWidget {
                 SizedBox(height: 2.h),
                 ReportCardInfo(
                   title: 'الملاحظات:',
-                  value: reports?.pharmacy?.details ?? 'N/A',
+                  value: reports?.notes ?? 'N/A',
                 ),
                 SizedBox(height: 8.h),
                 const RatingInfo(),

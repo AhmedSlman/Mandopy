@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:mandopy/core/theme/app_colors.dart';
 import 'package:mandopy/core/utils/app_strings.dart';
 import 'package:mandopy/core/utils/app_styles.dart';
+import 'package:mandopy/src/features/home/cubit/percentage/cubit/percentage_cubit.dart';
 
 class CircularProgressBarWidget extends StatelessWidget {
   const CircularProgressBarWidget({
@@ -22,31 +24,42 @@ class CircularProgressBarWidget extends StatelessWidget {
       ),
       child: Padding(
         padding: EdgeInsets.symmetric(horizontal: 8.w),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            const Text(
-              AppStrings.monthlyMissonsDone,
-            ),
-            const Spacer(),
-            Stack(
-              alignment: Alignment.center,
-              children: [
-                CircularProgressIndicator(
-                  strokeWidth: 10,
-                  value: progressValue,
-                  backgroundColor: AppColors.yellow,
-                  color: AppColors.primaryColor,
-                ),
-                Text(
-                  '60%',
-                  style: AppStyles.s12.copyWith(
-                    color: Colors.black,
+        child: BlocBuilder<PercentageCubit, PercentageState>(
+          builder: (context, state) {
+            if (state is PercentageLoading) {
+              return const CircularProgressIndicator();
+            }
+            if (state is MonthlyTargetLoaded) {
+              return Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    state.target,
                   ),
-                ),
-              ],
-            ),
-          ],
+                  const Spacer(),
+                  Stack(
+                    alignment: Alignment.center,
+                    children: [
+                      CircularProgressIndicator(
+                        strokeWidth: 10,
+                        value: progressValue,
+                        backgroundColor: AppColors.yellow,
+                        color: AppColors.primaryColor,
+                      ),
+                      Text(
+                        '0%',
+                        style: AppStyles.s12.copyWith(
+                          color: Colors.black,
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              );
+            } else {
+              return const Text('No data available');
+            }
+          },
         ),
       ),
     );

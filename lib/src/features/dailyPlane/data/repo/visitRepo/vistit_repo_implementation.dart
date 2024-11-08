@@ -26,12 +26,6 @@ class VisitRepoImplementation implements VisitRepoAbstract {
     try {
       final response = await api.post(
         "visits",
-        headers: {
-          'Accept': 'application/vnd.api+json',
-          'Content-Type': 'application/vnd.api+json',
-          'Authorization':
-              'Bearer 6|1U6J0ZvrTaaSWe9h2lyyVoLzOYir3c8ZUt0oKTCue7686e99',
-        },
         data: {
           'date': date,
           'time': time,
@@ -56,12 +50,6 @@ class VisitRepoImplementation implements VisitRepoAbstract {
     try {
       final response = await api.get(
         "visits",
-        headers: {
-          'Accept': 'application/vnd.api+json',
-          'Content-Type': 'application/vnd.api+json',
-          'Authorization':
-              'Bearer 6|1U6J0ZvrTaaSWe9h2lyyVoLzOYir3c8ZUt0oKTCue7686e99',
-        },
       );
 
       List<VisitModel> visits = (response['visits'] as List)
@@ -79,10 +67,6 @@ class VisitRepoImplementation implements VisitRepoAbstract {
     try {
       final response = await api.get(
         "visits/$visitId",
-        headers: {
-          'Accept': 'application/vnd.api+json',
-          'Content-Type': 'application/vnd.api+json',
-        },
       );
 
       final visitResponse = VisitModel.fromJson(response);
@@ -98,11 +82,6 @@ class VisitRepoImplementation implements VisitRepoAbstract {
     try {
       final response = await api.put(
         "visits/$visitId",
-        headers: {
-          'Accept': 'application/vnd.api+json',
-          'Content-Type': 'application/x-www-form-urlencoded',
-          'Authorization': CacheHelper.getToken(),
-        },
         data: {
           'status': status,
         },
@@ -117,10 +96,9 @@ class VisitRepoImplementation implements VisitRepoAbstract {
   @override
   Future<Either<ErrorModel, bool>> deleteVisit(String visitId) async {
     try {
-      await api.delete("visits/$visitId", headers: {
-        'Accept': 'application/vnd.api+json',
-        'Content-Type': 'application/vnd.api+json',
-      });
+      await api.delete(
+        "visits/$visitId",
+      );
       return const Right(true);
     } on ServerException catch (e) {
       return Left(e.errorModel);
@@ -130,12 +108,9 @@ class VisitRepoImplementation implements VisitRepoAbstract {
   @override
   Future<Either<ErrorModel, bool>> startVisit(String visitId) async {
     try {
-      await api.post("visits/$visitId/start", headers: {
-        'Accept': 'application/vnd.api+json',
-        'Content-Type': 'application/vnd.api+json',
-        'Authorization':
-            'Bearer 6|1U6J0ZvrTaaSWe9h2lyyVoLzOYir3c8ZUt0oKTCue7686e99',
-      });
+      await api.post(
+        "visits/$visitId/start",
+      );
       return const Right(true);
     } on ServerException catch (e) {
       return Left(e.errorModel);
@@ -148,12 +123,6 @@ class VisitRepoImplementation implements VisitRepoAbstract {
     try {
       final response = await api.post(
         "visits/$visitId/end",
-        headers: {
-          'Accept': 'application/vnd.api+json',
-          'Content-Type': 'application/vnd.api+json',
-          'Authorization':
-              'Bearer 6|1U6J0ZvrTaaSWe9h2lyyVoLzOYir3c8ZUt0oKTCue7686e99',
-        },
         data: {'is_sold': isSold},
       );
       final endVisitResponse = EndVisitModel.fromJson(response);

@@ -9,7 +9,7 @@ import 'package:mandopy/src/features/auth/data/repos/auth_repo_abstract.dart';
 class AuthRepoImplementation implements AuthRepoAbstract {
   final ApiConsumer api;
 
-  AuthRepoImplementation( this.api);
+  AuthRepoImplementation(this.api);
   @override
   Future<Either<ErrorModel, RegisterResponse>> register({
     required String email,
@@ -63,6 +63,7 @@ class AuthRepoImplementation implements AuthRepoAbstract {
       );
       final userResponse = LoginResponse.fromJson(response);
       CacheHelper.saveToken(value: userResponse.token);
+      CacheHelper.saveData(key: 'role', value: userResponse.user.role);
 
       return Right(userResponse);
     } on ServerException catch (e) {

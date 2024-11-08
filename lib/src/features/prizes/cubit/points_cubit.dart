@@ -3,6 +3,8 @@ import 'package:mandopy/core/errors/error_model.dart';
 import 'package:mandopy/src/features/prizes/data/models/points_model.dart';
 import 'package:mandopy/src/features/prizes/data/repo/bouns_repo.dart';
 
+import '../../../../core/common/functions/medal_function.dart';
+
 part 'points_state.dart';
 
 class PointsCubit extends Cubit<PointsState> {
@@ -17,7 +19,21 @@ class PointsCubit extends Cubit<PointsState> {
 
     result.fold(
       (error) => emit(PointsError(error)),
-      (points) => emit(PointsLoaded(points)),
+      (points) {
+        final progress = _calculateProgress(
+          int.parse(points.totalPoints),
+        );
+        emit(
+          PointsLoaded(points, progress),
+        );
+      },
     );
   }
+
+  double _calculateProgress(int totalPoints) {
+    int nextMilestone = 100 * ((totalPoints ~/ 100) + 1);
+    return totalPoints / nextMilestone;
+  }
+
+  
 }

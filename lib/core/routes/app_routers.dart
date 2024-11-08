@@ -18,10 +18,10 @@ import 'package:mandopy/src/features/profile/presentation/views/edit_profile_vie
 
 import 'package:mandopy/src/features/reports/presentation/views/resports_view.dart';
 import 'package:mandopy/src/nav_bar.dart';
-import 'package:mandopy/src/splach.dart';
 
 import '../../src/features/dailyPlane/cubit/vistiCubit/visit_cubit.dart';
 import '../../src/features/doctorprofile/presentation/views/doctor_profile_view.dart';
+import '../../src/features/intro/presentation/splash_view.dart';
 import '../../src/features/pharmacyprofile/presentation/views/pharmacy_profile_view.dart';
 import '../../src/features/profile/presentation/views/profile_view.dart';
 
@@ -78,11 +78,21 @@ final GoRouter router = GoRouter(
     ),
     GoRoute(
       path: RouterNames.doctorProfile,
-      builder: (context, state) => const DoctorProfileView(),
+      builder: (context, state) {
+        final doctorId = state.extra as String;
+        return DoctorProfileView(
+          doctorId: doctorId,
+        );
+      },
     ),
     GoRoute(
       path: RouterNames.pharmacyProfile,
-      builder: (context, state) => const PharmacyProfileView(),
+      builder: (context, state) {
+        final pharmacyId = state.extra as String;
+        return PharmacyProfileView(
+          pharmacyId: pharmacyId,
+        );
+      },
     ),
     GoRoute(
       path: RouterNames.reportsView,

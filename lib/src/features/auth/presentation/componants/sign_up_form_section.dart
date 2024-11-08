@@ -29,8 +29,9 @@ class SignUpFormSection extends StatelessWidget {
           showDialog(
             context: context,
             barrierDismissible: false,
-            builder: (context) =>
-                const Center(child: CircularProgressIndicator()),
+            builder: (context) => const Center(
+              child: CircularProgressIndicator(),
+            ),
           );
         } else if (state is RegisterSuccessState) {
           Navigator.of(context).pop();

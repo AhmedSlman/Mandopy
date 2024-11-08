@@ -20,7 +20,9 @@ class LoginView extends StatelessWidget {
             const AppLogoWidget(),
             LoginForm(),
             HaveAnAccountWidget(
-              onTap: () => context.go(RouterNames.signup),
+              onTap: () => context.push(
+                RouterNames.signup,
+              ),
               text1: AppStrings.donotHaveAnAccount,
               text2: AppStrings.creatAccount,
             ),

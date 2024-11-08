@@ -6,11 +6,10 @@ class DoctorModel {
   final String address;
   final String details;
   final String? image;
-  final double latitude;
-  final double longitude;
+  final dynamic latitude;
+  final dynamic longitude;
   final DateTime createdAt;
   final DateTime updatedAt;
-  
 
   DoctorModel({
     required this.id,

@@ -12,12 +12,28 @@ import 'package:mandopy/src/features/dailyPlane/data/repo/targetsAndMedecineREpo
 import 'package:mandopy/src/features/dailyPlane/data/repo/targetsAndMedecineREpo/targets_and_medecine_repo_implementation.dart';
 import 'package:mandopy/src/features/dailyPlane/data/repo/visitRepo/vistit_repo.dart';
 import 'package:mandopy/src/features/dailyPlane/data/repo/visitRepo/vistit_repo_implementation.dart';
+import 'package:mandopy/src/features/doctorprofile/cubit/doctor_profile_cubit.dart';
+import 'package:mandopy/src/features/doctorprofile/data/repos/doctor_repo_abstract.dart';
+import 'package:mandopy/src/features/doctorprofile/data/repos/doctor_repo_implementation.dart';
+import 'package:mandopy/src/features/home/cubit/notification/notification_cubit.dart';
+import 'package:mandopy/src/features/home/cubit/percentage/cubit/percentage_cubit.dart';
+import 'package:mandopy/src/features/home/data/repos/notifictations/notification_repo.dart';
+import 'package:mandopy/src/features/home/data/repos/notifictations/notification_repo_implementation.dart';
+import 'package:mandopy/src/features/home/data/repos/percentage/percentage_repo_abstract.dart';
+import 'package:mandopy/src/features/home/data/repos/percentage/percentage_repo_impl.dart';
 import 'package:mandopy/src/features/location/cubit/location_cubit.dart';
 import 'package:mandopy/src/features/location/data/repo/location_repo_abstract.dart';
 import 'package:mandopy/src/features/location/data/repo/location_repo_implementation.dart';
+import 'package:mandopy/src/features/pharmacyprofile/cubit/pharmacy_profile_cubit.dart';
+import 'package:mandopy/src/features/pharmacyprofile/data/repos/pharmacy_repo_abstract.dart';
+import 'package:mandopy/src/features/pharmacyprofile/data/repos/pharmacy_repo_impl.dart';
 import 'package:mandopy/src/features/prizes/cubit/points_cubit.dart';
 import 'package:mandopy/src/features/prizes/data/repo/bouns_repo.dart';
 import 'package:mandopy/src/features/prizes/data/repo/bouns_repo_implemetation.dart';
+import 'package:mandopy/src/features/profile/cubit/statistics/cubit/statistics_cubit.dart';
+import 'package:mandopy/src/features/profile/cubit/user/user_cubit.dart';
+import 'package:mandopy/src/features/profile/data/repos/user_repo_abstract.dart';
+import 'package:mandopy/src/features/profile/data/repos/user_repo_implementation.dart';
 import 'package:mandopy/src/features/reports/cubit/reports_cubit.dart';
 import 'package:mandopy/src/features/reports/data/repos/reports_repo.dart';
 import 'package:mandopy/src/features/reports/data/repos/reports_repo_implementation.dart';
@@ -45,6 +61,16 @@ void setupLocator() {
       () => LocationRepoImplementation(getIt<ApiConsumer>()));
   getIt.registerLazySingleton<ReportsRepo>(
       () => ReportsRepoImplementation(getIt<ApiConsumer>()));
+  getIt.registerLazySingleton<NotificationRepoAbstract>(
+      () => NotificationRepoImplementation(getIt<ApiConsumer>()));
+  getIt.registerLazySingleton<UserRepoAbstract>(
+      () => UserRepoImplementation(getIt<ApiConsumer>()));
+  getIt.registerLazySingleton<PercentageRepoAbstract>(
+      () => PercentageRepoImpl(getIt<ApiConsumer>()));
+  getIt.registerLazySingleton<PharmacyRepoAbstract>(
+      () => PharmacyRepoImplementation(getIt<ApiConsumer>()));
+  getIt.registerLazySingleton<DoctorRepoAbstract>(
+      () => DoctorRepoImplementation(getIt<ApiConsumer>()));
 
   // Cubits //
   getIt.registerFactory<AuthCubit>(() => AuthCubit(getIt<AuthRepoAbstract>()));
@@ -57,4 +83,15 @@ void setupLocator() {
   getIt.registerFactory<LocationCubit>(
       () => LocationCubit(getIt<LocationRepoAbstract>()));
   getIt.registerFactory<ReportsCubit>(() => ReportsCubit(getIt<ReportsRepo>()));
+  getIt.registerFactory<NotificationCubit>(
+      () => NotificationCubit(getIt<NotificationRepoAbstract>()));
+  getIt.registerFactory<UserCubit>(() => UserCubit(getIt<UserRepoAbstract>()));
+  getIt.registerFactory<StatisticsCubit>(
+      () => StatisticsCubit(getIt<UserRepoAbstract>()));
+  getIt.registerFactory<PercentageCubit>(
+      () => PercentageCubit(getIt<PercentageRepoAbstract>()));
+  getIt.registerFactory<PharmacyProfileCubit>(
+      () => PharmacyProfileCubit(getIt<PharmacyRepoAbstract>()));
+  getIt.registerFactory<DoctorProfileCubit>(
+      () => DoctorProfileCubit(getIt<DoctorRepoAbstract>()));
 }

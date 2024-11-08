@@ -27,7 +27,8 @@ class LoginForm extends StatelessWidget {
           );
         } else if (state is LoginSuccessState) {
           Navigator.of(context).pop();
-          context.go(RouterNames.home);
+          context.go(RouterNames.navigatiomBarButton);
+          
         } else if (state is LoginFailureState) {
           Navigator.of(context).pop();
           ScaffoldMessenger.of(context).showSnackBar(

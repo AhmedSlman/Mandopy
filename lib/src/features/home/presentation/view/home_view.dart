@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mandopy/core/common/widgets/custom_app_bar.dart';
+import 'package:mandopy/core/services/service_locator.dart';
 import 'package:mandopy/core/utils/app_strings.dart';
+import 'package:mandopy/src/features/home/cubit/percentage/cubit/percentage_cubit.dart';
 import 'package:mandopy/src/features/home/presentation/componants/add_new_visit_section.dart';
 import 'package:mandopy/src/features/home/presentation/componants/daily_goals_section.dart';
 import 'package:mandopy/src/features/home/presentation/componants/daily_plane_section.dart';
@@ -22,11 +25,19 @@ class HomeView extends StatelessWidget {
                   title: AppStrings.home,
                   iconleft: Icons.menu,
                   iconright: Icons.notifications),
-              const DailyGoalsSection(),
-              const MonthlyGoalsSection(),
-              NotificationSection(),
-              const AddNewVisitSection(),
-              DailyPlaneSection()
+              BlocProvider(
+                create: (context) =>
+                    getIt<PercentageCubit>()..getPercentagePerDay(),
+                child: const DailyGoalsSection(),
+              ),
+              BlocProvider(
+                create: (context) =>
+                    getIt<PercentageCubit>()..getMonthlyTarget(),
+                child: const MonthlyGoalsSection(),
+              ),
+              const NotificationSection(),
+              // const AddNewVisitSection(),
+              // DailyPlaneSection()
             ],
           ),
         ),

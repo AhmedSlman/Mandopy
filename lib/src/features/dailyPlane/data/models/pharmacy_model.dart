@@ -5,8 +5,8 @@ class PharmacyModel {
   final String address;
   final String details;
   final String? image;
-  final double latitude;
-  final double longitude;
+  final double? latitude;
+  final double? longitude;
   final DateTime createdAt;
   final DateTime updatedAt;
 

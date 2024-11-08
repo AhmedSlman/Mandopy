@@ -8,13 +8,13 @@ class NotoficationCardWidget extends StatelessWidget {
   const NotoficationCardWidget({
     super.key,
     required this.notification,
-    required this.address,
-    required this.time,
+    // required this.address,
+    // required this.time,
   });
 
   final String notification;
-  final String address;
-  final String time;
+  // final String address;
+  // final String time;
 
   @override
   Widget build(BuildContext context) {
@@ -28,6 +28,7 @@ class NotoficationCardWidget extends StatelessWidget {
         child: Padding(
           padding: EdgeInsets.symmetric(horizontal: 8.w),
           child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Row(
                 children: [
@@ -45,19 +46,19 @@ class NotoficationCardWidget extends StatelessWidget {
               SizedBox(
                 height: 8.h,
               ),
-              Row(
-                children: [
-                  Text(
-                    address,
-                    style: AppStyles.s12,
-                  ),
-                  const Spacer(),
-                  Text(
-                    time,
-                    style: AppStyles.s12,
-                  ),
-                ],
-              )
+              // Row(
+              //   children: [
+              //     Text(
+              //       address,
+              //       style: AppStyles.s12,
+              //     ),
+              //     const Spacer(),
+              //     Text(
+              //       time,
+              //       style: AppStyles.s12,
+              //     ),
+              //   ],
+              // )
             ],
           ),
         ));

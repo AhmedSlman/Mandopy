@@ -5,7 +5,7 @@ class UserModel {
   final DateTime updatedAt;
   final DateTime createdAt;
   final int id;
-  final int verificationCode;
+  final dynamic verificationCode;
 
   UserModel({
     required this.name,

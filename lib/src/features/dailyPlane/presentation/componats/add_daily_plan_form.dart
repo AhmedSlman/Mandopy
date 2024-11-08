@@ -106,43 +106,43 @@ class _AddDailyPlanFormState extends State<AddDailyPlanForm> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             SizedBox(height: 17.0.h),
-            const Text(AppStrings.selectPurpose),
-            SizedBox(height: 9.0.h),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                RadioOption(
-                  choice: 'طبيب',
-                  groupValue: _selectedPurpose,
-                  onChanged: (String? value) {
-                    setState(() {
-                      _selectedPurpose = value;
-                      debugPrint("Selected purpose: $_selectedPurpose");
-                    });
-                  },
-                ),
-                RadioOption(
-                  choice: 'صيدلية',
-                  groupValue: _selectedPurpose,
-                  onChanged: (String? value) {
-                    setState(() {
-                      _selectedPurpose = value;
-                      debugPrint("Selected purpose: $_selectedPurpose");
-                    });
-                  },
-                ),
-                RadioOption(
-                  choice: 'مختلط',
-                  groupValue: _selectedPurpose,
-                  onChanged: (String? value) {
-                    setState(() {
-                      _selectedPurpose = value;
-                      debugPrint("Selected purpose: $_selectedPurpose");
-                    });
-                  },
-                ),
-              ],
-            ),
+            // const Text(AppStrings.selectPurpose),
+            // SizedBox(height: 9.0.h),
+            // Row(
+            //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            //   children: [
+            //     RadioOption(
+            //       choice: 'طبيب',
+            //       groupValue: _selectedPurpose,
+            //       onChanged: (String? value) {
+            //         setState(() {
+            //           _selectedPurpose = value;
+            //           debugPrint("Selected purpose: $_selectedPurpose");
+            //         });
+            //       },
+            //     ),
+            //     RadioOption(
+            //       choice: 'صيدلية',
+            //       groupValue: _selectedPurpose,
+            //       onChanged: (String? value) {
+            //         setState(() {
+            //           _selectedPurpose = value;
+            //           debugPrint("Selected purpose: $_selectedPurpose");
+            //         });
+            //       },
+            //     ),
+            //     RadioOption(
+            //       choice: 'مختلط',
+            //       groupValue: _selectedPurpose,
+            //       onChanged: (String? value) {
+            //         setState(() {
+            //           _selectedPurpose = value;
+            //           debugPrint("Selected purpose: $_selectedPurpose");
+            //         });
+            //       },
+            //     ),
+            //   ],
+            // ),
             const Text(AppStrings.selectActiveIngredient),
             SizedBox(height: 5.h),
             BlocProvider(
@@ -190,25 +190,24 @@ class _AddDailyPlanFormState extends State<AddDailyPlanForm> {
             SizedBox(height: 15.h),
             const Text(AppStrings.choosePlans),
             SizedBox(height: 5.h),
-            if (_selectedPurpose != null) ...[
-              BlocProvider(
-                create: (context) => getIt<TargetsCubit>(),
-                child: SearchableTextField(
-                  hintText: AppStrings.choosePlans,
-                  selectedPurpose: _selectedPurpose,
-                  onDoctorSelected: (String id) {
-                    setState(() {
-                      _selectedDoctorId = id;
-                    });
-                  },
-                  onPharmacySelected: (String id) {
-                    setState(() {
-                      _selectedPharmacyId = id;
-                    });
-                  },
-                ),
+
+            BlocProvider(
+              create: (context) => getIt<TargetsCubit>(),
+              child: SearchableTextField(
+                hintText: AppStrings.choosePlans,
+                onDoctorSelected: (String id) {
+                  setState(() {
+                    _selectedDoctorId = id;
+                  });
+                },
+                onPharmacySelected: (String id) {
+                  setState(() {
+                    _selectedPharmacyId = id;
+                  });
+                },
               ),
-            ],
+            ),
+
             SizedBox(height: 15.h),
             Center(
               child: CustomButton(

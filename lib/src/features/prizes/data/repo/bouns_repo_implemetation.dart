@@ -1,6 +1,5 @@
 import 'package:dartz/dartz.dart';
 import 'package:mandopy/core/data/api/api_consumer.dart';
-import 'package:mandopy/core/data/cached/cache_helper.dart';
 import 'package:mandopy/core/errors/error_model.dart';
 import 'package:mandopy/core/errors/exceptions.dart';
 import 'package:mandopy/src/features/prizes/data/models/points_model.dart';
@@ -16,11 +15,6 @@ class BounsRepoImplementation implements BounsRepoAbstract {
     try {
       final response = await api.get(
         'points',
-        headers: {
-          'Accept': 'application/vnd.api+json',
-          'Content-Type': 'application/vnd.api+json',
-          'Authorization': CacheHelper.getToken(),
-        },
       );
 
       final pointsData = PointsModel.fromJson(response);

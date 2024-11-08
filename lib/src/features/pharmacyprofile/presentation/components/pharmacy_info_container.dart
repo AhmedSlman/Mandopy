@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:mandopy/src/features/pharmacyprofile/cubit/pharmacy_profile_cubit.dart';
 
 import '../../../../../core/common/widgets/custom_btn.dart';
 import '../../../../../core/theme/app_colors.dart';
@@ -36,67 +38,78 @@ class PharmacyInfoContainer extends StatelessWidget {
           ),
         ],
       ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          const InfoRow(
-            infoIcon: AppAssets.inVisit,
-            infoText: 'صيدلية العزبي',
-          ),
-          const SizedBox(
-            height: 15,
-          ),
-          const InfoRow(
-            infoIcon: AppAssets.inVisit,
-            infoText: 'المنصورة فرع حي الجامعة وكالة ابو رية',
-          ),
-          const SizedBox(
-            height: 15,
-          ),
-          const InfoRow(
-            infoIcon: AppAssets.inVisit,
-            infoText: '01234749782073',
-          ),
-          const SizedBox(
-            height: 15,
-          ),
-          const InfoRow(
-            infoIcon: AppAssets.inVisit,
-            infoText: 'طوال الاسبوع',
-          ),
-          const SizedBox(
-            height: 21,
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: [
-              CustomButton(
-                width: 97.w,
-                height: 26.h,
-                text: 'بدء الزيارة',
-                textStyle: const TextStyle(
-                  color: Colors.white,
-                  fontWeight: FontWeight.w500,
+      child: BlocBuilder<PharmacyProfileCubit, PharmacyProfileState>(
+        builder: (context, state) {
+          if (state is PharmacyProfileLoading) {
+            return const CircularProgressIndicator();
+          }
+          if (state is PharmacyProfileLoaded) {
+            return Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                InfoRow(
+                  infoIcon: AppAssets.inVisit,
+                  infoText: state.pharmacyProfileModel.name ?? 'N/A',
                 ),
-                onPressed: () {},
-              ),
-              const SizedBox(
-                width: 16,
-              ),
-              CustomButton(
-                backgroundColor: AppColors.accentColor,
-                width: 97.w,
-                height: 26.h,
-                text: 'انهاء الزيارة',
-                textStyle: const TextStyle(
-                  color: Colors.white,
-                  fontWeight: FontWeight.w500,
+                const SizedBox(
+                  height: 15,
                 ),
-                onPressed: () {},
-              ),
-            ],
-          )
-        ],
+                InfoRow(
+                  infoIcon: AppAssets.inVisit,
+                  infoText: state.pharmacyProfileModel.address ?? 'N/A',
+                ),
+                const SizedBox(
+                  height: 15,
+                ),
+                InfoRow(
+                  infoIcon: AppAssets.inVisit,
+                  infoText: state.pharmacyProfileModel.phone ?? 'N/A',
+                ),
+                const SizedBox(
+                  height: 15,
+                ),
+                const InfoRow(
+                  infoIcon: AppAssets.inVisit,
+                  infoText: 'طوال الاسبوع',
+                ),
+                const SizedBox(
+                  height: 21,
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    CustomButton(
+                      width: 97.w,
+                      height: 26.h,
+                      text: 'بدء الزيارة',
+                      textStyle: const TextStyle(
+                        color: Colors.white,
+                        fontWeight: FontWeight.w500,
+                      ),
+                      onPressed: () {},
+                    ),
+                    const SizedBox(
+                      width: 16,
+                    ),
+                    CustomButton(
+                      backgroundColor: AppColors.accentColor,
+                      width: 97.w,
+                      height: 26.h,
+                      text: 'انهاء الزيارة',
+                      textStyle: const TextStyle(
+                        color: Colors.white,
+                        fontWeight: FontWeight.w500,
+                      ),
+                      onPressed: () {},
+                    ),
+                  ],
+                )
+              ],
+            );
+          } else {
+            return const SizedBox();
+          }
+        },
       ),
     );
   }

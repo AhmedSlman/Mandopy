@@ -17,11 +17,6 @@ class TargetsRepoImplementation implements TargatsRepoAbstract {
     try {
       final response = await api.get(
         "doctors",
-        headers: {
-          'Accept': 'application/vnd.api+json',
-          'Authorization':
-              'Bearer 6|1U6J0ZvrTaaSWe9h2lyyVoLzOYir3c8ZUt0oKTCue7686e99',
-        },
       );
 
       List<DoctorModel> doctors = (response['doctors'] as List)
@@ -38,11 +33,6 @@ class TargetsRepoImplementation implements TargatsRepoAbstract {
     try {
       final response = await api.get(
         "pharmacies",
-        headers: {
-          'Accept': 'application/vnd.api+json',
-          'Authorization':
-              'Bearer 6|1U6J0ZvrTaaSWe9h2lyyVoLzOYir3c8ZUt0oKTCue7686e99',
-        },
       );
 
       List<PharmacyModel> pharmacies = (response['pharmacies'] as List)
@@ -59,11 +49,6 @@ class TargetsRepoImplementation implements TargatsRepoAbstract {
     try {
       final response = await api.get(
         "medications",
-        headers: {
-          'Accept': 'application/vnd.api+json',
-          'Authorization':
-              'Bearer 6|1U6J0ZvrTaaSWe9h2lyyVoLzOYir3c8ZUt0oKTCue7686e99',
-        },
       );
 
       List<MedicationModel> medications = (response['medications'] as List)
