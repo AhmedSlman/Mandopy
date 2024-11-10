@@ -30,6 +30,7 @@ import 'package:mandopy/src/features/pharmacyprofile/data/repos/pharmacy_repo_im
 import 'package:mandopy/src/features/prizes/cubit/points_cubit.dart';
 import 'package:mandopy/src/features/prizes/data/repo/bouns_repo.dart';
 import 'package:mandopy/src/features/prizes/data/repo/bouns_repo_implemetation.dart';
+import 'package:mandopy/src/features/profile/cubit/edit_profile/edit_profile_cubit.dart';
 import 'package:mandopy/src/features/profile/cubit/statistics/cubit/statistics_cubit.dart';
 import 'package:mandopy/src/features/profile/cubit/user/user_cubit.dart';
 import 'package:mandopy/src/features/profile/data/repos/user_repo_abstract.dart';
@@ -94,4 +95,6 @@ void setupLocator() {
       () => PharmacyProfileCubit(getIt<PharmacyRepoAbstract>()));
   getIt.registerFactory<DoctorProfileCubit>(
       () => DoctorProfileCubit(getIt<DoctorRepoAbstract>()));
+  getIt.registerFactory<EditProfileCubit>(
+      () => EditProfileCubit(getIt<UserRepoAbstract>()));
 }

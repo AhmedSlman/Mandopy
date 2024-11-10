@@ -10,6 +10,7 @@ class DoctorModel {
   final dynamic longitude;
   final DateTime createdAt;
   final DateTime updatedAt;
+  final String? type;
 
   DoctorModel({
     required this.id,
@@ -23,6 +24,7 @@ class DoctorModel {
     required this.longitude,
     required this.createdAt,
     required this.updatedAt,
+    required this.type,
   });
 
   factory DoctorModel.fromJson(Map<String, dynamic> json) {
@@ -38,6 +40,7 @@ class DoctorModel {
       longitude: json['longitude'],
       createdAt: DateTime.parse(json['created_at']),
       updatedAt: DateTime.parse(json['updated_at']),
+      type: json['type'],
     );
   }
 }

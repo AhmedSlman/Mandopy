@@ -41,6 +41,7 @@ class PerformanceDataItemCard extends StatelessWidget {
           SizedBox(height: 4.h),
           Text(
             data.value,
+            maxLines: 1,
             style: AppStyles.s20.copyWith(
               fontWeight: FontWeight.w600,
               color: data.valueColor ?? AppColors.accentColor,

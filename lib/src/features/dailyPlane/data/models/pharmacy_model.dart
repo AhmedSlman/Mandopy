@@ -9,6 +9,7 @@ class PharmacyModel {
   final double? longitude;
   final DateTime createdAt;
   final DateTime updatedAt;
+  final String type;
 
   PharmacyModel({
     required this.id,
@@ -21,6 +22,7 @@ class PharmacyModel {
     required this.longitude,
     required this.createdAt,
     required this.updatedAt,
+    required this.type,
   });
 
   factory PharmacyModel.fromJson(Map<String, dynamic> json) {
@@ -35,6 +37,7 @@ class PharmacyModel {
       longitude: json['longitude'],
       createdAt: DateTime.parse(json['created_at']),
       updatedAt: DateTime.parse(json['updated_at']),
+      type: json['type'],
     );
   }
 }

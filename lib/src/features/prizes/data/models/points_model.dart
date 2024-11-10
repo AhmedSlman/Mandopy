@@ -1,5 +1,5 @@
 class PointsModel {
-  final String totalPoints;
+  final int  totalPoints;
 
   PointsModel({required this.totalPoints});
 

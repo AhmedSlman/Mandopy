@@ -6,4 +6,5 @@ import '../../../../../core/errors/error_model.dart';
 abstract class DoctorRepoAbstract {
   Future<Either<ErrorModel, DoctorProfileModel>> getDoctorProfile(
       {required String doctorId});
+      
 }

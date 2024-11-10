@@ -15,9 +15,9 @@ class PointsLoaded extends PointsState {
     this.progress,
   );
   String get medal => determineMedal(
-        int.parse(
+      
           points.totalPoints,
-        ),
+       
       );
 }
 
