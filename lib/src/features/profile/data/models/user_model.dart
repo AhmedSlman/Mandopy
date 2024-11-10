@@ -1,9 +1,9 @@
-class UserModel {
+class ProfileUserModel {
   User? user;
 
-  UserModel({this.user});
+  ProfileUserModel({this.user});
 
-  UserModel.fromJson(Map<String, dynamic> json) {
+  ProfileUserModel.fromJson(Map<String, dynamic> json) {
     user = json['user'] != null ? User.fromJson(json['user']) : null;
   }
 
@@ -22,7 +22,7 @@ class User {
   String? name;
   String? email;
   String? role;
-  Null image;
+  String? image;
   Null verificationCode;
   String? verifiedAt;
   int? points;
