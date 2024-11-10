@@ -39,7 +39,7 @@ class LocationRepoImplementation implements LocationRepoAbstract {
 
   @override
   Future<Either<ErrorModel, LocationModel>> savePharmacyLocation({
-    required int pharmacyId,
+    required String pharmacyId,
     required double latitude,
     required double longitude,
   }) async {
@@ -66,7 +66,7 @@ class LocationRepoImplementation implements LocationRepoAbstract {
 
   @override
   Future<Either<ErrorModel, LocationModel>> getDoctorLocation(
-      int doctorId) async {
+      String doctorId) async {
     try {
       final response = await api.get(
         "doctors/$doctorId/location",
@@ -85,7 +85,7 @@ class LocationRepoImplementation implements LocationRepoAbstract {
 
   @override
   Future<Either<ErrorModel, LocationModel>> getPharmacyLocation(
-      int pharmacyId) async {
+      String pharmacyId) async {
     try {
       final response = await api.get(
         "pharmacies/$pharmacyId/location",

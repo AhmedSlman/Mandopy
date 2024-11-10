@@ -64,7 +64,7 @@ class LocationCubit extends Cubit<LocationState> {
     }
   }
 
-  Future<void> savePharmacyLocation(int pharmacyId) async {
+  Future<void> savePharmacyLocation(String pharmacyId) async {
     try {
       emit(LocationLoading());
 
@@ -92,7 +92,7 @@ class LocationCubit extends Cubit<LocationState> {
     }
   }
 
-  Future<void> loadDoctorLocation(int doctorId) async {
+  Future<void> loadDoctorLocation(String doctorId) async {
     try {
       emit(LocationLoading());
 
@@ -109,7 +109,7 @@ class LocationCubit extends Cubit<LocationState> {
     }
   }
 
-  Future<void> loadPharmacyLocation(int pharmacyId) async {
+  Future<void> loadPharmacyLocation(String pharmacyId) async {
     try {
       emit(LocationLoading());
 
@@ -126,7 +126,7 @@ class LocationCubit extends Cubit<LocationState> {
     }
   }
 
-  Future<void> checkDoctorLocation(int doctorId) async {
+  Future<void> checkDoctorLocation(String doctorId) async {
     try {
       emit(LocationLoading());
 
@@ -168,7 +168,7 @@ class LocationCubit extends Cubit<LocationState> {
     }
   }
 
-  Future<void> checkPharmacyLocation(int pharmacyId) async {
+  Future<void> checkPharmacyLocation(String pharmacyId) async {
     try {
       emit(LocationLoading());
 

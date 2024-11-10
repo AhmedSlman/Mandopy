@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:mandopy/core/services/service_locator.dart';
+import 'package:mandopy/src/features/location/cubit/location_cubit.dart';
 import 'package:mandopy/src/features/pharmacyprofile/cubit/pharmacy_profile_cubit.dart';
 
 import 'package:mandopy/src/features/pharmacyprofile/presentation/components/pharmacy_add_details_section.dart';
@@ -13,6 +14,7 @@ import '../widgets/pharmacy_profile_image_stack.dart';
 
 class PharmacyProfileView extends StatelessWidget {
   final String pharmacyId;
+
   const PharmacyProfileView({
     super.key,
     required this.pharmacyId,
@@ -22,30 +24,57 @@ class PharmacyProfileView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
-          child: Column(
-        children: [
-          const PharmacyProfileImageStack(),
-          SizedBox(
-            height: 50.h,
-          ),
-          BlocProvider(
-            create: (context) => getIt<PharmacyProfileCubit>()
-              ..getPharmacyProfile(pharmacyId: pharmacyId),
-            child: const PharmacyInfoContainer(),
-          ),
-          SizedBox(
-            height: 33.h,
-          ),
-          CustomButton(
-            text: 'اضغط للوصول للموقع',
-            onPressed: () {},
-          ),
-          SizedBox(
-            height: 33.h,
-          ),
-          PharmacyAddDetailsSection(),
-        ],
-      )),
+        child: Column(
+          children: [
+            const PharmacyProfileImageStack(),
+            SizedBox(height: 50.h),
+            BlocProvider(
+              create: (context) => getIt<PharmacyProfileCubit>()
+                ..getPharmacyProfile(pharmacyId: pharmacyId),
+              child: const PharmacyInfoContainer(
+                pharmacyId: '',
+              ),
+            ),
+            SizedBox(height: 33.h),
+            BlocProvider(
+              create: (context) => getIt<LocationCubit>(),
+              child: BlocConsumer<LocationCubit, LocationState>(
+                listener: (context, state) {
+                  if (state is LocationLoading) {
+                  } else if (state is LocationFailure) {
+                    String message;
+                    if (state.message.contains("إذن الموقع")) {
+                      message = "برجاء تفعيل إذن الموقع لاستخدام هذه الخاصية.";
+                    } else {
+                      message = state.message;
+                    }
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(content: Text(message)),
+                    );
+                  } else if (state is LocationSuccess) {
+                    // Show success message
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(content: Text(state.message)),
+                    );
+                  }
+                },
+                builder: (context, state) {
+                  return CustomButton(
+                    text: 'اضغط للوصول للموقع',
+                    onPressed: () {
+                      context
+                          .read<LocationCubit>()
+                          .savePharmacyLocation(pharmacyId);
+                    },
+                  );
+                },
+              ),
+            ),
+            SizedBox(height: 33.h),
+            PharmacyAddDetailsSection(),
+          ],
+        ),
+      ),
     );
   }
 }

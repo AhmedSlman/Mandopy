@@ -10,12 +10,13 @@ abstract class LocationRepoAbstract {
   });
 
   Future<Either<ErrorModel, LocationModel>> savePharmacyLocation({
-    required int pharmacyId,
+    required String pharmacyId,
     required double latitude,
     required double longitude,
   });
 
-  Future<Either<ErrorModel, LocationModel>> getDoctorLocation(int doctorId);
+  Future<Either<ErrorModel, LocationModel>> getDoctorLocation(String doctorId);
 
-  Future<Either<ErrorModel, LocationModel>> getPharmacyLocation(int pharmacyId);
+  Future<Either<ErrorModel, LocationModel>> getPharmacyLocation(
+      String pharmacyId);
 }
