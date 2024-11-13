@@ -25,7 +25,7 @@ class ProgressBarWidget extends StatelessWidget {
         children: [
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 8.0),
-            child: Text('قمت بتحقيق $progress% من هدفك اليومي'),
+            child: Text('قمت بتحقيق ${progress * 100}% من هدفك اليومي'),
           ),
           Padding(
             padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 8.h),
@@ -41,7 +41,7 @@ class ProgressBarWidget extends StatelessWidget {
                   right: 90.w,
                   top: 5,
                   child: Text(
-                    '$progress% مكتمل',
+                    '${progress * 100}% مكتمل',
                     style: AppStyles.s12.copyWith(
                       color: AppColors.white,
                     ),

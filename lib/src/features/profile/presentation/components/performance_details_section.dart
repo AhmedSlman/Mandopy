@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:mandopy/src/features/profile/cubit/statistics/cubit/statistics_cubit.dart';
+import 'package:skeletonizer/skeletonizer.dart';
 
 import '../../../../../core/utils/app_assets.dart';
 import '../../../../../core/utils/app_strings.dart';
@@ -21,12 +22,36 @@ class PerformanceDetailsSection extends StatelessWidget {
           AppStrings.performanceDetails,
           style: AppStyles.s16,
         ),
+        const SizedBox(
+          height: 15,
+        ),
         SizedBox(
           height: 300.h,
           child: BlocBuilder<StatisticsCubit, StatisticsState>(
             builder: (context, state) {
               if (state is StatisticsLoading) {
-                return const CircularProgressIndicator();
+                return Skeletonizer(
+                  enabled: true,
+                  child: GridView.builder(
+                    padding: EdgeInsets.zero,
+                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 2,
+                      mainAxisSpacing: 16.h,
+                      crossAxisSpacing: 16.w,
+                      childAspectRatio: 1.65,
+                    ),
+                    itemCount: 4,
+                    itemBuilder: (context, index) {
+                      return SizedBox(
+                        height: 120,
+                        width: 100,
+                        child: Card(
+                          color: Colors.grey.shade300,
+                        ),
+                      );
+                    },
+                  ),
+                );
               } else if (state is StatisticsLoaded) {
                 List<PerformanceData> performanceData = [
                   PerformanceData(
@@ -53,6 +78,7 @@ class PerformanceDetailsSection extends StatelessWidget {
                 ];
 
                 return GridView(
+                  padding: EdgeInsets.zero,
                   gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                     crossAxisCount: 2,
                     mainAxisSpacing: 16.h,

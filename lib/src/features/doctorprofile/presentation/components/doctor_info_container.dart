@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:mandopy/src/features/doctorprofile/cubit/doctor_profile_cubit.dart';
+import 'package:mandopy/src/features/doctorprofile/cubit/doctor_profile/doctor_profile_cubit.dart';
 import 'package:mandopy/src/features/location/cubit/location_cubit.dart';
 
 import '../../../../../core/common/widgets/custom_btn.dart';

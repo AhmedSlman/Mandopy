@@ -28,7 +28,6 @@ class LoginForm extends StatelessWidget {
         } else if (state is LoginSuccessState) {
           Navigator.of(context).pop();
           context.go(RouterNames.navigatiomBarButton);
-          
         } else if (state is LoginFailureState) {
           Navigator.of(context).pop();
           ScaffoldMessenger.of(context).showSnackBar(
@@ -50,8 +49,11 @@ class LoginForm extends StatelessWidget {
             validator: Validator.validatePassword,
             controller: passwordController,
           ),
-          const CustomTextButton(
+          CustomTextButton(
             text: AppStrings.forgetPassword,
+            onPressed: () => GoRouter.of(context).push(
+              RouterNames.forgetPassword,
+            ),
           ),
           CustomButton(
             text: AppStrings.signIn,

@@ -9,7 +9,7 @@ class PharmacyModel {
   final double? longitude;
   final DateTime createdAt;
   final DateTime updatedAt;
-  final String type;
+  final String? type;
 
   PharmacyModel({
     required this.id,

@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:mandopy/core/data/api/api_consumer.dart';
 import 'package:mandopy/core/data/api/dio_consumer.dart';
 import 'package:mandopy/core/data/cached/cache_helper.dart';
@@ -12,7 +13,8 @@ import 'package:mandopy/src/features/dailyPlane/data/repo/targetsAndMedecineREpo
 import 'package:mandopy/src/features/dailyPlane/data/repo/targetsAndMedecineREpo/targets_and_medecine_repo_implementation.dart';
 import 'package:mandopy/src/features/dailyPlane/data/repo/visitRepo/vistit_repo.dart';
 import 'package:mandopy/src/features/dailyPlane/data/repo/visitRepo/vistit_repo_implementation.dart';
-import 'package:mandopy/src/features/doctorprofile/cubit/doctor_profile_cubit.dart';
+import 'package:mandopy/src/features/doctorprofile/cubit/doctor_profile/doctor_profile_cubit.dart';
+import 'package:mandopy/src/features/doctorprofile/cubit/note/note_cubit.dart';
 import 'package:mandopy/src/features/doctorprofile/data/repos/doctor_repo_abstract.dart';
 import 'package:mandopy/src/features/doctorprofile/data/repos/doctor_repo_implementation.dart';
 import 'package:mandopy/src/features/home/cubit/notification/notification_cubit.dart';
@@ -45,6 +47,7 @@ void setupLocator() {
   getIt.registerLazySingleton<Dio>(() => Dio());
   getIt
       .registerLazySingleton<ApiConsumer>(() => DioConsumer(dio: getIt<Dio>()));
+      getIt.registerLazySingleton<ImagePicker>(() => ImagePicker());
 
   // Repositories //
   getIt.registerLazySingleton<AuthRepoAbstract>(
@@ -97,4 +100,6 @@ void setupLocator() {
       () => DoctorProfileCubit(getIt<DoctorRepoAbstract>()));
   getIt.registerFactory<EditProfileCubit>(
       () => EditProfileCubit(getIt<UserRepoAbstract>()));
+  getIt.registerFactory<NoteCubit>(
+      () => NoteCubit(getIt<DoctorRepoAbstract>()));
 }

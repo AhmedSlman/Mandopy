@@ -5,6 +5,9 @@ import 'package:mandopy/core/theme/app_colors.dart';
 import 'package:mandopy/core/utils/app_strings.dart';
 import 'package:mandopy/core/utils/app_styles.dart';
 import 'package:mandopy/src/features/home/cubit/percentage/cubit/percentage_cubit.dart';
+import 'package:skeletonizer/skeletonizer.dart';
+
+import 'progress_bar_widget.dart';
 
 class CircularProgressBarWidget extends StatelessWidget {
   const CircularProgressBarWidget({
@@ -27,7 +30,13 @@ class CircularProgressBarWidget extends StatelessWidget {
         child: BlocBuilder<PercentageCubit, PercentageState>(
           builder: (context, state) {
             if (state is PercentageLoading) {
-              return const CircularProgressIndicator();
+              return Skeletonizer(
+                containersColor: Colors.grey.shade300,
+                enabled: true,
+                child: Container(
+                  color: Colors.grey.shade300,
+                ),
+              );
             }
             if (state is MonthlyTargetLoaded) {
               return Row(

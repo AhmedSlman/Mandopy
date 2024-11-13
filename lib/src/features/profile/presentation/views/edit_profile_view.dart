@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:go_router/go_router.dart';
 import 'package:mandopy/core/common/widgets/custom_app_bar.dart';
 import 'package:mandopy/core/common/widgets/custom_btn.dart';
 import 'package:mandopy/core/common/widgets/custom_text_form_field.dart';
@@ -20,9 +21,10 @@ class EditProfileView extends StatelessWidget {
     return Scaffold(
       body: Column(
         children: [
-          const CustomAppBar(
+          CustomAppBar(
             title: AppStrings.editProfile,
             iconright: Icons.arrow_forward_ios,
+            onPressedRight: () => GoRouter.of(context).pop(),
           ),
           BlocProvider(
             create: (context) => getIt<EditProfileCubit>(),

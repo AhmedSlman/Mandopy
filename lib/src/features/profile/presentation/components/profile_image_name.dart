@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -29,10 +30,31 @@ class ProfileImageAndname extends StatelessWidget {
                         children: [
                           CircleAvatar(
                             radius: 35.w,
-                            child: Image.asset(
-                              AppAssets.userProfile,
-                              width: 70.w,
-                              height: 70.h,
+                            backgroundColor: Colors.grey.shade200,
+                            child: ClipOval(
+                              child: CachedNetworkImage(
+                                imageUrl: state.userModel.image ?? '',
+                                width: 70.w,
+                                height: 70.h,
+                                fit: BoxFit.cover,
+                                placeholder: (context, url) => Skeletonizer(
+                                  enabled: true,
+                                  child: Container(
+                                    width: 70.w,
+                                    height: 70.h,
+                                    decoration: BoxDecoration(
+                                      shape: BoxShape.circle,
+                                      color: Colors.grey.shade300,
+                                    ),
+                                  ),
+                                ),
+                                errorWidget: (context, url, error) =>
+                                    Image.asset(
+                                  AppAssets.userProfile,
+                                  width: 70.w,
+                                  height: 70.h,
+                                ),
+                              ),
                             ),
                           ),
                           Positioned(

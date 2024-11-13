@@ -32,10 +32,10 @@ class ReportsView extends StatelessWidget {
             SizedBox(
               height: 10.h,
             ),
-            const ReportSearchWidget(),
-            SizedBox(
-              height: 13.h,
-            ),
+            // const ReportSearchWidget(),
+            // SizedBox(
+            //   height: 13.h,
+            // ),
             const ReportsListView(),
           ],
         ),

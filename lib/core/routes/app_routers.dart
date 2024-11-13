@@ -51,11 +51,17 @@ final GoRouter router = GoRouter(
     ),
     GoRoute(
       path: RouterNames.forgetPassword,
-      builder: (context, state) => const ForgetPasswordView(),
+      builder: (context, state) => BlocProvider(
+        create: (context) => getIt<AuthCubit>(),
+        child: const ForgetPasswordView(),
+      ),
     ),
     GoRoute(
       path: RouterNames.resetPassword,
-      builder: (context, state) => const ResetPasswordView(),
+      builder: (context, state) => BlocProvider(
+        create: (context) => getIt<AuthCubit>(),
+        child: const ResetPasswordView(),
+      ),
     ),
     GoRoute(
       path: RouterNames.otp,

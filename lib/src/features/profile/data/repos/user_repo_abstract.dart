@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:dartz/dartz.dart';
 import 'package:mandopy/core/errors/error_model.dart';
 import 'package:mandopy/src/features/auth/data/models/user_model.dart';
@@ -11,5 +13,5 @@ abstract class UserRepoAbstract {
   Future<Either<ErrorModel, StatisticsModel>> getUserStatistics();
 
   Future<Either<ErrorModel, ProfileUserModel>> updateProfile(
-      {required String name, String? image});
+      {required String name, File? image});
 }

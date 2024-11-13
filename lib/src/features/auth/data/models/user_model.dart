@@ -6,6 +6,7 @@ class UserModel {
   final DateTime createdAt;
   final int id;
   final dynamic verificationCode;
+  String? image;
 
   UserModel({
     required this.name,
@@ -15,6 +16,8 @@ class UserModel {
     required this.createdAt,
     required this.id,
     required this.verificationCode,
+    this.image,
+
   });
 
   factory UserModel.fromJson(Map<String, dynamic> json) {
@@ -26,6 +29,7 @@ class UserModel {
       createdAt: DateTime.parse(json['created_at']),
       id: json['id'],
       verificationCode: json['verification_code'],
+      image: json['image'],
     );
   }
 
@@ -38,6 +42,7 @@ class UserModel {
       'created_at': createdAt.toIso8601String(),
       'id': id,
       'verification_code': verificationCode,
+      'image': image,
     };
   }
 }
@@ -90,22 +95,38 @@ class LoginResponse {
 }
 
 class VerifyEmailResponse {
-  final String message;
-  final String data;
+  String? message;
+  Data? data;
 
-  VerifyEmailResponse({required this.message, required this.data});
+  VerifyEmailResponse({this.message, this.data});
 
-  factory VerifyEmailResponse.fromJson(Map<String, dynamic> json) {
-    return VerifyEmailResponse(
-      message: json['message'],
-      data: json['data'],
-    );
+  VerifyEmailResponse.fromJson(Map<String, dynamic> json) {
+    message = json['message'];
+    data = json['data'] != null ? new Data.fromJson(json['data']) : null;
   }
 
   Map<String, dynamic> toJson() {
-    return {
-      'message': message,
-      'data': data,
-    };
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['message'] = this.message;
+    if (this.data != null) {
+      data['data'] = this.data!.toJson();
+    }
+    return data;
+  }
+}
+
+class Data {
+  String? message;
+
+  Data({this.message});
+
+  Data.fromJson(Map<String, dynamic> json) {
+    message = json['message'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['message'] = this.message;
+    return data;
   }
 }

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:go_router/go_router.dart';
 import 'package:mandopy/core/common/widgets/custom_btn.dart';
 import 'package:mandopy/core/services/service_locator.dart';
 import 'package:mandopy/src/features/dailyPlane/cubit/targetsCubit/targets_cubit.dart';
@@ -25,7 +26,6 @@ class AddDailyPlanForm extends StatefulWidget {
 }
 
 class _AddDailyPlanFormState extends State<AddDailyPlanForm> {
-  String? _selectedPurpose;
   String? _selectedMedicationId;
   String? _selectedDoctorId;
   String? _selectedPharmacyId;
@@ -48,13 +48,11 @@ class _AddDailyPlanFormState extends State<AddDailyPlanForm> {
       final notes = addPurposeTextEditingController.text;
       const isSold = false;
 
-      // Format the time for the visit
-      final formattedTime =
-          _formatTime(_selectedTime!); // New formatting method
+      final formattedTime = _formatTime(_selectedTime!);
 
       context.read<VisitCubit>().addVisit(
             date: _selectedDate.toString(),
-            time: formattedTime, // Use the formatted time here
+            time: formattedTime,
             medicationId: _selectedMedicationId!,
             pharmacyId: _selectedPharmacyId,
             doctorId: _selectedDoctorId,
@@ -78,12 +76,7 @@ class _AddDailyPlanFormState extends State<AddDailyPlanForm> {
   Widget build(BuildContext context) {
     return BlocListener<VisitCubit, VisitState>(
       listener: (context, state) {
-        if (state is VisitLoading) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(content: Text("Adding visit...")),
-          );
-        } else if (state is VisitError) {
-          // Handle error state
+        if (state is VisitError) {
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(content: Text("Error: ${state.error}")),
           );
@@ -92,7 +85,7 @@ class _AddDailyPlanFormState extends State<AddDailyPlanForm> {
             const SnackBar(content: Text("Visit added successfully!")),
           );
 
-          _resetForm();
+          GoRouter.of(context).pop();
         }
       },
       child: Container(
@@ -224,15 +217,14 @@ class _AddDailyPlanFormState extends State<AddDailyPlanForm> {
     );
   }
 
-  void _resetForm() {
-    setState(() {
-      _selectedPurpose = null;
-      _selectedMedicationId = null;
-      _selectedDoctorId = null;
-      _selectedPharmacyId = null;
-      _selectedDate = null;
-      _selectedTime = null;
-      addPurposeTextEditingController.clear();
-    });
-  }
+  // void _resetForm() {
+  //   setState(() {
+  //     _selectedMedicationId = null;
+  //     _selectedDoctorId = null;
+  //     _selectedPharmacyId = null;
+  //     _selectedDate = null;
+  //     _selectedTime = null;
+  //     addPurposeTextEditingController.clear();
+  //   });
+  // }
 }

@@ -21,7 +21,7 @@ class PointsCubit extends Cubit<PointsState> {
       (error) => emit(PointsError(error)),
       (points) {
         final progress = _calculateProgress(
-          points.totalPoints,
+          int.parse(points.totalPoints),
         );
         emit(
           PointsLoaded(points, progress),
