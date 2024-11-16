@@ -85,18 +85,29 @@ final GoRouter router = GoRouter(
     GoRoute(
       path: RouterNames.doctorProfile,
       builder: (context, state) {
-        final doctorId = state.extra as String;
+        final extra = state.extra as Map<String, String>;
+        final doctorId = extra['doctorId'] ?? '';
+        final visitId = extra['visitId'] ?? '';
+
         return DoctorProfileView(
           doctorId: doctorId,
+          visitId: visitId,
         );
       },
     ),
     GoRoute(
       path: RouterNames.pharmacyProfile,
       builder: (context, state) {
-        final pharmacyId = state.extra as String;
-        return PharmacyProfileView(
-          pharmacyId: pharmacyId,
+        final extra = state.extra as Map<String, String>;
+        final pharmacyId = extra['pharmacyId'] ?? '';
+        final visitId = extra['visitId'] ?? '';
+
+        return BlocProvider(
+          create: (context) => getIt<VisitCubit>(),
+          child: PharmacyProfileView(
+            pharmacyId: pharmacyId,
+            visitId: visitId,
+          ),
         );
       },
     ),

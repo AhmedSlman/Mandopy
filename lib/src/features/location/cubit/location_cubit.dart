@@ -209,4 +209,61 @@ class LocationCubit extends Cubit<LocationState> {
           message: "فشل في التحقق من موقع الصيدلية: ${e.toString()}"));
     }
   }
+
+  Future<void> checkAndSaveLocation({
+    required String entityId,
+    required bool isDoctor,
+  }) async {
+    try {
+      emit(LocationLoading());
+
+      if (!await checkLocationServices() || !await checkLocationPermission()) {
+        return;
+      }
+
+      Position currentPosition = await Geolocator.getCurrentPosition(
+        desiredAccuracy: LocationAccuracy.high,
+      );
+
+      final result = isDoctor
+          ? await locationRepo.getDoctorLocation(entityId)
+          : await locationRepo.getPharmacyLocation(entityId);
+
+      result.fold(
+        (error) async {
+          final saveResult = isDoctor
+              ? await locationRepo.saveDoctorLocation(
+                  doctorId: int.parse(entityId),
+                  latitude: currentPosition.latitude,
+                  longitude: currentPosition.longitude,
+                )
+              : await locationRepo.savePharmacyLocation(
+                  pharmacyId: entityId,
+                  latitude: currentPosition.latitude,
+                  longitude: currentPosition.longitude,
+                );
+
+          saveResult.fold(
+            (saveError) => emit(LocationFailure(message: saveError.message)),
+            (_) => emit(LocationSuccess(
+              message: 'تم حفظ الموقع بنجاح',
+              location: LocationModel(
+                latitude: currentPosition.latitude,
+                longitude: currentPosition.longitude,
+              ),
+            )),
+          );
+        },
+        (savedLocation) {
+          emit(LocationSuccess(
+            message: 'الموقع محفوظ بالفعل',
+            location: savedLocation,
+          ));
+        },
+      );
+    } catch (e) {
+      emit(LocationFailure(
+          message: "فشل في التحقق/حفظ الموقع: ${e.toString()}"));
+    }
+  }
 }

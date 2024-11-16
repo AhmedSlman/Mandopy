@@ -10,7 +10,7 @@ class PercentageRepoImpl implements PercentageRepoAbstract {
 
   PercentageRepoImpl(this.api);
   @override
-  Future<Either<ErrorModel, String>> getMonthlyTarget() async {
+  Future<Either<ErrorModel, int>> getMonthlyTarget() async {
     try {
       final response = await api.get(
         "monthly-target",

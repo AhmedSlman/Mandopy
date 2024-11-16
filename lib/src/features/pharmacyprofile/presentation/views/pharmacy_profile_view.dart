@@ -15,10 +15,12 @@ import '../widgets/pharmacy_profile_image_stack.dart';
 
 class PharmacyProfileView extends StatelessWidget {
   final String pharmacyId;
+  final String visitId;
 
   const PharmacyProfileView({
     super.key,
     required this.pharmacyId,
+    required this.visitId,
   });
 
   @override
@@ -45,6 +47,7 @@ class PharmacyProfileView extends StatelessWidget {
                 SizedBox(height: 50.h),
                 PharmacyInfoContainer(
                   pharmacyId: pharmacyId,
+                  visitId: visitId,
                 ),
                 SizedBox(height: 33.h),
                 BlocConsumer<LocationCubit, LocationState>(
@@ -72,9 +75,8 @@ class PharmacyProfileView extends StatelessWidget {
                     return CustomButton(
                       text: 'اضغط للوصول للموقع',
                       onPressed: () {
-                        context
-                            .read<LocationCubit>()
-                            .savePharmacyLocation(pharmacyId);
+                        context.read<LocationCubit>().checkAndSaveLocation(
+                            isDoctor: false, entityId: pharmacyId);
                       },
                     );
                   },

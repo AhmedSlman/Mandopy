@@ -43,7 +43,7 @@ class CircularProgressBarWidget extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(
-                    state.target,
+                    state.target as String,
                   ),
                   const Spacer(),
                   Stack(

@@ -65,11 +65,17 @@ class VisitCardWidget extends StatelessWidget {
           onTap: () => isPharmacy
               ? GoRouter.of(context).push(
                   RouterNames.pharmacyProfile,
-                  extra: pharmacyid,
+                  extra: {
+                    'visitId': visitId,
+                    'pharmacyId': pharmacyid,
+                  },
                 )
               : GoRouter.of(context).push(
                   RouterNames.doctorProfile,
-                  extra: doctorId,
+                  extra: {
+                    'visitId': visitId,
+                    'doctorId': doctorId,
+                  },
                 ),
           child: Container(
             height: 262.82.h,

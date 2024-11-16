@@ -27,7 +27,7 @@ class PercentageCubit extends Cubit<PercentageState> {
 
     result.fold(
       (error) => emit(PercentageError(error)),
-      (target) => emit(MonthlyTargetLoaded(target)),
+      (target) => emit(MonthlyTargetLoaded(target as String)),
     );
   }
 }

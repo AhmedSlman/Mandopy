@@ -15,9 +15,11 @@ import '../widgets/doctor_profile_image_stack.dart';
 
 class DoctorProfileView extends StatelessWidget {
   final String doctorId;
+  final String visitId;
   const DoctorProfileView({
     super.key,
     required this.doctorId,
+    required this.visitId,
   });
 
   @override
@@ -46,6 +48,7 @@ class DoctorProfileView extends StatelessWidget {
                 ),
                 DoctorInfocontainer(
                   doctorId: doctorId,
+                  visitId: visitId,
                 ),
                 SizedBox(
                   height: 33.h,
@@ -74,9 +77,8 @@ class DoctorProfileView extends StatelessWidget {
                     return CustomButton(
                       text: 'اضغط للوصول للموقع',
                       onPressed: () {
-                        context
-                            .read<LocationCubit>()
-                            .savePharmacyLocation(doctorId);
+                        context.read<LocationCubit>().checkAndSaveLocation(
+                            entityId: doctorId, isDoctor: true);
                       },
                     );
                   },

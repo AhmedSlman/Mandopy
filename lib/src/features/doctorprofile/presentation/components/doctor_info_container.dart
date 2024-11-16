@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:go_router/go_router.dart';
+import 'package:mandopy/src/features/dailyPlane/cubit/vistiCubit/visit_cubit.dart';
 import 'package:mandopy/src/features/doctorprofile/cubit/doctor_profile/doctor_profile_cubit.dart';
 import 'package:mandopy/src/features/location/cubit/location_cubit.dart';
 
@@ -10,8 +12,10 @@ import '../../../../../core/utils/app_assets.dart';
 import '../widgets/info_row.dart';
 
 class DoctorInfocontainer extends StatelessWidget {
-  const DoctorInfocontainer({super.key, required this.doctorId});
+  const DoctorInfocontainer(
+      {super.key, required this.doctorId, required this.visitId});
   final String doctorId;
+  final String visitId;
 
   @override
   Widget build(BuildContext context) {
@@ -100,6 +104,7 @@ class DoctorInfocontainer extends StatelessWidget {
                           context
                               .read<LocationCubit>()
                               .checkDoctorLocation(doctorId);
+                          context.read<VisitCubit>().startVisit(visitId);
                         },
                       ),
                       const SizedBox(width: 16),
@@ -112,7 +117,34 @@ class DoctorInfocontainer extends StatelessWidget {
                           color: Colors.white,
                           fontWeight: FontWeight.w500,
                         ),
-                        onPressed: () {},
+                        onPressed: () async {
+                          bool? saleMade = await showDialog(
+                            context: context,
+                            builder: (BuildContext context) {
+                              return AlertDialog(
+                                title: const Text("بيع المنتج"),
+                                content: const Text("هل قمت ببيع المنتج"),
+                                actions: [
+                                  TextButton(
+                                    onPressed: () =>
+                                        Navigator.of(context).pop(false),
+                                    child: const Text("No"),
+                                  ),
+                                  TextButton(
+                                    onPressed: () =>
+                                        Navigator.of(context).pop(true),
+                                    child: const Text("Yes"),
+                                  ),
+                                ],
+                              );
+                            },
+                          );
+                          if (saleMade != null) {
+                            context
+                                .read<VisitCubit>()
+                                .endVisit(visitId, saleMade ? "1" : "0");
+                          }
+                        },
                       ),
                     ],
                   )

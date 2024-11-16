@@ -4,5 +4,5 @@ import '../../../../../../core/errors/error_model.dart';
 
 abstract class PercentageRepoAbstract {
   Future<Either<ErrorModel, int>> getPercentagePerDay();
-  Future<Either<ErrorModel, String>> getMonthlyTarget();
+  Future<Either<ErrorModel, int>> getMonthlyTarget();
 }
