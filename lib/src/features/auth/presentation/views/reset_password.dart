@@ -9,6 +9,7 @@ import 'package:mandopy/core/utils/app_strings.dart';
 import 'package:mandopy/src/features/auth/cubit/auth_cubit.dart';
 import 'package:mandopy/src/features/auth/presentation/widgets/auth_text_form_field.dart';
 
+import '../../../../../core/functions/show_toast.dart';
 import '../../../../../core/routes/router_names.dart';
 
 class ResetPasswordView extends StatefulWidget {
@@ -48,13 +49,14 @@ class _ResetPasswordViewState extends State<ResetPasswordView> {
             );
           } else if (state is ResetPasswordSuccessState) {
             GoRouter.of(context).pop();
+            showToast(
+                message: state.resetPasswordModel.message,
+                state: ToastStates.SUCCESS);
             GoRouter.of(context).go(RouterNames.login);
           } else if (state is ResetPasswordFailureState) {
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(
-                content: Text(state.errorMessage.message),
-              ),
-            );
+            GoRouter.of(context).pop();
+            showToast(
+                message: state.errorMessage.message, state: ToastStates.ERROR);
           }
         },
         child: SingleChildScrollView(

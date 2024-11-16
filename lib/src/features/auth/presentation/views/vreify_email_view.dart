@@ -11,6 +11,7 @@ import 'package:mandopy/src/features/auth/presentation/widgets/custom_otp_fields
 import 'package:mandopy/src/features/auth/presentation/widgets/forget_password.dart';
 import 'package:mandopy/src/features/auth/presentation/widgets/forget_password_message.dart';
 
+import '../../../../../core/functions/show_toast.dart';
 import '../../../../../core/routes/router_names.dart';
 
 class VerifyEmailView extends StatelessWidget {
@@ -28,20 +29,20 @@ class VerifyEmailView extends StatelessWidget {
             showDialog(
               context: context,
               barrierDismissible: false,
-              builder: (context) =>
-                  const Center(child: CircularProgressIndicator()),
+              builder: (context) => const Center(
+                child: CircularProgressIndicator(),
+              ),
             );
           } else if (state is VerifyEmailSuccessState) {
             Navigator.of(context).pop();
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(content: Text(state.userModel)),
-            );
-            context.go(RouterNames.login);
+            showToast(
+                message: "email verfied successfully",
+                state: ToastStates.SUCCESS);
+            context.go(RouterNames.navigatiomBarButton);
           } else if (state is VerifyEmailFailureState) {
             Navigator.of(context).pop();
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(content: Text(state.errorMessage.message)),
-            );
+            showToast(
+                message: state.errorMessage.message, state: ToastStates.ERROR);
           }
         },
         child: Column(

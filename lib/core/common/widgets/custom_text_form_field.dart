@@ -49,7 +49,7 @@ class CustomTextFormField extends StatelessWidget {
           ),
         ),
         validator: validator ?? (value) => null,
-        maxLines: maxLines,
+        // maxLines: maxLines,
       ),
     );
   }

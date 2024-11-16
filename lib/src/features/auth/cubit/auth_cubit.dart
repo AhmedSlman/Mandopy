@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:mandopy/core/errors/error_model.dart';
+import 'package:mandopy/src/features/auth/data/models/logout_model.dart';
 import 'package:mandopy/src/features/auth/data/models/reset_password_model.dart';
 import 'package:mandopy/src/features/auth/data/models/user_model.dart';
 import 'package:mandopy/src/features/auth/data/repos/auth_repo_abstract.dart';
@@ -124,6 +125,19 @@ class AuthCubit extends Cubit<AuthState> {
       (error) => emit(ResetPasswordFailureState(errorMessage: error)),
       (resetPasswordModel) => emit(
         ResetPasswordSuccessState(resetPasswordModel: resetPasswordModel),
+      ),
+    );
+  }
+
+  Future<void> logout() async {
+    emit(LogoutLoadingState());
+    final result = await authRepo.logout();
+    result.fold(
+      (error) => emit(
+        LogoutFailureState(errorMessage: error),
+      ),
+      (logoutResponse) => emit(
+        LogoutSuccessState(logoutModel: logoutResponse),
       ),
     );
   }

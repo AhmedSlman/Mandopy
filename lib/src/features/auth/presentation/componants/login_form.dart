@@ -9,6 +9,8 @@ import 'package:mandopy/src/features/auth/cubit/auth_cubit.dart';
 import 'package:mandopy/src/features/auth/presentation/widgets/auth_text_form_field.dart';
 import 'package:mandopy/src/features/auth/presentation/widgets/forget_password.dart';
 
+import '../../../../../core/functions/show_toast.dart';
+
 class LoginForm extends StatelessWidget {
   LoginForm({super.key});
   final emailController = TextEditingController();
@@ -27,12 +29,14 @@ class LoginForm extends StatelessWidget {
           );
         } else if (state is LoginSuccessState) {
           Navigator.of(context).pop();
+          showToast(
+              message: "You logged in successfully",
+              state: ToastStates.SUCCESS);
           context.go(RouterNames.navigatiomBarButton);
         } else if (state is LoginFailureState) {
           Navigator.of(context).pop();
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text(state.errorMessage.message)),
-          );
+          showToast(
+              message: state.errorMessage.message, state: ToastStates.ERROR);
         }
       },
       child: Column(
@@ -48,6 +52,7 @@ class LoginForm extends StatelessWidget {
             hintText: AppStrings.hintPassword,
             validator: Validator.validatePassword,
             controller: passwordController,
+            isPassword: true,
           ),
           CustomTextButton(
             text: AppStrings.forgetPassword,

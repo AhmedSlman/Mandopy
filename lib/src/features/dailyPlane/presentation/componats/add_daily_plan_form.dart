@@ -6,6 +6,7 @@ import 'package:mandopy/core/common/widgets/custom_btn.dart';
 import 'package:mandopy/core/services/service_locator.dart';
 import 'package:mandopy/src/features/dailyPlane/cubit/targetsCubit/targets_cubit.dart';
 
+import '../../../../../core/functions/show_toast.dart';
 import '../../../../../core/theme/app_colors.dart';
 import '../../../../../core/utils/app_strings.dart';
 import '../../cubit/vistiCubit/visit_cubit.dart';
@@ -77,15 +78,20 @@ class _AddDailyPlanFormState extends State<AddDailyPlanForm> {
     return BlocListener<VisitCubit, VisitState>(
       listener: (context, state) {
         if (state is VisitError) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text("Error: ${state.error}")),
+          showDialog(
+            context: context,
+            barrierDismissible: false,
+            builder: (context) => const Center(
+              child: CircularProgressIndicator(),
+            ),
           );
+        }
+        if (state is VisitError) {
+          showToast(message: state.error.message, state: ToastStates.ERROR);
         } else if (state is VisitsLoaded) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(content: Text("Visit added successfully!")),
-          );
-
           GoRouter.of(context).pop();
+          showToast(
+              message: "Visit added successfully", state: ToastStates.SUCCESS);
         }
       },
       child: Container(

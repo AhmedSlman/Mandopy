@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mandopy/core/common/widgets/custom_app_bar.dart';
 import 'package:mandopy/core/services/service_locator.dart';
 import 'package:mandopy/core/utils/app_strings.dart';
+import 'package:mandopy/src/features/auth/cubit/auth_cubit.dart';
 import 'package:mandopy/src/features/home/cubit/percentage/cubit/percentage_cubit.dart';
 import 'package:mandopy/src/features/home/presentation/componants/custom_drawer.dart';
 import 'package:mandopy/src/features/home/presentation/componants/daily_goals_section.dart';
@@ -11,7 +12,6 @@ import 'package:mandopy/src/features/home/presentation/componants/notification_s
 
 import '../../../dailyPlane/cubit/vistiCubit/visit_cubit.dart';
 import '../../../dailyPlane/data/repo/visitRepo/vistit_repo.dart';
-import '../componants/add_new_visit_section.dart';
 import '../componants/daily_plane_section.dart';
 
 class HomeView extends StatelessWidget {
@@ -22,7 +22,10 @@ class HomeView extends StatelessWidget {
     final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
     return Scaffold(
       key: scaffoldKey,
-      drawer: const CustomDrawer(),
+      drawer: BlocProvider(
+        create: (context) => getIt<AuthCubit>(),
+        child: const CustomDrawer(),
+      ),
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 12.0),

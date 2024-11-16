@@ -3,6 +3,8 @@ import 'package:mandopy/core/errors/error_model.dart';
 import 'package:mandopy/src/features/home/data/repos/percentage/percentage_repo_abstract.dart';
 import 'package:meta/meta.dart';
 
+import '../../../data/models/montly_target_model.dart';
+
 part 'percentage_state.dart';
 
 class PercentageCubit extends Cubit<PercentageState> {
@@ -27,7 +29,7 @@ class PercentageCubit extends Cubit<PercentageState> {
 
     result.fold(
       (error) => emit(PercentageError(error)),
-      (target) => emit(MonthlyTargetLoaded(target as String)),
+      (target) => emit(MonthlyTargetLoaded(target)),
     );
   }
 }

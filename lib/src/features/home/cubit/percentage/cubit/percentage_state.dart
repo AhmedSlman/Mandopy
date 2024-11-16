@@ -14,9 +14,9 @@ final class PercentageLoaded extends PercentageState {
 }
 
 final class MonthlyTargetLoaded extends PercentageState {
-  final String target;
+  final MontlyTargetModel montlyTargetModel;
 
-  MonthlyTargetLoaded(this.target);
+  MonthlyTargetLoaded(this.montlyTargetModel);
 }
 
 final class PercentageError extends PercentageState {

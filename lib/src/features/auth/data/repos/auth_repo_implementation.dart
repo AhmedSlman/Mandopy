@@ -7,6 +7,7 @@ import 'package:mandopy/core/data/cached/cache_helper.dart';
 import 'package:mandopy/core/errors/error_model.dart';
 import 'package:mandopy/core/errors/exceptions.dart';
 import 'package:mandopy/src/features/auth/data/models/forget_password_model.dart';
+import 'package:mandopy/src/features/auth/data/models/logout_model.dart';
 import 'package:mandopy/src/features/auth/data/models/reset_password_model.dart';
 import 'package:mandopy/src/features/auth/data/models/user_model.dart';
 import 'package:mandopy/src/features/auth/data/repos/auth_repo_abstract.dart';
@@ -103,6 +104,11 @@ class AuthRepoImplementation implements AuthRepoAbstract {
         isFormData: true,
       );
       final userResponse = VerifyEmailResponse.fromJson(response);
+      CacheHelper.saveToken(value: userResponse.data!.token!);
+      CacheHelper.saveData(key: 'role', value: userResponse.data!.user!.role);
+      CacheHelper.saveData(key: 'name', value: userResponse.data!.user!.name);
+      CacheHelper.saveData(key: 'email', value: userResponse.data!.user!.email);
+      CacheHelper.saveData(key: 'image', value: userResponse.data!.user!.image);
 
       return Right(userResponse);
     } on ServerException catch (e) {
@@ -155,6 +161,17 @@ class AuthRepoImplementation implements AuthRepoAbstract {
       );
       final resetPasswordResponse = ResetPasswordModel.fromJson(response);
       return Right(resetPasswordResponse);
+    } on ServerException catch (e) {
+      return Left(e.errorModel);
+    }
+  }
+
+  @override
+  Future<Either<ErrorModel, LogoutModel>> logout() async {
+    try {
+      final response = await api.post('logout');
+      final logoutResponse = LogoutModel.fromJson(response);
+      return Right(logoutResponse);
     } on ServerException catch (e) {
       return Left(e.errorModel);
     }

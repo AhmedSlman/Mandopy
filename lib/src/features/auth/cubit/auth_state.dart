@@ -74,3 +74,16 @@ final class ResetPasswordFailureState extends AuthState {
 
   ResetPasswordFailureState({required this.errorMessage});
 }
+final class LogoutLoadingState extends AuthState {}
+
+final class LogoutSuccessState extends AuthState {
+  final LogoutModel logoutModel;
+
+  LogoutSuccessState({required this.logoutModel});
+}
+
+final class LogoutFailureState extends AuthState {
+  final ErrorModel errorMessage;
+
+  LogoutFailureState({required this.errorMessage});
+}

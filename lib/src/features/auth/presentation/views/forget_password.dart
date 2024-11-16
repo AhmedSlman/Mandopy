@@ -5,6 +5,7 @@ import 'package:mandopy/core/common/functions/validator.dart';
 import 'package:mandopy/core/common/widgets/custom_app_bar.dart';
 import 'package:mandopy/core/common/widgets/custom_btn.dart';
 import 'package:mandopy/core/common/widgets/custom_icon_back.dart';
+import 'package:mandopy/core/functions/show_toast.dart';
 import 'package:mandopy/core/routes/router_names.dart';
 import 'package:mandopy/core/utils/app_strings.dart';
 import 'package:mandopy/src/features/auth/cubit/auth_cubit.dart';
@@ -44,11 +45,8 @@ class _ForgetPasswordViewState extends State<ForgetPasswordView> {
             GoRouter.of(context).pop();
             GoRouter.of(context).go(RouterNames.resetPassword);
           } else if (state is ForgetPasswordFailureState) {
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(
-                content: Text(state.errorMessage.message),
-              ),
-            );
+            showToast(
+                message: state.errorMessage.message, state: ToastStates.ERROR);
           }
         },
         child: Column(

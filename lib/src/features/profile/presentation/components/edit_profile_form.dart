@@ -10,6 +10,7 @@ import 'package:mandopy/src/features/profile/cubit/user/user_cubit.dart';
 
 import '../../../../../core/common/widgets/custom_btn.dart';
 import '../../../../../core/common/widgets/custom_text_form_field.dart';
+import '../../../../../core/functions/show_toast.dart';
 import '../../../../../core/utils/app_strings.dart';
 import '../widgets/edit_image_widget.dart';
 import '../widgets/profile_image_picker.dart';
@@ -37,18 +38,12 @@ class _EditProfileFormState extends State<EditProfileForm> {
     return BlocListener<EditProfileCubit, EditProfileState>(
       listener: (context, state) {
         if (state is EditProfileLoaded) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(
-              content: Text('Profile updated successfully!'),
-            ),
-          );
+          showToast(
+              message: "Profile updated successfully",
+              state: ToastStates.SUCCESS);
           GoRouter.of(context).pop();
         } else if (state is EditProfileError) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
-              content: Text('Failed to update profile: ${state.error.message}'),
-            ),
-          );
+          showToast(message: state.error.message, state: ToastStates.ERROR);
           GoRouter.of(context).pop();
         }
       },

@@ -17,7 +17,6 @@ class UserModel {
     required this.id,
     required this.verificationCode,
     this.image,
-
   });
 
   factory UserModel.fromJson(Map<String, dynamic> json) {
@@ -102,12 +101,12 @@ class VerifyEmailResponse {
 
   VerifyEmailResponse.fromJson(Map<String, dynamic> json) {
     message = json['message'];
-    data = json['data'] != null ? new Data.fromJson(json['data']) : null;
+    data = json['data'] != null ? Data.fromJson(json['data']) : null;
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['message'] = this.message;
+    final Map<String, dynamic> data = {};
+    data['message'] = message;
     if (this.data != null) {
       data['data'] = this.data!.toJson();
     }
@@ -117,16 +116,82 @@ class VerifyEmailResponse {
 
 class Data {
   String? message;
+  User? user;
+  String? token;
 
-  Data({this.message});
+  Data({this.message, this.user, this.token});
 
   Data.fromJson(Map<String, dynamic> json) {
     message = json['message'];
+    user = json['user'] != null ? User.fromJson(json['user']) : null;
+    token = json['token'];
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['message'] = this.message;
+    final Map<String, dynamic> data = {};
+    data['message'] = message;
+    if (user != null) {
+      data['user'] = user!.toJson();
+    }
+    data['token'] = token;
+    return data;
+  }
+}
+
+class User {
+  int? id;
+  int? supervisorId;
+  String? name;
+  String? email;
+  String? role;
+  String? image;
+  String? verificationCode;
+  String? verifiedAt;
+  int? points;
+  String? createdAt;
+  String? updatedAt;
+
+  User({
+    this.id,
+    this.supervisorId,
+    this.name,
+    this.email,
+    this.role,
+    this.image,
+    this.verificationCode,
+    this.verifiedAt,
+    this.points,
+    this.createdAt,
+    this.updatedAt,
+  });
+
+  User.fromJson(Map<String, dynamic> json) {
+    id = json['id'];
+    supervisorId = json['supervisor_id'];
+    name = json['name'];
+    email = json['email'];
+    role = json['role'];
+    image = json['image'];
+    verificationCode = json['verification_code'];
+    verifiedAt = json['verified_at'];
+    points = json['points'];
+    createdAt = json['created_at'];
+    updatedAt = json['updated_at'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = {};
+    data['id'] = id;
+    data['supervisor_id'] = supervisorId;
+    data['name'] = name;
+    data['email'] = email;
+    data['role'] = role;
+    data['image'] = image;
+    data['verification_code'] = verificationCode;
+    data['verified_at'] = verifiedAt;
+    data['points'] = points;
+    data['created_at'] = createdAt;
+    data['updated_at'] = updatedAt;
     return data;
   }
 }

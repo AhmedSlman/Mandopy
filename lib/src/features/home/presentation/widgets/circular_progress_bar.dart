@@ -43,7 +43,7 @@ class CircularProgressBarWidget extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(
-                    state.target as String,
+                    "You have ${state.montlyTargetModel.monthlyTarget.toString()} visits this month",
                   ),
                   const Spacer(),
                   Stack(
@@ -51,12 +51,15 @@ class CircularProgressBarWidget extends StatelessWidget {
                     children: [
                       CircularProgressIndicator(
                         strokeWidth: 10,
-                        value: progressValue,
+                        value: double.parse(state.montlyTargetModel.percentage
+                                    ?.replaceAll('%', '') ??
+                                "N/A") /
+                            100,
                         backgroundColor: AppColors.yellow,
                         color: AppColors.primaryColor,
                       ),
                       Text(
-                        '0%',
+                        state.montlyTargetModel.percentage ?? "N/A",
                         style: AppStyles.s12.copyWith(
                           color: Colors.black,
                         ),

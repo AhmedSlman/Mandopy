@@ -15,6 +15,8 @@ import 'package:mandopy/src/features/auth/presentation/widgets/auth_text_form_fi
 import 'package:mandopy/src/features/auth/presentation/widgets/repersentative_type_widget.dart';
 import 'package:path/path.dart' as path;
 
+import '../../../../../core/functions/show_toast.dart';
+
 class SignUpFormSection extends StatefulWidget {
   const SignUpFormSection({super.key});
 
@@ -71,12 +73,15 @@ class _SignUpFormSectionState extends State<SignUpFormSection> {
           );
         } else if (state is RegisterSuccessState) {
           Navigator.of(context).pop();
-          context.go(RouterNames.home);
+
+          context.go(
+            RouterNames.verifyEmail,
+            extra: emailController.text,
+          );
         } else if (state is RegisterFailureState) {
           Navigator.of(context).pop();
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text(state.errorMessage.message)),
-          );
+          showToast(
+              message: state.errorMessage.message, state: ToastStates.ERROR);
         }
       },
       child: Column(
@@ -150,7 +155,6 @@ class _SignUpFormSectionState extends State<SignUpFormSection> {
                 admincode: adminCodeController.text,
                 image: _imageFile,
               );
-              context.go(RouterNames.verifyEmail, extra: emailController.text);
             },
           ),
         ],
