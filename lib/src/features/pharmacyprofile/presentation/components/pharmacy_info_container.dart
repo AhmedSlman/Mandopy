@@ -1,40 +1,89 @@
-import 'dart:ffi';
+// ignore_for_file: use_build_context_synchronously
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:go_router/go_router.dart';
 import 'package:mandopy/src/features/dailyPlane/cubit/vistiCubit/visit_cubit.dart';
 import 'package:mandopy/src/features/location/cubit/location_cubit.dart';
 import 'package:mandopy/src/features/pharmacyprofile/cubit/pharmacy_profile_cubit.dart';
-
 import '../../../../../core/common/widgets/custom_btn.dart';
 import '../../../../../core/theme/app_colors.dart';
 import '../../../../../core/utils/app_assets.dart';
 import '../../../doctorprofile/presentation/widgets/info_row.dart';
 
-class PharmacyInfoContainer extends StatelessWidget {
+class PharmacyInfoContainer extends StatefulWidget {
   const PharmacyInfoContainer(
       {super.key, required this.pharmacyId, required this.visitId});
   final String pharmacyId;
   final String visitId;
 
   @override
+  _PharmacyInfoContainerState createState() => _PharmacyInfoContainerState();
+}
+
+class _PharmacyInfoContainerState extends State<PharmacyInfoContainer> {
+  // Flag to control the loading dialog
+  bool isCheckingLocation = false;
+
+  // Function to show the loading message while checking location
+  Future<void> _showLoadingDialog(BuildContext context) async {
+    showDialog(
+      context: context,
+      barrierDismissible:
+          false, // Don't allow closing the dialog by tapping outside
+      builder: (BuildContext context) {
+        return const AlertDialog(
+          content: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              CircularProgressIndicator(),
+              SizedBox(width: 16),
+              Text("جارٍ التحقق من الموقع..."),
+            ],
+          ),
+        );
+      },
+    );
+  }
+
+  // Function to close the loading dialog
+  void _dismissLoadingDialog(BuildContext context) {
+    Navigator.of(context).pop();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return BlocListener<LocationCubit, LocationState>(
-      listener: (context, state) {
-        if (state is LocationLoading) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(content: Text('جارٍ التحقق من الموقع...')),
-          );
+      listener: (context, state) async {
+        if (state is LocationLoading && !isCheckingLocation) {
+          setState(() {
+            isCheckingLocation = true;
+          });
+          await _showLoadingDialog(context);
         } else if (state is LocationCheckSuccess) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text(state.message)),
+          _dismissLoadingDialog(context);
+          setState(() {
+            isCheckingLocation = false;
+          });
+
+          await _showMessage(
+            context,
+            state.isInCorrectLocation
+                ? "أنت في الموقع الصحيح. المسافة: ${state.distance.toStringAsFixed(2)} متر."
+                : "أنت بعيد عن الموقع بمقدار ${state.distance.toStringAsFixed(2)} متر.",
           );
         } else if (state is LocationFailure) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text(state.message)),
-          );
+          _dismissLoadingDialog(context);
+          setState(() {
+            isCheckingLocation = false;
+          });
+          await _showMessage(context, state.message);
+        } else if (state is LocationSaved) {
+          _dismissLoadingDialog(context);
+          setState(() {
+            isCheckingLocation = false;
+          });
+          await _showMessage(context, state.message);
         }
       },
       child: Container(
@@ -60,7 +109,7 @@ class PharmacyInfoContainer extends StatelessWidget {
         child: BlocBuilder<PharmacyProfileCubit, PharmacyProfileState>(
           builder: (context, state) {
             if (state is PharmacyProfileLoading) {
-              return const CircularProgressIndicator();
+              return const Center(child: CircularProgressIndicator());
             }
             if (state is PharmacyProfileLoaded) {
               return Column(
@@ -90,47 +139,75 @@ class PharmacyInfoContainer extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
                       CustomButton(
-                        width: 97.w,
-                        height: 26.h,
+                        width: 100.w,
+                        height: 30.h,
                         text: 'بدء الزيارة',
                         textStyle: const TextStyle(
                           color: Colors.white,
                           fontWeight: FontWeight.w500,
                         ),
-                        onPressed: () {
-                          context
-                              .read<LocationCubit>()
-                              .checkPharmacyLocation(pharmacyId);
-                          context.read<VisitCubit>().startVisit(visitId);
+                        onPressed: () async {
+                          final locationCubit = context.read<LocationCubit>();
+                          final visitCubit = context.read<VisitCubit>();
+
+                          await locationCubit
+                              .checkPharmacyLocation(widget.pharmacyId);
+                          final locationState = locationCubit.state;
+
+                          if (locationState is LocationCheckSuccess) {
+                            if (locationState.isInCorrectLocation) {
+                              if (!visitCubit.isVisitStarted) {
+                                visitCubit.startVisit(widget.visitId);
+                                await _showMessage(
+                                    context, 'تم بدء الزيارة بنجاح!');
+                              } else {
+                                await _showMessage(
+                                    context, 'الزيارة قد بدأت بالفعل!');
+                              }
+                            } else {
+                              await _showMessage(
+                                context,
+                                "أنت بعيد عن الموقع بمقدار ${locationState.distance.toStringAsFixed(2)} متر.",
+                              );
+                            }
+                          } else if (locationState is LocationFailure) {
+                            await _showMessage(context, locationState.message);
+                          }
                         },
                       ),
                       const SizedBox(width: 16),
                       CustomButton(
                         backgroundColor: AppColors.accentColor,
-                        width: 97.w,
-                        height: 26.h,
+                        width: 100.w,
+                        height: 30.h,
                         text: 'انهاء الزيارة',
                         textStyle: const TextStyle(
                           color: Colors.white,
                           fontWeight: FontWeight.w500,
                         ),
                         onPressed: () async {
+                          if (!context.read<VisitCubit>().isVisitStarted) {
+                            await _showMessage(
+                                context, "لا يمكنك إنهاء الزيارة قبل بدءها.");
+                            return;
+                          }
+
                           bool? saleMade = await showDialog(
                             context: context,
                             builder: (BuildContext context) {
                               return AlertDialog(
                                 title: const Text("بيع المنتج"),
-                                content: const Text("هل قمت ببيع المنتج"),
+                                content: const Text("هل قمت ببيع المنتج؟"),
                                 actions: [
                                   TextButton(
                                     onPressed: () =>
                                         Navigator.of(context).pop(false),
-                                    child: const Text("No"),
+                                    child: const Text("لا"),
                                   ),
                                   TextButton(
                                     onPressed: () =>
                                         Navigator.of(context).pop(true),
-                                    child: const Text("Yes"),
+                                    child: const Text("نعم"),
                                   ),
                                 ],
                               );
@@ -139,7 +216,13 @@ class PharmacyInfoContainer extends StatelessWidget {
                           if (saleMade != null) {
                             context
                                 .read<VisitCubit>()
-                                .endVisit(visitId, saleMade ? "1" : "0");
+                                .endVisit(widget.visitId, saleMade ? "1" : "0");
+                            await _showMessage(
+                              context,
+                              saleMade
+                                  ? "تم إنهاء الزيارة مع تأكيد البيع."
+                                  : "تم إنهاء الزيارة بدون بيع.",
+                            );
                           }
                         },
                       ),
@@ -153,6 +236,24 @@ class PharmacyInfoContainer extends StatelessWidget {
           },
         ),
       ),
+    );
+  }
+
+  Future<void> _showMessage(BuildContext context, String message) async {
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          content: Text(message),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.of(context).pop(),
+              child: const Text("موافق"),
+            ),
+          ],
+        );
+      },
     );
   }
 }

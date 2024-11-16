@@ -46,7 +46,7 @@ class DoctorProfileView extends StatelessWidget {
                 SizedBox(
                   height: 50.h,
                 ),
-                DoctorInfocontainer(
+                DoctorInfoContainer(
                   doctorId: doctorId,
                   visitId: visitId,
                 ),

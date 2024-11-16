@@ -1,9 +1,11 @@
 import 'package:bloc/bloc.dart';
+import 'package:mandopy/core/errors/error_model.dart';
 import 'package:mandopy/src/features/dailyPlane/data/repo/visitRepo/vistit_repo.dart';
 import 'visit_state.dart';
 
 class VisitCubit extends Cubit<VisitState> {
   final VisitRepoAbstract visitRepo;
+  bool isVisitStarted = false;
 
   VisitCubit(this.visitRepo) : super(VisitInitial());
 
@@ -90,24 +92,42 @@ class VisitCubit extends Cubit<VisitState> {
   }
 
   Future<void> startVisit(String visitId) async {
+    if (isVisitStarted) {
+      emit(VisitError(
+          ErrorModel(message: 'لا يمكنك بدء الزيارة لأنها قد بدأت بالفعل.')));
+      return;
+    }
+
     emit(VisitLoading());
 
     final result = await visitRepo.startVisit(visitId);
 
     result.fold(
       (error) => emit(VisitError(error)),
-      (success) => emit(VisitStarted(message: 'زيارة بدأت بنجاح')),
+      (success) {
+        isVisitStarted = true; // تحديث الحالة عند بدء الزيارة
+        emit(VisitStarted(message: 'زيارة بدأت بنجاح'));
+      },
     );
   }
 
   Future<void> endVisit(String visitId, String isSold) async {
+    if (!isVisitStarted) {
+      emit(VisitError(
+          ErrorModel(message: 'لا يمكنك انهاء الزيارة لأنها لم تبدأ بالفعل.')));
+      return;
+    }
+
     emit(VisitLoading());
 
     final result = await visitRepo.endVisit(visitId, isSold);
 
     result.fold(
       (error) => emit(VisitError(error)),
-      (endVisitResponse) => emit(VisitEnded(endVisitResponse)),
+      (endVisitResponse) {
+        isVisitStarted = false; // إعادة تعيين الحالة عند إنهاء الزيارة
+        emit(VisitEnded(endVisitResponse));
+      },
     );
   }
 }

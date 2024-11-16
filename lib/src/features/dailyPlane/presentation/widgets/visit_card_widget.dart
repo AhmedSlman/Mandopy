@@ -112,57 +112,72 @@ class VisitCardWidget extends StatelessWidget {
                           icon: Icons.done_rounded,
                         )
                       : Row(
-                          mainAxisAlignment: MainAxisAlignment.end,
+                          mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             CustomButton(
-                              height: 30.h,
-                              width: 100.w,
-                              text: 'بدء الزياره',
+                              height: 40.h,
+                              width: 120.w,
+                              text: 'تفاصيل الزياره',
                               textStyle: AppStyles.s12.copyWith(
                                 color: AppColors.white,
+                                fontSize: 14,
                               ),
                               onPressed: () {
-                                context.read<VisitCubit>().startVisit(visitId);
+                                isPharmacy
+                                    ? GoRouter.of(context).push(
+                                        RouterNames.pharmacyProfile,
+                                        extra: {
+                                          'visitId': visitId,
+                                          'pharmacyId': pharmacyid,
+                                        },
+                                      )
+                                    : GoRouter.of(context).push(
+                                        RouterNames.doctorProfile,
+                                        extra: {
+                                          'visitId': visitId,
+                                          'doctorId': doctorId,
+                                        },
+                                      );
                               },
                             ),
                             SizedBox(width: 8.w),
-                            CustomButton(
-                              height: 30.h,
-                              width: 100.w,
-                              backgroundColor: AppColors.accentColor,
-                              text: 'انهاء الزياره',
-                              textStyle: AppStyles.s12.copyWith(
-                                color: AppColors.white,
-                              ),
-                              onPressed: () async {
-                                bool? saleMade = await showDialog(
-                                  context: context,
-                                  builder: (BuildContext context) {
-                                    return AlertDialog(
-                                      title: const Text("بيع المنتج"),
-                                      content: const Text("هل قمت ببيع المنتج"),
-                                      actions: [
-                                        TextButton(
-                                          onPressed: () =>
-                                              Navigator.of(context).pop(false),
-                                          child: const Text("No"),
-                                        ),
-                                        TextButton(
-                                          onPressed: () =>
-                                              Navigator.of(context).pop(true),
-                                          child: const Text("Yes"),
-                                        ),
-                                      ],
-                                    );
-                                  },
-                                );
-                                if (saleMade != null) {
-                                  context
-                                      .read<VisitCubit>()
-                                      .endVisit(visitId, saleMade ? "1" : "0");
-                                }
-                              },
-                            ),
+                            // CustomButton(
+                            //   height: 30.h,
+                            //   width: 100.w,
+                            //   backgroundColor: AppColors.accentColor,
+                            //   text: 'انهاء الزياره',
+                            //   textStyle: AppStyles.s12.copyWith(
+                            //     color: AppColors.white,
+                            //   ),
+                            //   onPressed: () async {
+                            //     bool? saleMade = await showDialog(
+                            //       context: context,
+                            //       builder: (BuildContext context) {
+                            //         return AlertDialog(
+                            //           title: const Text("بيع المنتج"),
+                            //           content: const Text("هل قمت ببيع المنتج"),
+                            //           actions: [
+                            //             TextButton(
+                            //               onPressed: () =>
+                            //                   Navigator.of(context).pop(false),
+                            //               child: const Text("No"),
+                            //             ),
+                            //             TextButton(
+                            //               onPressed: () =>
+                            //                   Navigator.of(context).pop(true),
+                            //               child: const Text("Yes"),
+                            //             ),
+                            //           ],
+                            //         );
+                            //       },
+                            //     );
+                            //     if (saleMade != null) {
+                            //       context
+                            //           .read<VisitCubit>()
+                            //           .endVisit(visitId, saleMade ? "1" : "0");
+                            //     }
+                            //   },
+                            // ),
                           ],
                         ),
                 ],
