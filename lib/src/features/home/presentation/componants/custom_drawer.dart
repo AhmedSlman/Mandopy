@@ -27,7 +27,7 @@ class CustomDrawer extends StatelessWidget {
               backgroundColor: Colors.grey.shade200,
               child: ClipOval(
                 child: CachedNetworkImage(
-                  imageUrl: CacheHelper.getData(key: 'image'),
+                  imageUrl: CacheHelper.getData(key: 'image')!.toString(),
                   width: 70.w,
                   height: 70.h,
                   fit: BoxFit.fill,

@@ -14,9 +14,7 @@ class PointsLoaded extends PointsState {
     this.points,
     this.progress,
   );
-  String get medal => determineMedal(
-        int.parse(points.totalPoints),
-      );
+  String get medal => determineMedal(points.totalPoints);
 }
 
 class PointsError extends PointsState {

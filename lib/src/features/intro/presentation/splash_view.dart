@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:mandopy/core/data/cached/cache_helper.dart';
 import 'package:mandopy/core/utils/app_assets.dart';
 
 import '../../../../core/routes/router_names.dart';
@@ -15,7 +16,10 @@ class SplashView extends StatefulWidget {
 
 class _SplashViewState extends State<SplashView> {
   Timer? timer;
-  String startWidget = RouterNames.login;
+
+  String startWidget = CacheHelper.getToken() != null
+      ? RouterNames.navigatiomBarButton
+      : RouterNames.login;
   @override
   void initState() {
     timer = Timer(const Duration(seconds: 3), () {
