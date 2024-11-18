@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
-import 'package:mandopy/core/common/widgets/custom_btn.dart';
-import 'package:mandopy/core/common/widgets/custom_text_form_field.dart';
-import 'package:mandopy/core/utils/app_strings.dart';
-import 'package:mandopy/core/utils/app_styles.dart';
-import 'package:mandopy/src/features/doctorprofile/cubit/note/note_cubit.dart';
+import '../../../../../core/common/widgets/custom_btn.dart';
+import '../../../../../core/common/widgets/custom_text_form_field.dart';
+import '../../../../../core/utils/app_strings.dart';
+import '../../../../../core/utils/app_styles.dart';
+import '../../../doctorprofile/cubit/note/note_cubit.dart';
 
 class PharmacyAddDetailsWidget extends StatelessWidget {
   PharmacyAddDetailsWidget(

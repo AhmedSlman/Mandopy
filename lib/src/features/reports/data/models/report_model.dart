@@ -3,7 +3,7 @@ class ReportModel {
   final String address;
   final String date;
   final String time;
-  final String medicationName;
+  final List<dynamic>? medicationName;
   final String? notes;
   final int? rating;
 
@@ -23,7 +23,7 @@ class ReportModel {
       address: json['address'],
       date: json['date'],
       time: json['time'],
-      medicationName: json['medication name'],
+      medicationName: json['medication names'],
       notes: json['notes'],
       rating: json['rating'],
     );

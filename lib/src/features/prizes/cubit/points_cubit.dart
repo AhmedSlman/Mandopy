@@ -1,7 +1,7 @@
 import 'package:bloc/bloc.dart';
-import 'package:mandopy/core/errors/error_model.dart';
-import 'package:mandopy/src/features/prizes/data/models/points_model.dart';
-import 'package:mandopy/src/features/prizes/data/repo/bouns_repo.dart';
+import '../../../../core/errors/error_model.dart';
+import '../data/models/points_model.dart';
+import '../data/repo/bouns_repo.dart';
 
 import '../../../../core/common/functions/medal_function.dart';
 

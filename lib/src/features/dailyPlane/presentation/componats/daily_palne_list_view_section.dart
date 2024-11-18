@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:mandopy/core/services/service_locator.dart';
-import 'package:mandopy/src/features/dailyPlane/presentation/widgets/visit_card_widget.dart';
+import '../../../../../core/services/service_locator.dart';
+import '../widgets/visit_card_widget.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 
 import '../../cubit/vistiCubit/visit_cubit.dart';
@@ -35,13 +35,16 @@ class DailyPlanListViewSection extends StatelessWidget {
                         address: visit.pharmacy?.address ??
                             visit.doctor?.address ??
                             '',
-                        time: visit.time,
-                        item: visit.medication?.name ?? '',
+                        time: visit.time ?? "N/A",
+                        item: visit.medications != null &&
+                                visit.medications!.isNotEmpty
+                            ? visit.medications!
+                                .map((med) => med.name)
+                                .join(", ")
+                            : "N/A",
                         isPharmacy: visit.pharmacy != null,
                         pharmacyid: visit.pharmacy?.id.toString() ?? '',
                         doctorId: visit.doctor?.id.toString() ?? '',
-
-                      
                         isCompleated: visit.status != "قيد الأنتظار",
                         visitId: visit.id.toString(),
                       ),

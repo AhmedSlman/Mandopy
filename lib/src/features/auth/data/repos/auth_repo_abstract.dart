@@ -1,11 +1,11 @@
 import 'dart:io';
 
 import 'package:dartz/dartz.dart';
-import 'package:mandopy/core/errors/error_model.dart';
-import 'package:mandopy/src/features/auth/data/models/forget_password_model.dart';
-import 'package:mandopy/src/features/auth/data/models/logout_model.dart';
-import 'package:mandopy/src/features/auth/data/models/reset_password_model.dart';
-import 'package:mandopy/src/features/auth/data/models/user_model.dart';
+import '../../../../../core/errors/error_model.dart';
+import '../models/forget_password_model.dart';
+import '../models/logout_model.dart';
+import '../models/reset_password_model.dart';
+import '../models/user_model.dart';
 
 abstract class AuthRepoAbstract {
   Future<Either<ErrorModel, RegisterResponse>> register({

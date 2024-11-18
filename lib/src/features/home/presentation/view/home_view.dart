@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:mandopy/core/common/widgets/custom_app_bar.dart';
-import 'package:mandopy/core/services/service_locator.dart';
-import 'package:mandopy/core/utils/app_strings.dart';
-import 'package:mandopy/src/features/auth/cubit/auth_cubit.dart';
-import 'package:mandopy/src/features/home/cubit/percentage/cubit/percentage_cubit.dart';
-import 'package:mandopy/src/features/home/presentation/componants/custom_drawer.dart';
-import 'package:mandopy/src/features/home/presentation/componants/daily_goals_section.dart';
-import 'package:mandopy/src/features/home/presentation/componants/monthly_goals_section.dart';
-import 'package:mandopy/src/features/home/presentation/componants/notification_section.dart';
+import '../../../../../core/common/widgets/custom_app_bar.dart';
+import '../../../../../core/services/service_locator.dart';
+import '../../../../../core/utils/app_strings.dart';
+import '../../../auth/cubit/auth_cubit.dart';
+import '../../cubit/percentage/cubit/percentage_cubit.dart';
+import '../componants/custom_drawer.dart';
+import '../componants/daily_goals_section.dart';
+import '../componants/monthly_goals_section.dart';
+import '../componants/notification_section.dart';
 
 import '../../../dailyPlane/cubit/vistiCubit/visit_cubit.dart';
 import '../../../dailyPlane/data/repo/visitRepo/vistit_repo.dart';

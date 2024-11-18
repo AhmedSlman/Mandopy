@@ -1,7 +1,7 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:mandopy/core/services/service_locator.dart';
+import '../../../../../core/services/service_locator.dart';
 
 class ProfileImagePicker extends StatefulWidget {
   final File? initialImage;

@@ -1,6 +1,6 @@
 import 'package:dartz/dartz.dart';
-import 'package:mandopy/core/errors/error_model.dart';
-import 'package:mandopy/src/features/location/data/model/location_model.dart';
+import '../../../../../core/errors/error_model.dart';
+import '../model/location_model.dart';
 
 abstract class LocationRepoAbstract {
   Future<Either<ErrorModel, LocationModel>> saveDoctorLocation({

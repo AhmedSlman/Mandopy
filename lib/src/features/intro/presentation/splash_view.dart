@@ -2,8 +2,8 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:mandopy/core/data/cached/cache_helper.dart';
-import 'package:mandopy/core/utils/app_assets.dart';
+import '../../../../core/data/cached/cache_helper.dart';
+import '../../../../core/utils/app_assets.dart';
 
 import '../../../../core/routes/router_names.dart';
 

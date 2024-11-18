@@ -1,6 +1,6 @@
 import 'package:bloc/bloc.dart';
-import 'package:mandopy/core/errors/error_model.dart';
-import 'package:mandopy/src/features/home/data/repos/percentage/percentage_repo_abstract.dart';
+import '../../../../../../core/errors/error_model.dart';
+import '../../../data/repos/percentage/percentage_repo_abstract.dart';
 import 'package:meta/meta.dart';
 
 import '../../../data/models/montly_target_model.dart';

@@ -1,7 +1,7 @@
 import 'package:dartz/dartz.dart';
-import 'package:mandopy/core/data/api/api_consumer.dart';
-import 'package:mandopy/core/errors/error_model.dart';
-import 'package:mandopy/src/features/home/data/repos/percentage/percentage_repo_abstract.dart';
+import '../../../../../../core/data/api/api_consumer.dart';
+import '../../../../../../core/errors/error_model.dart';
+import 'percentage_repo_abstract.dart';
 
 import '../../../../../../core/errors/exceptions.dart';
 import '../../models/montly_target_model.dart';

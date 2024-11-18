@@ -2,12 +2,11 @@ import 'dart:io';
 
 import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
-import 'package:mandopy/core/errors/error_model.dart';
-import 'package:mandopy/src/features/auth/data/models/logout_model.dart';
-import 'package:mandopy/src/features/auth/data/models/reset_password_model.dart';
-import 'package:mandopy/src/features/auth/data/models/user_model.dart';
-import 'package:mandopy/src/features/auth/data/repos/auth_repo_abstract.dart';
-import 'package:mandopy/src/features/auth/presentation/widgets/forget_password_message.dart';
+import '../../../../core/errors/error_model.dart';
+import '../data/models/logout_model.dart';
+import '../data/models/reset_password_model.dart';
+import '../data/models/user_model.dart';
+import '../data/repos/auth_repo_abstract.dart';
 
 import '../data/models/forget_password_model.dart';
 

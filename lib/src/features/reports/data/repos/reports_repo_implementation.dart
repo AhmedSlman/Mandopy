@@ -1,7 +1,7 @@
 import 'package:dartz/dartz.dart';
-import 'package:mandopy/core/errors/error_model.dart';
-import 'package:mandopy/src/features/reports/data/models/report_model.dart';
-import 'package:mandopy/src/features/reports/data/repos/reports_repo.dart';
+import '../../../../../core/errors/error_model.dart';
+import '../models/report_model.dart';
+import 'reports_repo.dart';
 
 import '../../../../../core/data/api/api_consumer.dart';
 import '../../../../../core/errors/exceptions.dart';

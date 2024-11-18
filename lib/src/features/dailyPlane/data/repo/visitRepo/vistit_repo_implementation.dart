@@ -1,10 +1,9 @@
 import 'package:dartz/dartz.dart';
-import 'package:mandopy/core/data/api/api_consumer.dart';
-import 'package:mandopy/core/data/cached/cache_helper.dart';
-import 'package:mandopy/core/errors/error_model.dart';
-import 'package:mandopy/core/errors/exceptions.dart';
-import 'package:mandopy/src/features/dailyPlane/data/models/visit_model.dart';
-import 'package:mandopy/src/features/dailyPlane/data/repo/visitRepo/vistit_repo.dart';
+import '../../../../../../core/data/api/api_consumer.dart';
+import '../../../../../../core/errors/error_model.dart';
+import '../../../../../../core/errors/exceptions.dart';
+import '../../models/visit_model.dart';
+import 'vistit_repo.dart';
 
 import '../../models/end_visit_model.dart';
 
@@ -17,24 +16,31 @@ class VisitRepoImplementation implements VisitRepoAbstract {
   Future<Either<ErrorModel, VisitModel>> addVisit({
     required String date,
     required String time,
-    required String medicationId,
+    required List<String> medicationIds,
     String? pharmacyId,
     String? doctorId,
     required String notes,
     required bool isSold,
   }) async {
     try {
+    
+      final Map<String, dynamic> requestBody = {
+        'date': date,
+        'time': time,
+        'pharmacy_id': pharmacyId,
+        'doctor_id': doctorId,
+        'notes': notes,
+        'is_sold': isSold ? '1' : '0',
+      };
+
+      // Add medication_ids dynamically
+      for (int i = 0; i < medicationIds.length; i++) {
+        requestBody['medication_ids[$i]'] = medicationIds[i];
+      }
+
       final response = await api.post(
         "visits",
-        data: {
-          'date': date,
-          'time': time,
-          'medication_id': medicationId,
-          'pharmacy_id': pharmacyId,
-          'doctor_id': doctorId,
-          'notes': notes,
-          'is_sold': isSold ? '1' : '0',
-        },
+        data: requestBody,
         isFormData: true,
       );
 

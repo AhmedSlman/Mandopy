@@ -1,5 +1,5 @@
 import 'package:dartz/dartz.dart';
-import 'package:mandopy/src/features/reports/data/models/report_model.dart';
+import '../models/report_model.dart';
 
 import '../../../../../core/errors/error_model.dart';
 

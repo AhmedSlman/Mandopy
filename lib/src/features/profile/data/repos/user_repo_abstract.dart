@@ -1,8 +1,8 @@
 import 'dart:io';
 
 import 'package:dartz/dartz.dart';
-import 'package:mandopy/core/errors/error_model.dart';
-import 'package:mandopy/src/features/auth/data/models/user_model.dart';
+import '../../../../../core/errors/error_model.dart';
+import '../../../auth/data/models/user_model.dart';
 
 import '../models/statistics_model.dart';
 import '../models/user_model.dart';

@@ -1,13 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:mandopy/core/theme/app_colors.dart';
-import 'package:mandopy/core/utils/app_strings.dart';
-import 'package:mandopy/core/utils/app_styles.dart';
-import 'package:mandopy/src/features/home/cubit/percentage/cubit/percentage_cubit.dart';
+import '../../../../../core/theme/app_colors.dart';
+import '../../../../../core/utils/app_styles.dart';
+import '../../cubit/percentage/cubit/percentage_cubit.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 
-import 'progress_bar_widget.dart';
 
 class CircularProgressBarWidget extends StatelessWidget {
   const CircularProgressBarWidget({

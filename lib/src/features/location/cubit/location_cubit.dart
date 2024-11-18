@@ -1,7 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:geolocator/geolocator.dart';
-import 'package:mandopy/src/features/location/data/model/location_model.dart';
-import 'package:mandopy/src/features/location/data/repo/location_repo_abstract.dart';
+import '../data/model/location_model.dart';
+import '../data/repo/location_repo_abstract.dart';
 
 part 'location_state.dart';
 

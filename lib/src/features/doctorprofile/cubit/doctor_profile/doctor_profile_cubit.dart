@@ -1,7 +1,7 @@
 import 'package:bloc/bloc.dart';
-import 'package:mandopy/core/errors/error_model.dart';
-import 'package:mandopy/src/features/doctorprofile/data/models/doctor_profile_model.dart';
-import 'package:mandopy/src/features/doctorprofile/data/repos/doctor_repo_abstract.dart';
+import '../../../../../core/errors/error_model.dart';
+import '../../data/models/doctor_profile_model.dart';
+import '../../data/repos/doctor_repo_abstract.dart';
 import 'package:meta/meta.dart';
 
 part 'doctor_profile_state.dart';

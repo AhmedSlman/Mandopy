@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:mandopy/src/features/reports/data/models/report_model.dart';
+import '../../data/models/report_model.dart';
 
-import '../../../../../core/common/widgets/custom_btn.dart';
 import '../../../../../core/theme/app_colors.dart';
-import '../../../../../core/utils/app_strings.dart';
 import '../../../../../core/utils/app_styles.dart';
 import 'rating_info.dart';
 import 'report_card_info.dart';
@@ -53,11 +51,11 @@ class ReportCardWidget extends StatelessWidget {
                   title: 'اسم الطبيب/ الصيدلية:',
                   value: reports?.doctorOrPharmacyName ?? 'N/A',
                 ),
-                // SizedBox(height: 2.h),
-                // ReportCardInfo(
-                //   title: 'الموقع:',
-                //   value: reports?.pharmacy?.address ?? 'N/A',
-                // ),
+                SizedBox(height: 2.h),
+                ReportCardInfo(
+                  title: 'الموقع:',
+                  value: reports?.address ?? 'N/A',
+                ),
                 SizedBox(height: 2.h),
                 ReportCardInfo(
                   title: 'التاريخ:',
@@ -71,7 +69,7 @@ class ReportCardWidget extends StatelessWidget {
                 SizedBox(height: 2.h),
                 ReportCardInfo(
                   title: 'المادة الفعالة/الدواء المسوق:',
-                  value: reports?.medicationName ?? 'N/A',
+                  value: reports?.medicationName?.join(', ') ?? 'N/A',
                 ),
                 SizedBox(height: 2.h),
                 const ReportCardInfo(
@@ -88,17 +86,17 @@ class ReportCardWidget extends StatelessWidget {
               ],
             ),
           ),
-          Align(
-            alignment: Alignment.centerLeft,
-            child: CustomButton(
-              width: 85.w,
-              height: 30.h,
-              borderRadius: BorderRadius.circular(2),
-              textStyle: AppStyles.s10,
-              text: AppStrings.showDetails,
-              onPressed: () {},
-            ),
-          ),
+          // Align(
+          //   alignment: Alignment.centerLeft,
+          //   child: CustomButton(
+          //     width: 85.w,
+          //     height: 30.h,
+          //     borderRadius: BorderRadius.circular(2),
+          //     textStyle: AppStyles.s10,
+          //     text: AppStrings.showDetails,
+          //     onPressed: () {},
+          //   ),
+          // ),
         ],
       ),
     );

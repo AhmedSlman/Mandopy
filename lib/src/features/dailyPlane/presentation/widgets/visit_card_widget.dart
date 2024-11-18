@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
-import 'package:mandopy/core/common/widgets/custom_btn.dart';
-import 'package:mandopy/core/theme/app_colors.dart';
-import 'package:mandopy/core/utils/app_styles.dart';
-import 'package:mandopy/src/features/dailyPlane/presentation/widgets/number_of_visit_row.dart';
-import 'package:mandopy/src/features/dailyPlane/presentation/widgets/visit_item_row_widget.dart';
+import '../../../../../core/common/widgets/custom_btn.dart';
+import '../../../../../core/theme/app_colors.dart';
+import '../../../../../core/utils/app_styles.dart';
+import 'number_of_visit_row.dart';
+import 'visit_item_row_widget.dart';
 
 import '../../../../../core/routes/router_names.dart';
 import '../../cubit/vistiCubit/visit_cubit.dart';

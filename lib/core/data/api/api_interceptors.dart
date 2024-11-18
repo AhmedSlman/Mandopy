@@ -1,5 +1,5 @@
 import 'package:dio/dio.dart';
-import 'package:mandopy/core/data/cached/cache_helper.dart';
+import '../cached/cache_helper.dart';
 
 class ApiInterceptors extends Interceptor {
   @override

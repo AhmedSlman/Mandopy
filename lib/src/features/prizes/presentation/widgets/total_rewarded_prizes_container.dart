@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:mandopy/src/features/prizes/cubit/points_cubit.dart';
+import '../../cubit/points_cubit.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 
 import '../../../../../core/theme/app_colors.dart';

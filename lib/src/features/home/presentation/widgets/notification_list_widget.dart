@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:skeletonizer/skeletonizer.dart';
-import 'package:mandopy/src/features/home/cubit/notification/notification_cubit.dart';
-import 'package:mandopy/src/features/home/presentation/widgets/notification_card_widget.dart';
+import '../../cubit/notification/notification_cubit.dart';
+import 'notification_card_widget.dart';
 
 class NotificationsList extends StatelessWidget {
   const NotificationsList({

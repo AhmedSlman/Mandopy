@@ -1,6 +1,6 @@
 import 'package:dartz/dartz.dart';
-import 'package:mandopy/src/features/doctorprofile/data/models/doctor_profile_model.dart';
-import 'package:mandopy/src/features/doctorprofile/data/models/note_model.dart';
+import '../models/doctor_profile_model.dart';
+import '../models/note_model.dart';
 
 import '../../../../../core/errors/error_model.dart';
 

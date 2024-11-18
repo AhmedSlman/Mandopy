@@ -1,6 +1,6 @@
 import 'package:bloc/bloc.dart';
-import 'package:mandopy/core/errors/error_model.dart';
-import 'package:mandopy/src/features/dailyPlane/data/repo/visitRepo/vistit_repo.dart';
+import '../../../../../core/errors/error_model.dart';
+import '../../data/repo/visitRepo/vistit_repo.dart';
 import 'visit_state.dart';
 
 class VisitCubit extends Cubit<VisitState> {
@@ -12,7 +12,7 @@ class VisitCubit extends Cubit<VisitState> {
   Future<void> addVisit({
     required String date,
     required String time,
-    required String medicationId,
+    required List<String> medicationIds,
     String? pharmacyId,
     String? doctorId,
     required String notes,
@@ -23,7 +23,7 @@ class VisitCubit extends Cubit<VisitState> {
     final result = await visitRepo.addVisit(
       date: date,
       time: time,
-      medicationId: medicationId,
+      medicationIds: medicationIds,
       pharmacyId: pharmacyId,
       doctorId: doctorId,
       notes: notes,

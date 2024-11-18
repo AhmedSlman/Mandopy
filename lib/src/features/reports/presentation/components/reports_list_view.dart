@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:mandopy/src/features/reports/cubit/reports_cubit.dart';
-import 'package:mandopy/src/features/reports/presentation/widgets/report_card_widget.dart';
+import '../../cubit/reports_cubit.dart';
+import '../widgets/report_card_widget.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 
 class ReportsListView extends StatelessWidget {

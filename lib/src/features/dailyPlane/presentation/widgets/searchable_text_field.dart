@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:mandopy/src/features/dailyPlane/cubit/targetsCubit/targets_cubit.dart';
-import 'package:mandopy/src/features/dailyPlane/cubit/targetsCubit/targets_state.dart';
+import '../../cubit/targetsCubit/targets_cubit.dart';
+import '../../cubit/targetsCubit/targets_state.dart';
 
 import '../../../../../core/data/cached/cache_helper.dart';
 

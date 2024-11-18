@@ -2,15 +2,15 @@ import 'dart:io';
 
 import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
-import 'package:mandopy/core/data/api/api_consumer.dart';
-import 'package:mandopy/core/data/cached/cache_helper.dart';
-import 'package:mandopy/core/errors/error_model.dart';
-import 'package:mandopy/core/errors/exceptions.dart';
-import 'package:mandopy/src/features/auth/data/models/forget_password_model.dart';
-import 'package:mandopy/src/features/auth/data/models/logout_model.dart';
-import 'package:mandopy/src/features/auth/data/models/reset_password_model.dart';
-import 'package:mandopy/src/features/auth/data/models/user_model.dart';
-import 'package:mandopy/src/features/auth/data/repos/auth_repo_abstract.dart';
+import '../../../../../core/data/api/api_consumer.dart';
+import '../../../../../core/data/cached/cache_helper.dart';
+import '../../../../../core/errors/error_model.dart';
+import '../../../../../core/errors/exceptions.dart';
+import '../models/forget_password_model.dart';
+import '../models/logout_model.dart';
+import '../models/reset_password_model.dart';
+import '../models/user_model.dart';
+import 'auth_repo_abstract.dart';
 import 'package:path/path.dart' as path;
 
 class AuthRepoImplementation implements AuthRepoAbstract {

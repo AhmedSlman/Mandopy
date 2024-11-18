@@ -3,11 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
-import 'package:mandopy/core/data/cached/cache_helper.dart';
-import 'package:mandopy/core/routes/router_names.dart';
-import 'package:mandopy/core/services/service_locator.dart';
-import 'package:mandopy/core/theme/app_colors.dart';
-import 'package:mandopy/src/features/auth/cubit/auth_cubit.dart';
+import '../../../../../core/data/cached/cache_helper.dart';
+import '../../../../../core/routes/router_names.dart';
+import '../../../../../core/theme/app_colors.dart';
+import '../../../auth/cubit/auth_cubit.dart';
 
 import '../../../../../core/utils/app_assets.dart';
 

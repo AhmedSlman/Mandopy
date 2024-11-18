@@ -1,11 +1,11 @@
 import 'package:dartz/dartz.dart';
-import 'package:mandopy/core/data/api/api_consumer.dart';
-import 'package:mandopy/core/errors/error_model.dart';
-import 'package:mandopy/core/errors/exceptions.dart';
-import 'package:mandopy/src/features/dailyPlane/data/models/doctor_model.dart';
-import 'package:mandopy/src/features/dailyPlane/data/models/medecation_model.dart';
-import 'package:mandopy/src/features/dailyPlane/data/models/pharmacy_model.dart';
-import 'package:mandopy/src/features/dailyPlane/data/repo/targetsAndMedecineREpo/targets_and_medecine_repo.dart';
+import '../../../../../../core/data/api/api_consumer.dart';
+import '../../../../../../core/errors/error_model.dart';
+import '../../../../../../core/errors/exceptions.dart';
+import '../../models/doctor_model.dart';
+import '../../models/medecation_model.dart';
+import '../../models/pharmacy_model.dart';
+import 'targets_and_medecine_repo.dart';
 
 class TargetsRepoImplementation implements TargatsRepoAbstract {
   final ApiConsumer api;

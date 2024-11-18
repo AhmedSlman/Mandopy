@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:mandopy/core/services/service_locator.dart';
-import 'package:mandopy/src/features/home/cubit/notification/notification_cubit.dart';
-import 'package:mandopy/src/features/home/presentation/widgets/notification_list_widget.dart';
-import 'package:mandopy/src/features/home/presentation/widgets/notification_title_widget.dart';
+import '../../../../../core/services/service_locator.dart';
+import '../../cubit/notification/notification_cubit.dart';
+import '../widgets/notification_list_widget.dart';
+import '../widgets/notification_title_widget.dart';
 
 class NotificationSection extends StatelessWidget {
   const NotificationSection({super.key});

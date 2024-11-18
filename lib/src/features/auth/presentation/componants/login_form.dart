@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
-import 'package:mandopy/core/common/functions/validator.dart';
-import 'package:mandopy/core/common/widgets/custom_btn.dart';
-import 'package:mandopy/core/routes/router_names.dart';
-import 'package:mandopy/core/utils/app_strings.dart';
-import 'package:mandopy/src/features/auth/cubit/auth_cubit.dart';
-import 'package:mandopy/src/features/auth/presentation/widgets/auth_text_form_field.dart';
-import 'package:mandopy/src/features/auth/presentation/widgets/forget_password.dart';
+import '../../../../../core/common/functions/validator.dart';
+import '../../../../../core/common/widgets/custom_btn.dart';
+import '../../../../../core/routes/router_names.dart';
+import '../../../../../core/utils/app_strings.dart';
+import '../../cubit/auth_cubit.dart';
+import '../widgets/auth_text_form_field.dart';
+import '../widgets/forget_password.dart';
 
 import '../../../../../core/functions/show_toast.dart';
 

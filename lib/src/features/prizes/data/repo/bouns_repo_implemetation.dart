@@ -1,9 +1,9 @@
 import 'package:dartz/dartz.dart';
-import 'package:mandopy/core/data/api/api_consumer.dart';
-import 'package:mandopy/core/errors/error_model.dart';
-import 'package:mandopy/core/errors/exceptions.dart';
-import 'package:mandopy/src/features/prizes/data/models/points_model.dart';
-import 'package:mandopy/src/features/prizes/data/repo/bouns_repo.dart';
+import '../../../../../core/data/api/api_consumer.dart';
+import '../../../../../core/errors/error_model.dart';
+import '../../../../../core/errors/exceptions.dart';
+import '../models/points_model.dart';
+import 'bouns_repo.dart';
 
 class BounsRepoImplementation implements BounsRepoAbstract {
   final ApiConsumer api;

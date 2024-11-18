@@ -22,15 +22,12 @@ class PharmacyInfoContainer extends StatefulWidget {
 }
 
 class _PharmacyInfoContainerState extends State<PharmacyInfoContainer> {
-  // Flag to control the loading dialog
   bool isCheckingLocation = false;
 
-  // Function to show the loading message while checking location
   Future<void> _showLoadingDialog(BuildContext context) async {
     showDialog(
       context: context,
-      barrierDismissible:
-          false, // Don't allow closing the dialog by tapping outside
+      barrierDismissible: false,
       builder: (BuildContext context) {
         return const AlertDialog(
           content: Row(
@@ -46,7 +43,6 @@ class _PharmacyInfoContainerState extends State<PharmacyInfoContainer> {
     );
   }
 
-  // Function to close the loading dialog
   void _dismissLoadingDialog(BuildContext context) {
     Navigator.of(context).pop();
   }

@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
-import 'package:mandopy/core/common/widgets/custom_btn.dart';
-import 'package:mandopy/core/services/service_locator.dart';
-import 'package:mandopy/src/features/dailyPlane/cubit/targetsCubit/targets_cubit.dart';
+import '../../../../../core/common/widgets/custom_btn.dart';
+import '../../../../../core/services/service_locator.dart';
+import '../../cubit/targetsCubit/targets_cubit.dart';
 
 import '../../../../../core/functions/show_toast.dart';
 import '../../../../../core/theme/app_colors.dart';
@@ -15,7 +15,6 @@ import '../widgets/add_purpose_custom_text_field.dart';
 import '../widgets/date_picker.dart';
 import '../widgets/drop_down_text)field.dart';
 
-import '../widgets/radio_option.dart';
 import '../widgets/searchable_text_field.dart';
 import '../widgets/time_picker.dart';
 
@@ -27,7 +26,7 @@ class AddDailyPlanForm extends StatefulWidget {
 }
 
 class _AddDailyPlanFormState extends State<AddDailyPlanForm> {
-  String? _selectedMedicationId;
+  List<String> _selectedMedicationIds = []; 
   String? _selectedDoctorId;
   String? _selectedPharmacyId;
 
@@ -45,7 +44,7 @@ class _AddDailyPlanFormState extends State<AddDailyPlanForm> {
   void _onAddToPlanPressed(BuildContext context) {
     if (_selectedDate != null &&
         _selectedTime != null &&
-        _selectedMedicationId != null) {
+        _selectedMedicationIds.isNotEmpty) {
       final notes = addPurposeTextEditingController.text;
       const isSold = false;
 
@@ -54,7 +53,7 @@ class _AddDailyPlanFormState extends State<AddDailyPlanForm> {
       context.read<VisitCubit>().addVisit(
             date: _selectedDate.toString(),
             time: formattedTime,
-            medicationId: _selectedMedicationId!,
+            medicationIds: _selectedMedicationIds,
             pharmacyId: _selectedPharmacyId,
             doctorId: _selectedDoctorId,
             notes: notes,
@@ -87,6 +86,7 @@ class _AddDailyPlanFormState extends State<AddDailyPlanForm> {
           );
         }
         if (state is VisitError) {
+          GoRouter.of(context).pop();
           showToast(message: state.error.message, state: ToastStates.ERROR);
         } else if (state is VisitsLoaded) {
           GoRouter.of(context).pop();
@@ -105,51 +105,15 @@ class _AddDailyPlanFormState extends State<AddDailyPlanForm> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             SizedBox(height: 17.0.h),
-            // const Text(AppStrings.selectPurpose),
-            // SizedBox(height: 9.0.h),
-            // Row(
-            //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            //   children: [
-            //     RadioOption(
-            //       choice: 'طبيب',
-            //       groupValue: _selectedPurpose,
-            //       onChanged: (String? value) {
-            //         setState(() {
-            //           _selectedPurpose = value;
-            //           debugPrint("Selected purpose: $_selectedPurpose");
-            //         });
-            //       },
-            //     ),
-            //     RadioOption(
-            //       choice: 'صيدلية',
-            //       groupValue: _selectedPurpose,
-            //       onChanged: (String? value) {
-            //         setState(() {
-            //           _selectedPurpose = value;
-            //           debugPrint("Selected purpose: $_selectedPurpose");
-            //         });
-            //       },
-            //     ),
-            //     RadioOption(
-            //       choice: 'مختلط',
-            //       groupValue: _selectedPurpose,
-            //       onChanged: (String? value) {
-            //         setState(() {
-            //           _selectedPurpose = value;
-            //           debugPrint("Selected purpose: $_selectedPurpose");
-            //         });
-            //       },
-            //     ),
-            //   ],
-            // ),
             const Text(AppStrings.selectActiveIngredient),
             SizedBox(height: 5.h),
             BlocProvider(
               create: (context) => getIt<TargetsCubit>()..fetchMedications(),
               child: DropDownTextField(
-                onSelect: (String? id) {
+                isMultiSelect: true,
+                onSelect: (List<String> ids) {
                   setState(() {
-                    _selectedMedicationId = id;
+                    _selectedMedicationIds = ids;
                   });
                 },
               ),
@@ -189,7 +153,6 @@ class _AddDailyPlanFormState extends State<AddDailyPlanForm> {
             SizedBox(height: 15.h),
             const Text(AppStrings.choosePlans),
             SizedBox(height: 5.h),
-
             BlocProvider(
               create: (context) => getIt<TargetsCubit>(),
               child: SearchableTextField(
@@ -206,7 +169,6 @@ class _AddDailyPlanFormState extends State<AddDailyPlanForm> {
                 },
               ),
             ),
-
             SizedBox(height: 15.h),
             Center(
               child: CustomButton(
@@ -222,15 +184,4 @@ class _AddDailyPlanFormState extends State<AddDailyPlanForm> {
       ),
     );
   }
-
-  // void _resetForm() {
-  //   setState(() {
-  //     _selectedMedicationId = null;
-  //     _selectedDoctorId = null;
-  //     _selectedPharmacyId = null;
-  //     _selectedDate = null;
-  //     _selectedTime = null;
-  //     addPurposeTextEditingController.clear();
-  //   });
-  // }
 }

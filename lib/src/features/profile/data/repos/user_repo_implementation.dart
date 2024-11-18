@@ -2,11 +2,11 @@ import 'dart:io';
 
 import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
-import 'package:mandopy/core/data/api/api_consumer.dart';
-import 'package:mandopy/core/errors/error_model.dart';
-import 'package:mandopy/src/features/auth/data/models/user_model.dart';
-import 'package:mandopy/src/features/profile/data/models/statistics_model.dart';
-import 'package:mandopy/src/features/profile/data/repos/user_repo_abstract.dart';
+import '../../../../../core/data/api/api_consumer.dart';
+import '../../../../../core/errors/error_model.dart';
+import '../../../auth/data/models/user_model.dart';
+import '../models/statistics_model.dart';
+import 'user_repo_abstract.dart';
 
 import '../../../../../core/errors/exceptions.dart';
 import '../models/user_model.dart';

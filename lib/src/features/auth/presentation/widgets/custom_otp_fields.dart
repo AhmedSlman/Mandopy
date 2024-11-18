@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:mandopy/core/theme/app_colors.dart';
+import '../../../../../core/theme/app_colors.dart';
 
 class CustomOTPFields extends StatelessWidget {
   final List<TextEditingController> controllers;

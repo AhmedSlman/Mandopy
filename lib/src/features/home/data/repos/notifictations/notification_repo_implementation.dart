@@ -1,10 +1,10 @@
 import 'package:dartz/dartz.dart';
 import 'package:flutter/material.dart';
-import 'package:mandopy/core/data/api/api_consumer.dart';
-import 'package:mandopy/core/errors/error_model.dart';
-import 'package:mandopy/core/errors/exceptions.dart';
-import 'package:mandopy/src/features/home/data/models/notification_model.dart';
-import 'package:mandopy/src/features/home/data/repos/notifictations/notification_repo.dart';
+import '../../../../../../core/data/api/api_consumer.dart';
+import '../../../../../../core/errors/error_model.dart';
+import '../../../../../../core/errors/exceptions.dart';
+import '../../models/notification_model.dart';
+import 'notification_repo.dart';
 
 import '../../../../../../core/data/cached/cache_helper.dart';
 

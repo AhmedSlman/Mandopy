@@ -1,6 +1,6 @@
 import 'package:dio/dio.dart';
-import 'package:mandopy/core/constants/app_constants.dart';
-import 'package:mandopy/core/errors/exceptions.dart';
+import '../../constants/app_constants.dart';
+import '../../errors/exceptions.dart';
 import '../cached/cache_helper.dart';
 import 'api_consumer.dart';
 

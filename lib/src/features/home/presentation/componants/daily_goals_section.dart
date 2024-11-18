@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:mandopy/core/utils/app_strings.dart';
+import '../../../../../core/utils/app_strings.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 
-import 'package:mandopy/src/features/home/presentation/widgets/daily_goals_title.dart';
-import 'package:mandopy/src/features/home/presentation/widgets/progress_bar_widget.dart';
+import '../widgets/daily_goals_title.dart';
+import '../widgets/progress_bar_widget.dart';
 
 import '../../cubit/percentage/cubit/percentage_cubit.dart';
 

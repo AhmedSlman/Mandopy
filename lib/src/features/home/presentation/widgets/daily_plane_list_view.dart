@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:mandopy/src/features/dailyPlane/cubit/vistiCubit/visit_cubit.dart';
-import 'package:mandopy/src/features/dailyPlane/cubit/vistiCubit/visit_state.dart';
-import 'package:mandopy/src/features/home/data/models/visit_card_model.dart';
-import 'package:mandopy/src/features/home/presentation/widgets/daily_plane_item_card.dart';
+import '../../../dailyPlane/cubit/vistiCubit/visit_cubit.dart';
+import '../../../dailyPlane/cubit/vistiCubit/visit_state.dart';
+import '../../data/models/visit_card_model.dart';
+import 'daily_plane_item_card.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 
 import '../../../../../core/theme/app_colors.dart';
@@ -50,15 +50,14 @@ class DailyPlanListView extends StatelessWidget {
                 scrollDirection: Axis.horizontal,
                 itemCount: state.visits.length,
                 itemBuilder: (context, index) {
-                  final visit = visits[index];
                   return Padding(
                     padding: const EdgeInsets.only(left: 16.0),
                     child: DailyPlaneItemCard(
                       doctorName: state.visits[index].doctor?.name ??
                           state.visits[index].pharmacy?.name ??
                           'N/A',
-                      time: state.visits[index].time,
-                      status: state.visits[index].status,
+                      time: state.visits[index].time ?? "N/A",
+                      status: state.visits[index].status ?? "N/A",
                       statusColor: state.visits[index].status == "أكتملت"
                           ? AppColors.primaryColor
                           : state.visits[index].status == "جارية"

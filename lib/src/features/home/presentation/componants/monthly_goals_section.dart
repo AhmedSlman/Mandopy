@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:mandopy/core/utils/app_strings.dart';
-import 'package:mandopy/src/features/home/presentation/widgets/circular_progress_bar.dart';
-import 'package:mandopy/src/features/home/presentation/widgets/daily_goals_title.dart';
+import '../../../../../core/utils/app_strings.dart';
+import '../widgets/circular_progress_bar.dart';
+import '../widgets/daily_goals_title.dart';
 
 class MonthlyGoalsSection extends StatelessWidget {
   const MonthlyGoalsSection({super.key});

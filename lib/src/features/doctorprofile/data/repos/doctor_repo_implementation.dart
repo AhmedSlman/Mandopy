@@ -1,9 +1,9 @@
 import 'package:dartz/dartz.dart';
-import 'package:mandopy/core/data/api/api_consumer.dart';
-import 'package:mandopy/core/errors/error_model.dart';
-import 'package:mandopy/src/features/doctorprofile/data/models/doctor_profile_model.dart';
-import 'package:mandopy/src/features/doctorprofile/data/models/note_model.dart';
-import 'package:mandopy/src/features/doctorprofile/data/repos/doctor_repo_abstract.dart';
+import '../../../../../core/data/api/api_consumer.dart';
+import '../../../../../core/errors/error_model.dart';
+import '../models/doctor_profile_model.dart';
+import '../models/note_model.dart';
+import 'doctor_repo_abstract.dart';
 
 import '../../../../../core/errors/exceptions.dart';
 

@@ -1,8 +1,8 @@
 import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
-import 'package:mandopy/src/features/dailyPlane/cubit/targetsCubit/targets_state.dart';
-import 'package:mandopy/src/features/dailyPlane/data/models/pharmacy_model.dart';
-import 'package:mandopy/src/features/dailyPlane/data/repo/targetsAndMedecineREpo/targets_and_medecine_repo.dart';
+import 'targets_state.dart';
+import '../../data/models/pharmacy_model.dart';
+import '../../data/repo/targetsAndMedecineREpo/targets_and_medecine_repo.dart';
 
 import '../../data/models/doctor_model.dart';
 

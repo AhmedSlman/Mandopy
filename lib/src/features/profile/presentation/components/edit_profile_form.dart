@@ -5,14 +5,12 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
-import 'package:mandopy/src/features/profile/cubit/edit_profile/edit_profile_cubit.dart';
-import 'package:mandopy/src/features/profile/cubit/user/user_cubit.dart';
+import '../../cubit/edit_profile/edit_profile_cubit.dart';
 
 import '../../../../../core/common/widgets/custom_btn.dart';
 import '../../../../../core/common/widgets/custom_text_form_field.dart';
 import '../../../../../core/functions/show_toast.dart';
 import '../../../../../core/utils/app_strings.dart';
-import '../widgets/edit_image_widget.dart';
 import '../widgets/profile_image_picker.dart';
 
 class EditProfileForm extends StatefulWidget {

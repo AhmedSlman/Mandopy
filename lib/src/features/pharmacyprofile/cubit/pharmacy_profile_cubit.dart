@@ -1,7 +1,7 @@
 import 'package:bloc/bloc.dart';
-import 'package:mandopy/core/errors/error_model.dart';
-import 'package:mandopy/src/features/pharmacyprofile/data/models/pharmacy_profile_model.dart';
-import 'package:mandopy/src/features/pharmacyprofile/data/repos/pharmacy_repo_abstract.dart';
+import '../../../../core/errors/error_model.dart';
+import '../data/models/pharmacy_profile_model.dart';
+import '../data/repos/pharmacy_repo_abstract.dart';
 import 'package:meta/meta.dart';
 
 part 'pharmacy_profile_state.dart';
