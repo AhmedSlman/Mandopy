@@ -11,7 +11,7 @@ class MonthlyGoalsSection extends StatelessWidget {
     return const Column(
       children: [
         GoalsTitle(title: AppStrings.monthlyGoals),
-        CircularProgressBarWidget(progressValue: 0)
+        CircularProgressBarWidget()
       ],
     );
   }

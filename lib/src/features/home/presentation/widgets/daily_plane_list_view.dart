@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import '../../../../../core/utils/app_styles.dart';
 import '../../../dailyPlane/cubit/vistiCubit/visit_cubit.dart';
 import '../../../dailyPlane/cubit/vistiCubit/visit_state.dart';
 import '../../data/models/visit_card_model.dart';
@@ -10,11 +11,8 @@ import 'package:skeletonizer/skeletonizer.dart';
 import '../../../../../core/theme/app_colors.dart';
 
 class DailyPlanListView extends StatelessWidget {
-  final List<VisitCardModel> visits;
-
   const DailyPlanListView({
     super.key,
-    required this.visits,
   });
 
   @override
@@ -46,6 +44,14 @@ class DailyPlanListView extends StatelessWidget {
                 },
               );
             } else if (state is VisitsLoaded) {
+              if (state.visits.isEmpty) {
+                return Center(
+                  child: Text(
+                    'No visits available',
+                    style: AppStyles.s16,
+                  ),
+                );
+              }
               return ListView.builder(
                 scrollDirection: Axis.horizontal,
                 itemCount: state.visits.length,

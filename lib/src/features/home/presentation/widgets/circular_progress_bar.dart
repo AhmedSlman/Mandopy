@@ -6,13 +6,12 @@ import '../../../../../core/utils/app_styles.dart';
 import '../../cubit/percentage/cubit/percentage_cubit.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 
-
 class CircularProgressBarWidget extends StatelessWidget {
   const CircularProgressBarWidget({
     super.key,
-    required this.progressValue,
+    // required this.progressValue,
   });
-  final double progressValue;
+  // final double progressValue;
 
   @override
   Widget build(BuildContext context) {

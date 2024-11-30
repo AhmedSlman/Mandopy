@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import '../../../../../core/utils/app_styles.dart';
 import '../../../dailyPlane/cubit/vistiCubit/visit_cubit.dart';
 import '../../cubit/doctor_profile/doctor_profile_cubit.dart';
 import '../../../location/cubit/location_cubit.dart';
@@ -86,7 +87,7 @@ class _DoctorInfoContainerState extends State<DoctorInfoContainer> {
       },
       child: Container(
         width: 373.w,
-        height: 280.h,
+        height: 340.h,
         margin: EdgeInsets.only(left: 8.h),
         padding: EdgeInsets.symmetric(horizontal: 18.h, vertical: 26.h),
         decoration: BoxDecoration(
@@ -140,9 +141,8 @@ class _DoctorInfoContainerState extends State<DoctorInfoContainer> {
                         width: 100.w,
                         height: 30.h,
                         text: 'بدء الزيارة',
-                        textStyle: const TextStyle(
+                        textStyle: AppStyles.s12.copyWith(
                           color: Colors.white,
-                          fontWeight: FontWeight.w500,
                         ),
                         onPressed: () async {
                           final locationCubit = context.read<LocationCubit>();
@@ -179,9 +179,8 @@ class _DoctorInfoContainerState extends State<DoctorInfoContainer> {
                         width: 100.w,
                         height: 30.h,
                         text: 'انهاء الزيارة',
-                        textStyle: const TextStyle(
+                        textStyle: AppStyles.s12.copyWith(
                           color: Colors.white,
-                          fontWeight: FontWeight.w500,
                         ),
                         onPressed: () async {
                           if (!context.read<VisitCubit>().isVisitStarted) {

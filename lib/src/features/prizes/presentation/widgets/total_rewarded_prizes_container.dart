@@ -23,7 +23,7 @@ class TotalRewardedPrizesContainer extends StatelessWidget {
           return Skeletonizer(
             child: Container(
               width: 404.w,
-              height: 129.h,
+              height: 150.h,
               color: Colors.grey,
             ),
           );
@@ -31,7 +31,7 @@ class TotalRewardedPrizesContainer extends StatelessWidget {
           final int progressPercentage = (state.progress * 100).toInt();
           return Container(
             width: 404.w,
-            height: 129.h,
+            height: 160.h,
             decoration: BoxDecoration(
               color: AppColors.primaryColor,
               borderRadius: BorderRadius.circular(5),

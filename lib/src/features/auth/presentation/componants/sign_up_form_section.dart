@@ -120,12 +120,14 @@ class _SignUpFormSectionState extends State<SignUpFormSection> {
             hintText: AppStrings.hintPassword,
             controller: passwordController,
             validator: Validator.validatePassword,
+            isPassword: true,
           ),
           AuthTextFormField(
             titleOfField: AppStrings.confirmPassword,
             hintText: AppStrings.hintPassword,
             controller: passwordConfirmController,
             validator: Validator.validatePassword,
+            isPassword: true,
           ),
           AuthTextFormField(
             titleOfField: AppStrings.confirmationCode,

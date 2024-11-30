@@ -13,6 +13,8 @@ class LocationCubit extends Cubit<LocationState> {
 
   Future<bool> checkLocationServices() async {
     bool serviceEnabled = await Geolocator.isLocationServiceEnabled();
+    print("Location Services Enabled: $serviceEnabled");
+
     if (!serviceEnabled) {
       emit(LocationFailure(message: "خدمات الموقع غير مفعلة"));
       return false;
@@ -22,8 +24,12 @@ class LocationCubit extends Cubit<LocationState> {
 
   Future<bool> checkLocationPermission() async {
     LocationPermission permission = await Geolocator.checkPermission();
+    print("Initial Location Permission: $permission");
+
     if (permission == LocationPermission.denied) {
       permission = await Geolocator.requestPermission();
+      print("Requested Location Permission: $permission");
+
       if (permission == LocationPermission.denied) {
         emit(LocationFailure(message: "تم رفض إذن الموقع"));
         return false;
@@ -79,6 +85,9 @@ class LocationCubit extends Cubit<LocationState> {
         latitude: position.latitude,
         longitude: position.longitude,
       );
+
+      print(
+          "Sending Pharmacy Location: Latitude = ${position.latitude}, Longitude = ${position.longitude}");
 
       result.fold(
         (error) => emit(LocationFailure(message: error.message)),
@@ -216,21 +225,29 @@ class LocationCubit extends Cubit<LocationState> {
   }) async {
     try {
       emit(LocationLoading());
+      print("Checking location services and permissions...");
 
       if (!await checkLocationServices() || !await checkLocationPermission()) {
+        print("Location services or permission check failed.");
         return;
       }
 
       Position currentPosition = await Geolocator.getCurrentPosition(
         desiredAccuracy: LocationAccuracy.high,
       );
+      print(
+          "Current Position: Latitude = ${currentPosition.latitude}, Longitude = ${currentPosition.longitude}");
 
       final result = isDoctor
           ? await locationRepo.getDoctorLocation(entityId)
           : await locationRepo.getPharmacyLocation(entityId);
+      print(
+          "Fetching saved location for ${isDoctor ? 'Doctor' : 'Pharmacy'} with ID: $entityId");
 
       result.fold(
         (error) async {
+          print("No saved location found, attempting to save...");
+
           final saveResult = isDoctor
               ? await locationRepo.saveDoctorLocation(
                   doctorId: int.parse(entityId),
@@ -243,18 +260,27 @@ class LocationCubit extends Cubit<LocationState> {
                   longitude: currentPosition.longitude,
                 );
 
+          print("Saving ${isDoctor ? 'Doctor' : 'Pharmacy'} location...");
           saveResult.fold(
-            (saveError) => emit(LocationFailure(message: saveError.message)),
-            (_) => emit(LocationSuccess(
-              message: 'تم حفظ الموقع بنجاح',
-              location: LocationModel(
-                latitude: currentPosition.latitude,
-                longitude: currentPosition.longitude,
-              ),
-            )),
+            (saveError) {
+              print("Error saving location: ${saveError.message}");
+              emit(LocationFailure(message: saveError.message));
+            },
+            (_) {
+              print("Location saved successfully.");
+              emit(LocationSuccess(
+                message: 'تم حفظ الموقع بنجاح',
+                location: LocationModel(
+                  latitude: currentPosition.latitude,
+                  longitude: currentPosition.longitude,
+                ),
+              ));
+            },
           );
         },
         (savedLocation) {
+          print(
+              "Location already saved: ${savedLocation.latitude}, ${savedLocation.longitude}");
           emit(LocationSuccess(
             message: 'الموقع محفوظ بالفعل',
             location: savedLocation,
@@ -262,6 +288,7 @@ class LocationCubit extends Cubit<LocationState> {
         },
       );
     } catch (e) {
+      print("Error occurred: ${e.toString()}");
       emit(LocationFailure(
           message: "فشل في التحقق/حفظ الموقع: ${e.toString()}"));
     }

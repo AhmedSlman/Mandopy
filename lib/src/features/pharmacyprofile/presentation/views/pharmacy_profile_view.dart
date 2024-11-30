@@ -2,7 +2,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:go_router/go_router.dart';
 import 'package:mandopy/core/services/service_locator.dart';
 import 'package:mandopy/src/features/location/cubit/location_cubit.dart';
 import 'package:mandopy/src/features/pharmacyprofile/cubit/pharmacy_profile_cubit.dart';

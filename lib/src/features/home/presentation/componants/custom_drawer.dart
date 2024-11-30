@@ -38,6 +38,7 @@ class CustomDrawer extends StatelessWidget {
         }
       },
       child: Drawer(
+        width: MediaQuery.of(context).size.width * 0.75,
         child: ListView(
           padding: EdgeInsets.zero,
           children: [
@@ -51,18 +52,22 @@ class CustomDrawer extends StatelessWidget {
                 radius: 35.w,
                 backgroundColor: Colors.grey.shade200,
                 child: ClipOval(
-                  child: CachedNetworkImage(
-                    imageUrl: CacheHelper.getData(key: 'image'),
-                    width: 70.w,
-                    height: 70.h,
-                    fit: BoxFit.fill,
-                    placeholder: (context, url) => const Icon(Icons.error),
-                    errorWidget: (context, url, error) => Image.asset(
-                      AppAssets.userProfile,
+                  child: Builder(builder: (context) {
+                    final imageUrl = CacheHelper.getData(key: 'image');
+                    print('Fetched image URL: $imageUrl');
+                    return CachedNetworkImage(
+                      imageUrl: imageUrl ?? '',
                       width: 70.w,
                       height: 70.h,
-                    ),
-                  ),
+                      fit: BoxFit.fill,
+                      placeholder: (context, url) => const Icon(Icons.error),
+                      errorWidget: (context, url, error) => Image.asset(
+                        AppAssets.userProfile,
+                        width: 70.w,
+                        height: 70.h,
+                      ),
+                    );
+                  }),
                 ),
               ),
             ),

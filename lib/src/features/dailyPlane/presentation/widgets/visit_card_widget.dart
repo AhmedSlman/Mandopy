@@ -78,7 +78,7 @@ class VisitCardWidget extends StatelessWidget {
                   },
                 ),
           child: Container(
-            height: 262.82.h,
+            height: 300.h,
             width: 389.w,
             decoration: BoxDecoration(
               color: isCompleated ? AppColors.dailyPlaneItem : AppColors.yellow,

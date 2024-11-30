@@ -44,7 +44,7 @@ class _DatePickerWidgetState extends State<DatePickerWidget> {
     return GestureDetector(
       onTap: () => _selectDate(context),
       child: Container(
-        width: 186.w,
+        width: 190.w,
         height: 40.h,
         decoration: BoxDecoration(
           color: widget.containerColor,

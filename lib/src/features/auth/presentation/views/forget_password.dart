@@ -45,6 +45,7 @@ class _ForgetPasswordViewState extends State<ForgetPasswordView> {
             GoRouter.of(context).pop();
             GoRouter.of(context).go(RouterNames.resetPassword);
           } else if (state is ForgetPasswordFailureState) {
+            GoRouter.of(context).pop();
             showToast(
                 message: state.errorMessage.message, state: ToastStates.ERROR);
           }

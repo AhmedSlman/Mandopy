@@ -13,12 +13,14 @@ class CustomAppBar extends StatelessWidget {
     this.onPressedRight,
     this.padding,
   });
+
   final String title;
   final IconData? iconleft;
   final IconData? iconright;
   final VoidCallback? onPressedLeft;
   final VoidCallback? onPressedRight;
   final double? padding;
+
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -26,26 +28,36 @@ class CustomAppBar extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          IconButton(
-            onPressed: onPressedLeft,
-            icon: Icon(
-              iconleft,
-              color: AppColors.primaryColor,
-            ),
-          ),
+  
+          iconleft != null
+              ? IconButton(
+                  onPressed: onPressedLeft,
+                  icon: Icon(
+                    iconleft,
+                    color: AppColors.primaryColor,
+                  ),
+                )
+              : const SizedBox(),
+          
+          // Title
           Text(
             title,
             style: AppStyles.s24,
           ),
-          IconButton(
-            onPressed: onPressedRight,
-            icon: Icon(
-              iconright,
-              color: AppColors.primaryColor,
-            ),
-          ),
+          
+          // Right IconButton
+          iconright != null
+              ? IconButton(
+                  onPressed: onPressedRight,
+                  icon: Icon(
+                    iconright,
+                    color: AppColors.primaryColor,
+                  ),
+                )
+              : const SizedBox(),
         ],
       ),
     );
   }
 }
+

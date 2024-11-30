@@ -77,7 +77,7 @@ class AuthRepoImplementation implements AuthRepoAbstract {
       CacheHelper.saveData(key: 'role', value: userResponse.user.role);
       CacheHelper.saveData(key: 'name', value: userResponse.user.name);
       CacheHelper.saveData(key: 'email', value: userResponse.user.email);
-      CacheHelper.saveData(key: 'image', value: userResponse.user.image);
+      CacheHelper.saveData(key: 'image', value: userResponse.user.image ?? "");
 
       return Right(userResponse);
     } on ServerException catch (e) {

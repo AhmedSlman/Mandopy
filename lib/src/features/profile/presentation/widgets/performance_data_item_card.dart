@@ -17,6 +17,9 @@ class PerformanceDataItemCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+      padding: EdgeInsets.all(
+        4.sp,
+      ),
       width: 188.w,
       height: 108.h,
       decoration: BoxDecoration(
@@ -39,12 +42,14 @@ class PerformanceDataItemCard extends StatelessWidget {
             ),
           ),
           SizedBox(height: 4.h),
-          Text(
-            data.value,
-            maxLines: 1,
-            style: AppStyles.s20.copyWith(
-              fontWeight: FontWeight.w600,
-              color: data.valueColor ?? AppColors.accentColor,
+          FittedBox(
+            child: Text(
+              data.value,
+              maxLines: 1,
+              style: AppStyles.s20.copyWith(
+                fontWeight: FontWeight.w600,
+                color: data.valueColor ?? AppColors.accentColor,
+              ),
             ),
           ),
         ],

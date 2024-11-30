@@ -26,7 +26,7 @@ class AddDailyPlanForm extends StatefulWidget {
 }
 
 class _AddDailyPlanFormState extends State<AddDailyPlanForm> {
-  List<String> _selectedMedicationIds = []; 
+  List<String> _selectedMedicationIds = [];
   String? _selectedDoctorId;
   String? _selectedPharmacyId;
 
@@ -76,7 +76,7 @@ class _AddDailyPlanFormState extends State<AddDailyPlanForm> {
   Widget build(BuildContext context) {
     return BlocListener<VisitCubit, VisitState>(
       listener: (context, state) {
-        if (state is VisitError) {
+        if (state is VisitLoading) {
           showDialog(
             context: context,
             barrierDismissible: false,
@@ -92,6 +92,9 @@ class _AddDailyPlanFormState extends State<AddDailyPlanForm> {
           GoRouter.of(context).pop();
           showToast(
               message: "Visit added successfully", state: ToastStates.SUCCESS);
+          Future.delayed(const Duration(milliseconds: 500), () {
+            GoRouter.of(context).pop();
+          });
         }
       },
       child: Container(
@@ -131,7 +134,7 @@ class _AddDailyPlanFormState extends State<AddDailyPlanForm> {
                     });
                   },
                 ),
-                const SizedBox(width: 10),
+                SizedBox(width: 13.w),
                 TimePicker(
                   onTimeSelected: (TimeOfDay? time) {
                     setState(() {

@@ -73,11 +73,13 @@ class _ResetPasswordViewState extends State<ResetPasswordView> {
                 titleOfField: AppStrings.newPassword,
                 hintText: AppStrings.hintPassword,
                 controller: _passwordcontroller,
+                isPassword: true,
               ),
               AuthTextFormField(
                 titleOfField: AppStrings.confirmNewPassword,
                 hintText: AppStrings.hintConfirmPassword,
                 controller: _confirmPasswordcontroller,
+                isPassword: true,
               ),
               AuthTextFormField(
                 titleOfField: AppStrings.confirmationCode,

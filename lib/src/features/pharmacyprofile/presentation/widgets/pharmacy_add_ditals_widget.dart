@@ -26,7 +26,15 @@ class PharmacyAddDetailsWidget extends StatelessWidget {
       ),
       child: BlocListener<NoteCubit, NoteState>(
         listener: (context, state) {
-          if (state is NoteLoaded) {
+          if (state is NoteLoading) {
+            showDialog(
+              context: context,
+              barrierDismissible: false,
+              builder: (context) => const Center(
+                child: CircularProgressIndicator(),
+              ),
+            );
+          } else if (state is NoteLoaded) {
             ScaffoldMessenger.of(context).showSnackBar(
               const SnackBar(
                 content: Text('Note Sent successfully!'),

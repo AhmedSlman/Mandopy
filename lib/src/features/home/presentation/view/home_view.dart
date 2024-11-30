@@ -34,7 +34,6 @@ class HomeView extends StatelessWidget {
               CustomAppBar(
                 title: AppStrings.home,
                 iconleft: Icons.menu,
-                // iconright: Icons.notifications,
                 onPressedLeft: () {
                   scaffoldKey.currentState!.openDrawer();
                 },

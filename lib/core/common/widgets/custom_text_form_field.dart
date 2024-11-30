@@ -17,7 +17,7 @@ class CustomTextFormField extends StatelessWidget {
     this.obscureText = false,
     this.controller,
     this.validator,
-    this.maxLines,
+    this.maxLines = 1,
     this.suffixIcon,
   });
 
@@ -49,7 +49,7 @@ class CustomTextFormField extends StatelessWidget {
           ),
         ),
         validator: validator ?? (value) => null,
-        // maxLines: maxLines,
+        maxLines: maxLines,
       ),
     );
   }

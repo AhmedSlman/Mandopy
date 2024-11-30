@@ -33,7 +33,7 @@ class _TimePickerState extends State<TimePicker> {
         }
       },
       child: Container(
-        width: 133.w,
+        width: 150.w,
         height: 47.h,
         padding: const EdgeInsets.symmetric(
           horizontal: 10.0,

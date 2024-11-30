@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:lottie/lottie.dart';
 import '../../../../../core/services/service_locator.dart';
 import '../widgets/visit_card_widget.dart';
 import 'package:skeletonizer/skeletonizer.dart';
@@ -18,13 +19,35 @@ class DailyPlanListViewSection extends StatelessWidget {
         padding: const EdgeInsets.all(8.0),
         child: BlocBuilder<VisitCubit, VisitState>(
           builder: (context, state) {
-            return Skeletonizer(
-              enabled: state is VisitLoading,
-              child: ListView.builder(
-                padding: EdgeInsets.zero,
-                itemCount: state is VisitsLoaded ? state.visits.length : 5,
-                itemBuilder: (context, index) {
-                  if (state is VisitsLoaded) {
+            if (state is VisitLoading) {
+              // Skeleton loading UI
+              return Skeletonizer(
+                enabled: true,
+                child: ListView.builder(
+                  padding: EdgeInsets.zero,
+                  itemCount: 5,
+                  itemBuilder: (context, index) {
+                    return Container(
+                      margin: EdgeInsets.symmetric(vertical: 10.h),
+                      height: 262.82.h,
+                      width: 389.w,
+                      color: Colors.grey.shade300,
+                    );
+                  },
+                ),
+              );
+            } else if (state is VisitsLoaded) {
+              if (state.visits.isEmpty) {
+                return Center(
+                  child: Lottie.asset(
+                    'assets/images/no_tasks.json',
+                  ),
+                );
+              } else {
+                return ListView.builder(
+                  padding: EdgeInsets.zero,
+                  itemCount: state.visits.length,
+                  itemBuilder: (context, index) {
                     final visit = state.visits[index];
                     return BlocProvider(
                       create: (context) => getIt<VisitCubit>(),
@@ -49,17 +72,17 @@ class DailyPlanListViewSection extends StatelessWidget {
                         visitId: visit.id.toString(),
                       ),
                     );
-                  } else {
-                    return Container(
-                      margin: EdgeInsets.symmetric(vertical: 10.h),
-                      height: 262.82.h,
-                      width: 389.w,
-                      color: Colors.grey.shade300,
-                    );
-                  }
-                },
-              ),
-            );
+                  },
+                );
+              }
+            } else {
+              return Center(
+                child: Text(
+                  'Something went wrong. Please try again.',
+                  style: TextStyle(fontSize: 16.sp),
+                ),
+              );
+            }
           },
         ),
       ),

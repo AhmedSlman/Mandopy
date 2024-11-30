@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:mandopy/core/utils/app_styles.dart';
 import 'package:mandopy/src/features/dailyPlane/cubit/vistiCubit/visit_cubit.dart';
 import 'package:mandopy/src/features/location/cubit/location_cubit.dart';
 import 'package:mandopy/src/features/pharmacyprofile/cubit/pharmacy_profile_cubit.dart';
@@ -51,40 +52,23 @@ class _PharmacyInfoContainerState extends State<PharmacyInfoContainer> {
   Widget build(BuildContext context) {
     return BlocListener<LocationCubit, LocationState>(
       listener: (context, state) async {
-        if (state is LocationLoading && !isCheckingLocation) {
-          setState(() {
-            isCheckingLocation = true;
-          });
+        if (state is LocationLoading) {
           await _showLoadingDialog(context);
-        } else if (state is LocationCheckSuccess) {
+        } else {
           _dismissLoadingDialog(context);
-          setState(() {
-            isCheckingLocation = false;
-          });
 
-          await _showMessage(
-            context,
-            state.isInCorrectLocation
-                ? "أنت في الموقع الصحيح. المسافة: ${state.distance.toStringAsFixed(2)} متر."
-                : "أنت بعيد عن الموقع بمقدار ${state.distance.toStringAsFixed(2)} متر.",
-          );
-        } else if (state is LocationFailure) {
-          _dismissLoadingDialog(context);
-          setState(() {
-            isCheckingLocation = false;
-          });
-          await _showMessage(context, state.message);
-        } else if (state is LocationSaved) {
-          _dismissLoadingDialog(context);
-          setState(() {
-            isCheckingLocation = false;
-          });
-          await _showMessage(context, state.message);
+          if (state is LocationSuccess) {
+            await _showMessage(context, state.message);
+          } else if (state is LocationFailure) {
+            await _showMessage(context, state.message);
+          } else if (state is LocationCheckSuccess) {
+            await _showMessage(context, state.message);
+          }
         }
       },
       child: Container(
         width: 373.w,
-        height: 280.h,
+        height: 340.h,
         margin: EdgeInsets.only(left: 8.h),
         padding: EdgeInsets.symmetric(horizontal: 18.h, vertical: 26.h),
         decoration: BoxDecoration(
@@ -138,9 +122,8 @@ class _PharmacyInfoContainerState extends State<PharmacyInfoContainer> {
                         width: 100.w,
                         height: 30.h,
                         text: 'بدء الزيارة',
-                        textStyle: const TextStyle(
+                        textStyle: AppStyles.s12.copyWith(
                           color: Colors.white,
-                          fontWeight: FontWeight.w500,
                         ),
                         onPressed: () async {
                           final locationCubit = context.read<LocationCubit>();
@@ -177,9 +160,8 @@ class _PharmacyInfoContainerState extends State<PharmacyInfoContainer> {
                         width: 100.w,
                         height: 30.h,
                         text: 'انهاء الزيارة',
-                        textStyle: const TextStyle(
+                        textStyle: AppStyles.s12.copyWith(
                           color: Colors.white,
-                          fontWeight: FontWeight.w500,
                         ),
                         onPressed: () async {
                           if (!context.read<VisitCubit>().isVisitStarted) {
