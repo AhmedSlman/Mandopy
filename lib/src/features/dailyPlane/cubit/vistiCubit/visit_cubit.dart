@@ -1,16 +1,18 @@
 import 'package:bloc/bloc.dart';
-import 'package:mandopy/src/features/dailyPlane/data/repo/visitRepo/vistit_repo.dart';
+import '../../../../../core/errors/error_model.dart';
+import '../../data/repo/visitRepo/vistit_repo.dart';
 import 'visit_state.dart';
 
 class VisitCubit extends Cubit<VisitState> {
   final VisitRepoAbstract visitRepo;
+  bool isVisitStarted = false;
 
   VisitCubit(this.visitRepo) : super(VisitInitial());
 
   Future<void> addVisit({
     required String date,
     required String time,
-    required String medicationId,
+    required List<String> medicationIds,
     String? pharmacyId,
     String? doctorId,
     required String notes,
@@ -21,7 +23,7 @@ class VisitCubit extends Cubit<VisitState> {
     final result = await visitRepo.addVisit(
       date: date,
       time: time,
-      medicationId: medicationId,
+      medicationIds: medicationIds,
       pharmacyId: pharmacyId,
       doctorId: doctorId,
       notes: notes,
@@ -90,24 +92,42 @@ class VisitCubit extends Cubit<VisitState> {
   }
 
   Future<void> startVisit(String visitId) async {
+    if (isVisitStarted) {
+      emit(VisitError(
+          ErrorModel(message: 'لا يمكنك بدء الزيارة لأنها قد بدأت بالفعل.')));
+      return;
+    }
+
     emit(VisitLoading());
 
     final result = await visitRepo.startVisit(visitId);
 
     result.fold(
       (error) => emit(VisitError(error)),
-      (success) => emit(VisitStarted(message: 'زيارة بدأت بنجاح')),
+      (success) {
+        isVisitStarted = true; // تحديث الحالة عند بدء الزيارة
+        emit(VisitStarted(message: 'زيارة بدأت بنجاح'));
+      },
     );
   }
 
   Future<void> endVisit(String visitId, String isSold) async {
+    if (!isVisitStarted) {
+      emit(VisitError(
+          ErrorModel(message: 'لا يمكنك انهاء الزيارة لأنها لم تبدأ بالفعل.')));
+      return;
+    }
+
     emit(VisitLoading());
 
     final result = await visitRepo.endVisit(visitId, isSold);
 
     result.fold(
       (error) => emit(VisitError(error)),
-      (endVisitResponse) => emit(VisitEnded(endVisitResponse)),
+      (endVisitResponse) {
+        isVisitStarted = false; // إعادة تعيين الحالة عند إنهاء الزيارة
+        emit(VisitEnded(endVisitResponse));
+      },
     );
   }
 }

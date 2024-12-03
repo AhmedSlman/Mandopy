@@ -10,7 +10,6 @@ import 'package:mandopy/src/features/reports/cubit/reports_cubit.dart';
 
 import '../components/calender_row.dart';
 import '../components/reports_list_view.dart';
-import '../widgets/report_search_widget.dart';
 
 class ReportsView extends StatelessWidget {
   const ReportsView({super.key});
@@ -32,10 +31,10 @@ class ReportsView extends StatelessWidget {
             SizedBox(
               height: 10.h,
             ),
-            const ReportSearchWidget(),
-            SizedBox(
-              height: 13.h,
-            ),
+            // const ReportSearchWidget(),
+            // SizedBox(
+            //   height: 13.h,
+            // ),
             const ReportsListView(),
           ],
         ),

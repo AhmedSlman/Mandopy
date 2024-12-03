@@ -1,7 +1,7 @@
-import 'package:mandopy/src/features/dailyPlane/data/models/doctor_model.dart';
-import 'package:mandopy/src/features/dailyPlane/data/models/medecation_model.dart';
-import 'package:mandopy/src/features/dailyPlane/data/models/pharmacy_model.dart';
-import 'package:mandopy/core/errors/error_model.dart';
+import '../../data/models/doctor_model.dart';
+import '../../data/models/medecation_model.dart';
+import '../../data/models/pharmacy_model.dart';
+import '../../../../../core/errors/error_model.dart';
 
 abstract class TargetsState {}
 

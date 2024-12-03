@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:mandopy/core/utils/app_assets.dart';
+import 'package:go_router/go_router.dart';
+import '../../../../../core/utils/app_assets.dart';
 
 class DoctorProfileImageStack extends StatelessWidget {
   const DoctorProfileImageStack({super.key});
@@ -34,10 +35,13 @@ class DoctorProfileImageStack extends StatelessWidget {
               borderRadius: BorderRadius.circular(10),
               color: Colors.white,
             ),
-            child: Icon(
-              Icons.arrow_forward_ios,
-              size: 24.w,
-              color: Colors.black,
+            child: GestureDetector(
+              onTap: () => GoRouter.of(context).pop(),
+              child: Icon(
+                Icons.arrow_forward_ios,
+                size: 24.w,
+                color: Colors.black,
+              ),
             ),
           ),
         ),

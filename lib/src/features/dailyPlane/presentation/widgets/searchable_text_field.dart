@@ -1,19 +1,18 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:mandopy/src/features/dailyPlane/cubit/targetsCubit/targets_cubit.dart';
-import 'package:mandopy/src/features/dailyPlane/cubit/targetsCubit/targets_state.dart';
+import '../../cubit/targetsCubit/targets_cubit.dart';
+import '../../cubit/targetsCubit/targets_state.dart';
+
+import '../../../../../core/data/cached/cache_helper.dart';
 
 class SearchableTextField extends StatefulWidget {
   final String hintText;
-  final String? selectedPurpose;
   final Function(String)? onDoctorSelected;
   final Function(String)? onPharmacySelected;
 
   const SearchableTextField({
     super.key,
     required this.hintText,
-    this.selectedPurpose,
     this.onDoctorSelected,
     this.onPharmacySelected,
   });
@@ -25,30 +24,27 @@ class SearchableTextField extends StatefulWidget {
 class _SearchableTextFieldState extends State<SearchableTextField> {
   final TextEditingController _controller = TextEditingController();
   List<dynamic> _filteredResults = [];
+  String? role;
 
   @override
   void initState() {
     super.initState();
     _initializeData();
     _controller.addListener(_onSearch);
-    debugPrint(
-        "Initialized SearchableTextField with purpose: ${widget.selectedPurpose}");
   }
 
   void _initializeData() {
+    role = CacheHelper.getData(key: 'role');
     final cubit = BlocProvider.of<TargetsCubit>(context);
-    debugPrint("Fetching data for selected purpose: ${widget.selectedPurpose}");
+    debugPrint("Fetched role from cache: $role");
 
-    if (widget.selectedPurpose == 'طبيب') {
-      cubit.fetchDoctors();
-      debugPrint("Fetching doctors...");
-    } else if (widget.selectedPurpose == 'صيدلية') {
+    if (role == 'تجاري') {
       cubit.fetchPharmacies();
-      debugPrint("Fetching pharmacies...");
-    } else if (widget.selectedPurpose == 'مختلط') {
+      debugPrint("Fetching only pharmacies for role تجاري...");
+    } else if (role == 'علمي') {
       cubit.fetchDoctors();
       cubit.fetchPharmacies();
-      debugPrint("Fetching both doctors and pharmacies...");
+      debugPrint("Fetching both doctors and pharmacies for role علمي...");
     }
   }
 
@@ -58,18 +54,17 @@ class _SearchableTextFieldState extends State<SearchableTextField> {
     debugPrint("Searching for: $query");
 
     setState(() {
-      if (widget.selectedPurpose == 'طبيب') {
-        _filteredResults = cubit.filterDoctors(query);
-        debugPrint("Filtered doctors: $_filteredResults");
-      } else if (widget.selectedPurpose == 'صيدلية') {
+      if (role == 'تجاري') {
         _filteredResults = cubit.filterPharmacies(query);
-        debugPrint("Filtered pharmacies: $_filteredResults");
-      } else if (widget.selectedPurpose == 'مختلط') {
+        debugPrint("Filtered pharmacies (تجاري): $_filteredResults");
+      } else if (role == 'علمي') {
+        final doctors = cubit.filterDoctors(query);
+        final pharmacies = cubit.filterPharmacies(query);
         _filteredResults = [
-          ...cubit.filterDoctors(query),
-          ...cubit.filterPharmacies(query)
+          ...doctors,
+          ...pharmacies,
         ];
-        debugPrint("Filtered mixed results: $_filteredResults");
+        debugPrint("Filtered mixed results (علمي): $_filteredResults");
       }
     });
   }
@@ -122,10 +117,13 @@ class _SearchableTextFieldState extends State<SearchableTextField> {
                         _filteredResults.clear();
                       });
 
-                      if (widget.selectedPurpose == 'طبيب') {
+                      if (role == 'تجاري') {
+                        widget.onPharmacySelected?.call(item.id.toString());
+                        debugPrint("Selected pharmacy ID: ${item.id}");
+                      } else if (role == 'علمي' && item.type == 'doctor') {
                         widget.onDoctorSelected?.call(item.id.toString());
                         debugPrint("Selected doctor ID: ${item.id}");
-                      } else if (widget.selectedPurpose == 'صيدلية') {
+                      } else if (role == 'علمي' && item.type == 'pharmacy') {
                         widget.onPharmacySelected?.call(item.id.toString());
                         debugPrint("Selected pharmacy ID: ${item.id}");
                       }

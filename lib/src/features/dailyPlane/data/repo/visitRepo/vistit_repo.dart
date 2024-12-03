@@ -1,6 +1,6 @@
 import 'package:dartz/dartz.dart';
-import 'package:mandopy/core/errors/error_model.dart';
-import 'package:mandopy/src/features/dailyPlane/data/models/visit_model.dart';
+import '../../../../../../core/errors/error_model.dart';
+import '../../models/visit_model.dart';
 
 import '../../models/end_visit_model.dart';
 
@@ -8,9 +8,9 @@ abstract class VisitRepoAbstract {
   Future<Either<ErrorModel, VisitModel>> addVisit({
     required String date,
     required String time,
-    required String medicationId,
-     String? pharmacyId,
-     String? doctorId,
+    required List<String> medicationIds,
+    String? pharmacyId,
+    String? doctorId,
     required String notes,
     required bool isSold,
   });
@@ -25,6 +25,6 @@ abstract class VisitRepoAbstract {
   Future<Either<ErrorModel, bool>> deleteVisit(String visitId);
   Future<Either<ErrorModel, bool>> startVisit(String visitId);
 
-  Future<Either<ErrorModel, EndVisitModel>> endVisit(String visitId,String isSold);
-
+  Future<Either<ErrorModel, EndVisitModel>> endVisit(
+      String visitId, String isSold);
 }

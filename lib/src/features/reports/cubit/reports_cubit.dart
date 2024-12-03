@@ -1,6 +1,6 @@
 import 'package:bloc/bloc.dart';
-import 'package:mandopy/src/features/reports/data/models/report_model.dart';
-import 'package:mandopy/src/features/reports/data/repos/reports_repo.dart';
+import '../data/models/report_model.dart';
+import '../data/repos/reports_repo.dart';
 import 'package:meta/meta.dart';
 
 import '../../../../core/errors/error_model.dart';

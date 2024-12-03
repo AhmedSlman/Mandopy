@@ -23,7 +23,7 @@ class RewardCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: 404.w,
-      height: 90.h,
+      height: 110.h,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(22),
         color: AppColors.lightGreen,

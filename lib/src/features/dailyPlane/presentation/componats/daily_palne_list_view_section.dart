@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:mandopy/core/services/service_locator.dart';
-import 'package:mandopy/src/features/dailyPlane/presentation/widgets/visit_card_widget.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:lottie/lottie.dart';
+import '../../../../../core/services/service_locator.dart';
+import '../widgets/visit_card_widget.dart';
+import 'package:skeletonizer/skeletonizer.dart';
 
 import '../../cubit/vistiCubit/visit_cubit.dart';
 import '../../cubit/vistiCubit/visit_state.dart';
@@ -17,40 +20,67 @@ class DailyPlanListViewSection extends StatelessWidget {
         child: BlocBuilder<VisitCubit, VisitState>(
           builder: (context, state) {
             if (state is VisitLoading) {
-              return const Center(child: CircularProgressIndicator());
+              // Skeleton loading UI
+              return Skeletonizer(
+                enabled: true,
+                child: ListView.builder(
+                  padding: EdgeInsets.zero,
+                  itemCount: 5,
+                  itemBuilder: (context, index) {
+                    return Container(
+                      margin: EdgeInsets.symmetric(vertical: 10.h),
+                      height: 262.82.h,
+                      width: 389.w,
+                      color: Colors.grey.shade300,
+                    );
+                  },
+                ),
+              );
             } else if (state is VisitsLoaded) {
-              final visits = state.visits;
-              return ListView.builder(
-                padding: EdgeInsets.zero,
-                itemCount: visits.length,
-                itemBuilder: (context, index) {
-                  final visit = visits[index];
-                  return BlocProvider(
-                    create: (context) => getIt<VisitCubit>(),
-                    child: VisitCardWidget(
-                      visitNumber: visit.id.toString(),
-                      nameOfGoal:
-                          visit.pharmacy?.name ?? visit.doctor?.name ?? '',
-                      address: visit.pharmacy?.address ??
-                          visit.doctor?.address ??
-                          '',
-                      time: visit.time,
-                      item: visit.medication?.name ?? '',
-                      isPharmacy: true,
-                      isCompleated:
-                          visit.status == "قيد الأنتظار" ? false : true,
-                      visitId: visit.id.toString(),
-                    ),
-                  );
-                },
-              );
-            } else if (state is VisitError) {
-              return Text(
-                state.error.message,
-              );
+              if (state.visits.isEmpty) {
+                return Center(
+                  child: Lottie.asset(
+                    'assets/images/no_tasks.json',
+                  ),
+                );
+              } else {
+                return ListView.builder(
+                  padding: EdgeInsets.zero,
+                  itemCount: state.visits.length,
+                  itemBuilder: (context, index) {
+                    final visit = state.visits[index];
+                    return BlocProvider(
+                      create: (context) => getIt<VisitCubit>(),
+                      child: VisitCardWidget(
+                        visitNumber: visit.id.toString(),
+                        nameOfGoal:
+                            visit.pharmacy?.name ?? visit.doctor?.name ?? '',
+                        address: visit.pharmacy?.address ??
+                            visit.doctor?.address ??
+                            '',
+                        time: visit.time ?? "N/A",
+                        item: visit.medications != null &&
+                                visit.medications!.isNotEmpty
+                            ? visit.medications!
+                                .map((med) => med.name)
+                                .join(", ")
+                            : "N/A",
+                        isPharmacy: visit.pharmacy != null,
+                        pharmacyid: visit.pharmacy?.id.toString() ?? '',
+                        doctorId: visit.doctor?.id.toString() ?? '',
+                        isCompleated: visit.status != "قيد الأنتظار",
+                        visitId: visit.id.toString(),
+                      ),
+                    );
+                  },
+                );
+              }
             } else {
-              return const Center(
-                child: Text('No visits available'),
+              return Center(
+                child: Text(
+                  'Something went wrong. Please try again.',
+                  style: TextStyle(fontSize: 16.sp),
+                ),
               );
             }
           },

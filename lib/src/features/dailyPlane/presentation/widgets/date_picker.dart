@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/intl.dart';
+import 'package:mandopy/core/utils/app_styles.dart';
 
 import '../../../../../core/utils/app_strings.dart';
 
@@ -37,9 +38,9 @@ class _DatePickerState extends State<DatePicker> {
         }
       },
       child: Container(
-        width: 224.w,
+        width: 190.w,
         height: 47.h,
-        padding: const EdgeInsets.symmetric(horizontal: 10.0),
+        padding: EdgeInsets.symmetric(horizontal: 10.0.h, vertical: 10.h),
         decoration: BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.circular(5),
@@ -51,7 +52,9 @@ class _DatePickerState extends State<DatePicker> {
               _selectedDate != null
                   ? DateFormat('yyyy-MM-dd').format(_selectedDate!)
                   : AppStrings.visitDate,
-              style: const TextStyle(color: Colors.black54),
+              style: AppStyles.s14.copyWith(
+                color: const Color.fromRGBO(102, 102, 102, .75),
+              ),
             ),
             const Icon(
               Icons.calendar_month,

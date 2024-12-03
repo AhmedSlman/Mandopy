@@ -1,20 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:mandopy/core/theme/app_colors.dart';
-import 'package:mandopy/core/utils/app_styles.dart';
+import '../../../../../core/theme/app_colors.dart';
+import '../../../../../core/utils/app_styles.dart';
 
 class NotoficationCardWidget extends StatelessWidget {
   const NotoficationCardWidget({
     super.key,
     required this.notification,
-    required this.address,
-    required this.time,
+    // required this.address,
+    // required this.time,
   });
 
   final String notification;
-  final String address;
-  final String time;
+  // final String address;
+  // final String time;
 
   @override
   Widget build(BuildContext context) {
@@ -28,6 +28,7 @@ class NotoficationCardWidget extends StatelessWidget {
         child: Padding(
           padding: EdgeInsets.symmetric(horizontal: 8.w),
           child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Row(
                 children: [
@@ -45,19 +46,19 @@ class NotoficationCardWidget extends StatelessWidget {
               SizedBox(
                 height: 8.h,
               ),
-              Row(
-                children: [
-                  Text(
-                    address,
-                    style: AppStyles.s12,
-                  ),
-                  const Spacer(),
-                  Text(
-                    time,
-                    style: AppStyles.s12,
-                  ),
-                ],
-              )
+              // Row(
+              //   children: [
+              //     Text(
+              //       address,
+              //       style: AppStyles.s12,
+              //     ),
+              //     const Spacer(),
+              //     Text(
+              //       time,
+              //       style: AppStyles.s12,
+              //     ),
+              //   ],
+              // )
             ],
           ),
         ));

@@ -22,10 +22,12 @@ class ReportCardInfo extends StatelessWidget {
             color: AppColors.textColor,
           ),
         ),
-        Text(
-          value,
-          style: AppStyles.s14.copyWith(
-            color: AppColors.greyForText,
+        Flexible(
+          child: Text(
+            value,
+            style: AppStyles.s14.copyWith(
+              color: AppColors.greyForText,
+            ),
           ),
         ),
       ],

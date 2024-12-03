@@ -1,5 +1,5 @@
-import 'package:mandopy/src/features/dailyPlane/data/models/visit_model.dart';
-import 'package:mandopy/core/errors/error_model.dart';
+import '../../data/models/visit_model.dart';
+import '../../../../../core/errors/error_model.dart';
 
 import '../../data/models/end_visit_model.dart';
 

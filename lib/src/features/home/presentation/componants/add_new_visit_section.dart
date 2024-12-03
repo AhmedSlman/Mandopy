@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:mandopy/core/theme/app_colors.dart';
-import 'package:mandopy/core/utils/app_strings.dart';
+import '../../../../../core/theme/app_colors.dart';
+import '../../../../../core/utils/app_strings.dart';
 
 class AddNewVisitSection extends StatelessWidget {
   const AddNewVisitSection({super.key});

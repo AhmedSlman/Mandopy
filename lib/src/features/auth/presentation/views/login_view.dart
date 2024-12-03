@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:mandopy/core/common/widgets/custom_app_bar.dart';
-import 'package:mandopy/core/routes/router_names.dart';
-import 'package:mandopy/core/utils/app_strings.dart';
-import 'package:mandopy/src/features/auth/presentation/componants/login_form.dart';
-import 'package:mandopy/src/features/auth/presentation/widgets/app_logo.dart';
-import 'package:mandopy/src/features/auth/presentation/widgets/have_an%20_account_widget.dart';
+import '../../../../../core/common/widgets/custom_app_bar.dart';
+import '../../../../../core/routes/router_names.dart';
+import '../../../../../core/utils/app_strings.dart';
+import '../componants/login_form.dart';
+import '../widgets/app_logo.dart';
+import '../widgets/have_an%20_account_widget.dart';
 
 class LoginView extends StatelessWidget {
   const LoginView({super.key});
@@ -20,7 +20,9 @@ class LoginView extends StatelessWidget {
             const AppLogoWidget(),
             LoginForm(),
             HaveAnAccountWidget(
-              onTap: () => context.go(RouterNames.signup),
+              onTap: () => context.push(
+                RouterNames.signup,
+              ),
               text1: AppStrings.donotHaveAnAccount,
               text2: AppStrings.creatAccount,
             ),

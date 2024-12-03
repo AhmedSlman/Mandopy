@@ -1,10 +1,9 @@
 import 'package:dartz/dartz.dart';
-import 'package:mandopy/core/data/api/api_consumer.dart';
-import 'package:mandopy/core/data/cached/cache_helper.dart';
-import 'package:mandopy/core/errors/error_model.dart';
-import 'package:mandopy/core/errors/exceptions.dart';
-import 'package:mandopy/src/features/dailyPlane/data/models/visit_model.dart';
-import 'package:mandopy/src/features/dailyPlane/data/repo/visitRepo/vistit_repo.dart';
+import '../../../../../../core/data/api/api_consumer.dart';
+import '../../../../../../core/errors/error_model.dart';
+import '../../../../../../core/errors/exceptions.dart';
+import '../../models/visit_model.dart';
+import 'vistit_repo.dart';
 
 import '../../models/end_visit_model.dart';
 
@@ -17,30 +16,31 @@ class VisitRepoImplementation implements VisitRepoAbstract {
   Future<Either<ErrorModel, VisitModel>> addVisit({
     required String date,
     required String time,
-    required String medicationId,
+    required List<String> medicationIds,
     String? pharmacyId,
     String? doctorId,
     required String notes,
     required bool isSold,
   }) async {
     try {
+    
+      final Map<String, dynamic> requestBody = {
+        'date': date,
+        'time': time,
+        'pharmacy_id': pharmacyId,
+        'doctor_id': doctorId,
+        'notes': notes,
+        'is_sold': isSold ? '1' : '0',
+      };
+
+      // Add medication_ids dynamically
+      for (int i = 0; i < medicationIds.length; i++) {
+        requestBody['medication_ids[$i]'] = medicationIds[i];
+      }
+
       final response = await api.post(
         "visits",
-        headers: {
-          'Accept': 'application/vnd.api+json',
-          'Content-Type': 'application/vnd.api+json',
-          'Authorization':
-              'Bearer 6|1U6J0ZvrTaaSWe9h2lyyVoLzOYir3c8ZUt0oKTCue7686e99',
-        },
-        data: {
-          'date': date,
-          'time': time,
-          'medication_id': medicationId,
-          'pharmacy_id': pharmacyId,
-          'doctor_id': doctorId,
-          'notes': notes,
-          'is_sold': isSold ? '1' : '0',
-        },
+        data: requestBody,
         isFormData: true,
       );
 
@@ -56,12 +56,6 @@ class VisitRepoImplementation implements VisitRepoAbstract {
     try {
       final response = await api.get(
         "visits",
-        headers: {
-          'Accept': 'application/vnd.api+json',
-          'Content-Type': 'application/vnd.api+json',
-          'Authorization':
-              'Bearer 6|1U6J0ZvrTaaSWe9h2lyyVoLzOYir3c8ZUt0oKTCue7686e99',
-        },
       );
 
       List<VisitModel> visits = (response['visits'] as List)
@@ -79,10 +73,6 @@ class VisitRepoImplementation implements VisitRepoAbstract {
     try {
       final response = await api.get(
         "visits/$visitId",
-        headers: {
-          'Accept': 'application/vnd.api+json',
-          'Content-Type': 'application/vnd.api+json',
-        },
       );
 
       final visitResponse = VisitModel.fromJson(response);
@@ -98,11 +88,6 @@ class VisitRepoImplementation implements VisitRepoAbstract {
     try {
       final response = await api.put(
         "visits/$visitId",
-        headers: {
-          'Accept': 'application/vnd.api+json',
-          'Content-Type': 'application/x-www-form-urlencoded',
-          'Authorization': CacheHelper.getToken(),
-        },
         data: {
           'status': status,
         },
@@ -117,10 +102,9 @@ class VisitRepoImplementation implements VisitRepoAbstract {
   @override
   Future<Either<ErrorModel, bool>> deleteVisit(String visitId) async {
     try {
-      await api.delete("visits/$visitId", headers: {
-        'Accept': 'application/vnd.api+json',
-        'Content-Type': 'application/vnd.api+json',
-      });
+      await api.delete(
+        "visits/$visitId",
+      );
       return const Right(true);
     } on ServerException catch (e) {
       return Left(e.errorModel);
@@ -130,12 +114,9 @@ class VisitRepoImplementation implements VisitRepoAbstract {
   @override
   Future<Either<ErrorModel, bool>> startVisit(String visitId) async {
     try {
-      await api.post("visits/$visitId/start", headers: {
-        'Accept': 'application/vnd.api+json',
-        'Content-Type': 'application/vnd.api+json',
-        'Authorization':
-            'Bearer 6|1U6J0ZvrTaaSWe9h2lyyVoLzOYir3c8ZUt0oKTCue7686e99',
-      });
+      await api.post(
+        "visits/$visitId/start",
+      );
       return const Right(true);
     } on ServerException catch (e) {
       return Left(e.errorModel);
@@ -148,12 +129,6 @@ class VisitRepoImplementation implements VisitRepoAbstract {
     try {
       final response = await api.post(
         "visits/$visitId/end",
-        headers: {
-          'Accept': 'application/vnd.api+json',
-          'Content-Type': 'application/vnd.api+json',
-          'Authorization':
-              'Bearer 6|1U6J0ZvrTaaSWe9h2lyyVoLzOYir3c8ZUt0oKTCue7686e99',
-        },
         data: {'is_sold': isSold},
       );
       final endVisitResponse = EndVisitModel.fromJson(response);

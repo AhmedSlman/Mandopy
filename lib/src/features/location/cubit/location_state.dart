@@ -33,3 +33,15 @@ class LocationCheckSuccess extends LocationState {
     required this.distance,
   });
 }
+
+class LocationSaved extends LocationState {
+  final String message;
+
+  LocationSaved({required this.message});
+}
+
+class LocationNotSet extends LocationState {
+  final String message;
+
+  LocationNotSet(this.message);
+}

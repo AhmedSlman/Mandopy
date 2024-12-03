@@ -1,9 +1,9 @@
 import 'package:dartz/dartz.dart';
-import 'package:mandopy/core/data/api/api_consumer.dart';
-import 'package:mandopy/core/errors/error_model.dart';
-import 'package:mandopy/core/errors/exceptions.dart';
-import 'package:mandopy/src/features/location/data/model/location_model.dart';
-import 'package:mandopy/src/features/location/data/repo/location_repo_abstract.dart';
+import '../../../../../core/data/api/api_consumer.dart';
+import '../../../../../core/errors/error_model.dart';
+import '../../../../../core/errors/exceptions.dart';
+import '../model/location_model.dart';
+import 'location_repo_abstract.dart';
 
 class LocationRepoImplementation implements LocationRepoAbstract {
   final ApiConsumer api;
@@ -39,7 +39,7 @@ class LocationRepoImplementation implements LocationRepoAbstract {
 
   @override
   Future<Either<ErrorModel, LocationModel>> savePharmacyLocation({
-    required int pharmacyId,
+    required String pharmacyId,
     required double latitude,
     required double longitude,
   }) async {
@@ -66,7 +66,7 @@ class LocationRepoImplementation implements LocationRepoAbstract {
 
   @override
   Future<Either<ErrorModel, LocationModel>> getDoctorLocation(
-      int doctorId) async {
+      String doctorId) async {
     try {
       final response = await api.get(
         "doctors/$doctorId/location",
@@ -85,7 +85,7 @@ class LocationRepoImplementation implements LocationRepoAbstract {
 
   @override
   Future<Either<ErrorModel, LocationModel>> getPharmacyLocation(
-      int pharmacyId) async {
+      String pharmacyId) async {
     try {
       final response = await api.get(
         "pharmacies/$pharmacyId/location",

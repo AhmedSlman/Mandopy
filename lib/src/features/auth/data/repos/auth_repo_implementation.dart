@@ -1,15 +1,22 @@
+import 'dart:io';
+
 import 'package:dartz/dartz.dart';
-import 'package:mandopy/core/data/api/api_consumer.dart';
-import 'package:mandopy/core/data/cached/cache_helper.dart';
-import 'package:mandopy/core/errors/error_model.dart';
-import 'package:mandopy/core/errors/exceptions.dart';
-import 'package:mandopy/src/features/auth/data/models/user_model.dart';
-import 'package:mandopy/src/features/auth/data/repos/auth_repo_abstract.dart';
+import 'package:dio/dio.dart';
+import '../../../../../core/data/api/api_consumer.dart';
+import '../../../../../core/data/cached/cache_helper.dart';
+import '../../../../../core/errors/error_model.dart';
+import '../../../../../core/errors/exceptions.dart';
+import '../models/forget_password_model.dart';
+import '../models/logout_model.dart';
+import '../models/reset_password_model.dart';
+import '../models/user_model.dart';
+import 'auth_repo_abstract.dart';
+import 'package:path/path.dart' as path;
 
 class AuthRepoImplementation implements AuthRepoAbstract {
   final ApiConsumer api;
 
-  AuthRepoImplementation( this.api);
+  AuthRepoImplementation(this.api);
   @override
   Future<Either<ErrorModel, RegisterResponse>> register({
     required String email,
@@ -18,6 +25,7 @@ class AuthRepoImplementation implements AuthRepoAbstract {
     required String password,
     required String passwordConfirmation,
     required String role,
+    File? image,
   }) async {
     try {
       final response = await api.post(
@@ -31,8 +39,11 @@ class AuthRepoImplementation implements AuthRepoAbstract {
           'name': name,
           'password': password,
           'password_confirmation': passwordConfirmation,
-          'admin_code': admincode,
+          'supervisor_code': admincode,
           'role': role,
+          if (image != null)
+            'image': await MultipartFile.fromFile(image.path,
+                filename: path.basename(image.path)),
         },
         isFormData: true,
       );
@@ -63,6 +74,10 @@ class AuthRepoImplementation implements AuthRepoAbstract {
       );
       final userResponse = LoginResponse.fromJson(response);
       CacheHelper.saveToken(value: userResponse.token);
+      CacheHelper.saveData(key: 'role', value: userResponse.user.role);
+      CacheHelper.saveData(key: 'name', value: userResponse.user.name);
+      CacheHelper.saveData(key: 'email', value: userResponse.user.email);
+      CacheHelper.saveData(key: 'image', value: userResponse.user.image ?? "");
 
       return Right(userResponse);
     } on ServerException catch (e) {
@@ -89,8 +104,74 @@ class AuthRepoImplementation implements AuthRepoAbstract {
         isFormData: true,
       );
       final userResponse = VerifyEmailResponse.fromJson(response);
+      CacheHelper.saveToken(value: userResponse.data!.token!);
+      CacheHelper.saveData(key: 'role', value: userResponse.data!.user!.role);
+      CacheHelper.saveData(key: 'name', value: userResponse.data!.user!.name);
+      CacheHelper.saveData(key: 'email', value: userResponse.data!.user!.email);
+      CacheHelper.saveData(key: 'image', value: userResponse.data!.user!.image);
 
       return Right(userResponse);
+    } on ServerException catch (e) {
+      return Left(e.errorModel);
+    }
+  }
+
+  @override
+  Future<Either<ErrorModel, ForgetPasswordModel>> forgetPassword(
+      {required String email}) async {
+    try {
+      final response = await api.post(
+        "forgot-password",
+        headers: {
+          'Accept': 'application/vnd.api+json',
+          'Content-Type': 'application/vnd.api+json'
+        },
+        data: {
+          'email': email,
+        },
+        isFormData: true,
+      );
+      final forgetPasswordResponse = ForgetPasswordModel.fromJson(response);
+      return Right(forgetPasswordResponse);
+    } on ServerException catch (e) {
+      return Left(e.errorModel);
+    }
+  }
+
+  @override
+  Future<Either<ErrorModel, ResetPasswordModel>> resetPassword(
+      {required String email,
+      required String password,
+      required String passwordConfirmation,
+      required String code}) async {
+    try {
+      final response = await api.post(
+        "reset-password",
+        headers: {
+          'Accept': 'application/vnd.api+json',
+          'Content-Type': 'application/vnd.api+json'
+        },
+        data: {
+          'email': email,
+          'password': password,
+          'password_confirmation': passwordConfirmation,
+          'code': code,
+        },
+        isFormData: true,
+      );
+      final resetPasswordResponse = ResetPasswordModel.fromJson(response);
+      return Right(resetPasswordResponse);
+    } on ServerException catch (e) {
+      return Left(e.errorModel);
+    }
+  }
+
+  @override
+  Future<Either<ErrorModel, LogoutModel>> logout() async {
+    try {
+      final response = await api.post('logout');
+      final logoutResponse = LogoutModel.fromJson(response);
+      return Right(logoutResponse);
     } on ServerException catch (e) {
       return Left(e.errorModel);
     }

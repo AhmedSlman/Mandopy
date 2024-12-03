@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
-import 'package:mandopy/core/common/functions/validator.dart';
-import 'package:mandopy/core/common/widgets/custom_btn.dart';
-import 'package:mandopy/core/routes/router_names.dart';
-import 'package:mandopy/core/utils/app_strings.dart';
-import 'package:mandopy/src/features/auth/cubit/auth_cubit.dart';
-import 'package:mandopy/src/features/auth/presentation/widgets/auth_text_form_field.dart';
-import 'package:mandopy/src/features/auth/presentation/widgets/forget_password.dart';
+import '../../../../../core/common/functions/validator.dart';
+import '../../../../../core/common/widgets/custom_btn.dart';
+import '../../../../../core/routes/router_names.dart';
+import '../../../../../core/utils/app_strings.dart';
+import '../../cubit/auth_cubit.dart';
+import '../widgets/auth_text_form_field.dart';
+import '../widgets/forget_password.dart';
+
+import '../../../../../core/functions/show_toast.dart';
 
 class LoginForm extends StatelessWidget {
   LoginForm({super.key});
@@ -27,12 +29,14 @@ class LoginForm extends StatelessWidget {
           );
         } else if (state is LoginSuccessState) {
           Navigator.of(context).pop();
-          context.go(RouterNames.home);
+          showToast(
+              message: "You logged in successfully",
+              state: ToastStates.SUCCESS);
+          context.go(RouterNames.navigatiomBarButton);
         } else if (state is LoginFailureState) {
           Navigator.of(context).pop();
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text(state.errorMessage.message)),
-          );
+          showToast(
+              message: state.errorMessage.message, state: ToastStates.ERROR);
         }
       },
       child: Column(
@@ -48,9 +52,13 @@ class LoginForm extends StatelessWidget {
             hintText: AppStrings.hintPassword,
             validator: Validator.validatePassword,
             controller: passwordController,
+            isPassword: true,
           ),
-          const CustomTextButton(
+          CustomTextButton(
             text: AppStrings.forgetPassword,
+            onPressed: () => GoRouter.of(context).push(
+              RouterNames.forgetPassword,
+            ),
           ),
           CustomButton(
             text: AppStrings.signIn,

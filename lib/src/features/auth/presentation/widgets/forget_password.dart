@@ -11,10 +11,13 @@ class CustomTextButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: EdgeInsets.symmetric(vertical: 8.0.h, horizontal: 16.0.w),
-      child: Align(
-        alignment: alignment ?? Alignment.centerLeft,
-        child: Text(
-          text,
+      child: GestureDetector(
+        onTap: onPressed,
+        child: Align(
+          alignment: alignment ?? Alignment.centerLeft,
+          child: Text(
+            text,
+          ),
         ),
       ),
     );

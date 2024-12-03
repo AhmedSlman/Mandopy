@@ -1,7 +1,7 @@
 import 'package:dartz/dartz.dart';
-import 'package:mandopy/core/errors/error_model.dart';
-import 'package:mandopy/src/features/reports/data/models/report_model.dart';
-import 'package:mandopy/src/features/reports/data/repos/reports_repo.dart';
+import '../../../../../core/errors/error_model.dart';
+import '../models/report_model.dart';
+import 'reports_repo.dart';
 
 import '../../../../../core/data/api/api_consumer.dart';
 import '../../../../../core/errors/exceptions.dart';
@@ -15,11 +15,6 @@ class ReportsRepoImplementation implements ReportsRepo {
     try {
       final response = await api.get(
         'reports',
-        headers: {
-          'Accept': 'application/vnd.api+json',
-          'Authorization':
-              'Bearer 6|1U6J0ZvrTaaSWe9h2lyyVoLzOYir3c8ZUt0oKTCue7686e99',
-        },
       );
 
       List<ReportModel> reports = (response['reports'] as List)
@@ -39,11 +34,6 @@ class ReportsRepoImplementation implements ReportsRepo {
     try {
       final response = await api.get(
         'reports',
-        headers: {
-          'Accept': 'application/vnd.api+json',
-          'Authorization':
-              'Bearer 6|1U6J0ZvrTaaSWe9h2lyyVoLzOYir3c8ZUt0oKTCue7686e99',
-        },
         queryParameters: {
           'start_date': startDate.toIso8601String(),
           'end_date': endDate.toIso8601String(),

@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:mandopy/core/theme/app_colors.dart';
-import 'package:mandopy/src/features/dailyPlane/presentation/views/daily_plane_view.dart';
-import 'package:mandopy/src/features/home/presentation/view/home_view.dart';
-import 'package:mandopy/src/features/prizes/presentation/views/prizes_view.dart';
-import 'package:mandopy/src/features/reports/presentation/views/resports_view.dart';
+import '../core/theme/app_colors.dart';
+import 'features/dailyPlane/presentation/views/daily_plane_view.dart';
+import 'features/home/presentation/view/home_view.dart';
+import 'features/prizes/presentation/views/prizes_view.dart';
+import 'features/reports/presentation/views/resports_view.dart';
 
 import 'features/profile/presentation/views/profile_view.dart';
 

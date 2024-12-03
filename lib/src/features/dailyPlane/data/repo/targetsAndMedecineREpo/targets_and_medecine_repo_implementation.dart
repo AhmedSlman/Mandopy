@@ -1,11 +1,11 @@
 import 'package:dartz/dartz.dart';
-import 'package:mandopy/core/data/api/api_consumer.dart';
-import 'package:mandopy/core/errors/error_model.dart';
-import 'package:mandopy/core/errors/exceptions.dart';
-import 'package:mandopy/src/features/dailyPlane/data/models/doctor_model.dart';
-import 'package:mandopy/src/features/dailyPlane/data/models/medecation_model.dart';
-import 'package:mandopy/src/features/dailyPlane/data/models/pharmacy_model.dart';
-import 'package:mandopy/src/features/dailyPlane/data/repo/targetsAndMedecineREpo/targets_and_medecine_repo.dart';
+import '../../../../../../core/data/api/api_consumer.dart';
+import '../../../../../../core/errors/error_model.dart';
+import '../../../../../../core/errors/exceptions.dart';
+import '../../models/doctor_model.dart';
+import '../../models/medecation_model.dart';
+import '../../models/pharmacy_model.dart';
+import 'targets_and_medecine_repo.dart';
 
 class TargetsRepoImplementation implements TargatsRepoAbstract {
   final ApiConsumer api;
@@ -17,11 +17,6 @@ class TargetsRepoImplementation implements TargatsRepoAbstract {
     try {
       final response = await api.get(
         "doctors",
-        headers: {
-          'Accept': 'application/vnd.api+json',
-          'Authorization':
-              'Bearer 6|1U6J0ZvrTaaSWe9h2lyyVoLzOYir3c8ZUt0oKTCue7686e99',
-        },
       );
 
       List<DoctorModel> doctors = (response['doctors'] as List)
@@ -38,11 +33,6 @@ class TargetsRepoImplementation implements TargatsRepoAbstract {
     try {
       final response = await api.get(
         "pharmacies",
-        headers: {
-          'Accept': 'application/vnd.api+json',
-          'Authorization':
-              'Bearer 6|1U6J0ZvrTaaSWe9h2lyyVoLzOYir3c8ZUt0oKTCue7686e99',
-        },
       );
 
       List<PharmacyModel> pharmacies = (response['pharmacies'] as List)
@@ -59,11 +49,6 @@ class TargetsRepoImplementation implements TargatsRepoAbstract {
     try {
       final response = await api.get(
         "medications",
-        headers: {
-          'Accept': 'application/vnd.api+json',
-          'Authorization':
-              'Bearer 6|1U6J0ZvrTaaSWe9h2lyyVoLzOYir3c8ZUt0oKTCue7686e99',
-        },
       );
 
       List<MedicationModel> medications = (response['medications'] as List)

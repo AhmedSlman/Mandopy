@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:mandopy/core/utils/app_styles.dart';
+import '../../../../../core/utils/app_styles.dart';
 
 class ForgetPasswordMessage extends StatelessWidget {
   const ForgetPasswordMessage({

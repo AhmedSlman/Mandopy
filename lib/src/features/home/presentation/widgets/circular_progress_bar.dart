@@ -1,15 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:mandopy/core/theme/app_colors.dart';
-import 'package:mandopy/core/utils/app_strings.dart';
-import 'package:mandopy/core/utils/app_styles.dart';
+import '../../../../../core/theme/app_colors.dart';
+import '../../../../../core/utils/app_styles.dart';
+import '../../cubit/percentage/cubit/percentage_cubit.dart';
+import 'package:skeletonizer/skeletonizer.dart';
 
 class CircularProgressBarWidget extends StatelessWidget {
   const CircularProgressBarWidget({
     super.key,
-    required this.progressValue,
+    // required this.progressValue,
   });
-  final double progressValue;
+  // final double progressValue;
 
   @override
   Widget build(BuildContext context) {
@@ -22,31 +24,51 @@ class CircularProgressBarWidget extends StatelessWidget {
       ),
       child: Padding(
         padding: EdgeInsets.symmetric(horizontal: 8.w),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            const Text(
-              AppStrings.monthlyMissonsDone,
-            ),
-            const Spacer(),
-            Stack(
-              alignment: Alignment.center,
-              children: [
-                CircularProgressIndicator(
-                  strokeWidth: 10,
-                  value: progressValue,
-                  backgroundColor: AppColors.yellow,
-                  color: AppColors.primaryColor,
+        child: BlocBuilder<PercentageCubit, PercentageState>(
+          builder: (context, state) {
+            if (state is PercentageLoading) {
+              return Skeletonizer(
+                containersColor: Colors.grey.shade300,
+                enabled: true,
+                child: Container(
+                  color: Colors.grey.shade300,
                 ),
-                Text(
-                  '60%',
-                  style: AppStyles.s12.copyWith(
-                    color: Colors.black,
+              );
+            }
+            if (state is MonthlyTargetLoaded) {
+              return Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    "You have ${state.montlyTargetModel.monthlyTarget.toString()} visits this month",
                   ),
-                ),
-              ],
-            ),
-          ],
+                  const Spacer(),
+                  Stack(
+                    alignment: Alignment.center,
+                    children: [
+                      CircularProgressIndicator(
+                        strokeWidth: 10,
+                        value: double.parse(state.montlyTargetModel.percentage
+                                    ?.replaceAll('%', '') ??
+                                "N/A") /
+                            100,
+                        backgroundColor: AppColors.yellow,
+                        color: AppColors.primaryColor,
+                      ),
+                      Text(
+                        state.montlyTargetModel.percentage ?? "N/A",
+                        style: AppStyles.s12.copyWith(
+                          color: Colors.black,
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              );
+            } else {
+              return const Text('No data available');
+            }
+          },
         ),
       ),
     );

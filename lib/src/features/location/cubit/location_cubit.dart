@@ -1,7 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:geolocator/geolocator.dart';
-import 'package:mandopy/src/features/location/data/model/location_model.dart';
-import 'package:mandopy/src/features/location/data/repo/location_repo_abstract.dart';
+import '../data/model/location_model.dart';
+import '../data/repo/location_repo_abstract.dart';
 
 part 'location_state.dart';
 
@@ -13,6 +13,8 @@ class LocationCubit extends Cubit<LocationState> {
 
   Future<bool> checkLocationServices() async {
     bool serviceEnabled = await Geolocator.isLocationServiceEnabled();
+    print("Location Services Enabled: $serviceEnabled");
+
     if (!serviceEnabled) {
       emit(LocationFailure(message: "خدمات الموقع غير مفعلة"));
       return false;
@@ -22,8 +24,12 @@ class LocationCubit extends Cubit<LocationState> {
 
   Future<bool> checkLocationPermission() async {
     LocationPermission permission = await Geolocator.checkPermission();
+    print("Initial Location Permission: $permission");
+
     if (permission == LocationPermission.denied) {
       permission = await Geolocator.requestPermission();
+      print("Requested Location Permission: $permission");
+
       if (permission == LocationPermission.denied) {
         emit(LocationFailure(message: "تم رفض إذن الموقع"));
         return false;
@@ -64,7 +70,7 @@ class LocationCubit extends Cubit<LocationState> {
     }
   }
 
-  Future<void> savePharmacyLocation(int pharmacyId) async {
+  Future<void> savePharmacyLocation(String pharmacyId) async {
     try {
       emit(LocationLoading());
 
@@ -80,6 +86,9 @@ class LocationCubit extends Cubit<LocationState> {
         longitude: position.longitude,
       );
 
+      print(
+          "Sending Pharmacy Location: Latitude = ${position.latitude}, Longitude = ${position.longitude}");
+
       result.fold(
         (error) => emit(LocationFailure(message: error.message)),
         (location) => emit(LocationSuccess(
@@ -92,7 +101,7 @@ class LocationCubit extends Cubit<LocationState> {
     }
   }
 
-  Future<void> loadDoctorLocation(int doctorId) async {
+  Future<void> loadDoctorLocation(String doctorId) async {
     try {
       emit(LocationLoading());
 
@@ -109,7 +118,7 @@ class LocationCubit extends Cubit<LocationState> {
     }
   }
 
-  Future<void> loadPharmacyLocation(int pharmacyId) async {
+  Future<void> loadPharmacyLocation(String pharmacyId) async {
     try {
       emit(LocationLoading());
 
@@ -126,7 +135,7 @@ class LocationCubit extends Cubit<LocationState> {
     }
   }
 
-  Future<void> checkDoctorLocation(int doctorId) async {
+  Future<void> checkDoctorLocation(String doctorId) async {
     try {
       emit(LocationLoading());
 
@@ -168,7 +177,7 @@ class LocationCubit extends Cubit<LocationState> {
     }
   }
 
-  Future<void> checkPharmacyLocation(int pharmacyId) async {
+  Future<void> checkPharmacyLocation(String pharmacyId) async {
     try {
       emit(LocationLoading());
 
@@ -207,6 +216,81 @@ class LocationCubit extends Cubit<LocationState> {
     } catch (e) {
       emit(LocationFailure(
           message: "فشل في التحقق من موقع الصيدلية: ${e.toString()}"));
+    }
+  }
+
+  Future<void> checkAndSaveLocation({
+    required String entityId,
+    required bool isDoctor,
+  }) async {
+    try {
+      emit(LocationLoading());
+      print("Checking location services and permissions...");
+
+      if (!await checkLocationServices() || !await checkLocationPermission()) {
+        print("Location services or permission check failed.");
+        return;
+      }
+
+      Position currentPosition = await Geolocator.getCurrentPosition(
+        desiredAccuracy: LocationAccuracy.high,
+      );
+      print(
+          "Current Position: Latitude = ${currentPosition.latitude}, Longitude = ${currentPosition.longitude}");
+
+      final result = isDoctor
+          ? await locationRepo.getDoctorLocation(entityId)
+          : await locationRepo.getPharmacyLocation(entityId);
+      print(
+          "Fetching saved location for ${isDoctor ? 'Doctor' : 'Pharmacy'} with ID: $entityId");
+
+      result.fold(
+        (error) async {
+          print("No saved location found, attempting to save...");
+
+          final saveResult = isDoctor
+              ? await locationRepo.saveDoctorLocation(
+                  doctorId: int.parse(entityId),
+                  latitude: currentPosition.latitude,
+                  longitude: currentPosition.longitude,
+                )
+              : await locationRepo.savePharmacyLocation(
+                  pharmacyId: entityId,
+                  latitude: currentPosition.latitude,
+                  longitude: currentPosition.longitude,
+                );
+
+          print("Saving ${isDoctor ? 'Doctor' : 'Pharmacy'} location...");
+          saveResult.fold(
+            (saveError) {
+              print("Error saving location: ${saveError.message}");
+              emit(LocationFailure(message: saveError.message));
+            },
+            (_) {
+              print("Location saved successfully.");
+              emit(LocationSuccess(
+                message: 'تم حفظ الموقع بنجاح',
+                location: LocationModel(
+                  latitude: currentPosition.latitude,
+                  longitude: currentPosition.longitude,
+                ),
+              ));
+            },
+          );
+        },
+        (savedLocation) {
+          print(
+              "Location already saved: ${savedLocation.latitude}, ${savedLocation.longitude}");
+          emit(LocationSuccess(
+            message: 'الموقع محفوظ بالفعل',
+            location: savedLocation,
+          ));
+        },
+      );
+    } catch (e) {
+      print("Error occurred: ${e.toString()}");
+      emit(LocationFailure(
+          message: "فشل في التحقق/حفظ الموقع: ${e.toString()}"));
     }
   }
 }

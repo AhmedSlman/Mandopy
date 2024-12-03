@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:mandopy/core/theme/app_colors.dart';
-import 'package:mandopy/core/utils/app_strings.dart';
-import 'package:mandopy/core/utils/app_styles.dart';
+import '../../../../../core/theme/app_colors.dart';
+import '../../../../../core/utils/app_styles.dart';
 
 class ProgressBarWidget extends StatelessWidget {
   const ProgressBarWidget({
@@ -14,7 +13,7 @@ class ProgressBarWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 73.h,
+      height: 80.h,
       width: 390.w,
       decoration: BoxDecoration(
         color: AppColors.greyForBackground,
@@ -24,9 +23,9 @@ class ProgressBarWidget extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          const Padding(
-            padding: EdgeInsets.symmetric(horizontal: 8.0),
-            child: Text(AppStrings.dailyMissonsDone),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 8.0),
+            child: Text('قمت بتحقيق ${progress * 100}% من هدفك اليومي'),
           ),
           Padding(
             padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 8.h),
@@ -42,7 +41,7 @@ class ProgressBarWidget extends StatelessWidget {
                   right: 90.w,
                   top: 5,
                   child: Text(
-                    '60% مكتمل',
+                    '${progress * 100}% مكتمل',
                     style: AppStyles.s12.copyWith(
                       color: AppColors.white,
                     ),

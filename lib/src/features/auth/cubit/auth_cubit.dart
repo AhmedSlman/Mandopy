@@ -1,8 +1,14 @@
+import 'dart:io';
+
 import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
-import 'package:mandopy/core/errors/error_model.dart';
-import 'package:mandopy/src/features/auth/data/models/user_model.dart';
-import 'package:mandopy/src/features/auth/data/repos/auth_repo_abstract.dart';
+import '../../../../core/errors/error_model.dart';
+import '../data/models/logout_model.dart';
+import '../data/models/reset_password_model.dart';
+import '../data/models/user_model.dart';
+import '../data/repos/auth_repo_abstract.dart';
+
+import '../data/models/forget_password_model.dart';
 
 part 'auth_state.dart';
 
@@ -35,6 +41,7 @@ class AuthCubit extends Cubit<AuthState> {
     required String passwordConfirmation,
     required String role,
     required String admincode,
+    File? image,
   }) async {
     emit(RegisterLoadingState());
 
@@ -45,6 +52,7 @@ class AuthCubit extends Cubit<AuthState> {
       passwordConfirmation: passwordConfirmation,
       admincode: admincode,
       role: role,
+      image: image,
     );
 
     result.fold(
@@ -85,7 +93,51 @@ class AuthCubit extends Cubit<AuthState> {
     result.fold(
       (error) => emit(VerifyEmailFailureState(errorMessage: error)),
       (userResponse) =>
-          emit(VerifyEmailSuccessState(userModel: userResponse.message)),
+          emit(VerifyEmailSuccessState(userModel: userResponse.message!)),
+    );
+  }
+
+  Future<void> forgetPassword({required String email}) async {
+    emit(ForgetPasswordLoadingState());
+    final result = await authRepo.forgetPassword(email: email);
+    result.fold(
+      (error) => emit(ForgetPasswordFailureState(errorMessage: error)),
+      (forgetPasswordModel) => emit(
+        ForgetPasswordSuccessState(forgetPasswordModel: forgetPasswordModel),
+      ),
+    );
+  }
+
+  Future<void> resetPassword(
+      {required String email,
+      required String password,
+      required String passwordConfirmation,
+      required String code}) async {
+    emit(ResetPasswordLoadingState());
+    final result = await authRepo.resetPassword(
+      email: email,
+      password: password,
+      passwordConfirmation: passwordConfirmation,
+      code: code,
+    );
+    result.fold(
+      (error) => emit(ResetPasswordFailureState(errorMessage: error)),
+      (resetPasswordModel) => emit(
+        ResetPasswordSuccessState(resetPasswordModel: resetPasswordModel),
+      ),
+    );
+  }
+
+  Future<void> logout() async {
+    emit(LogoutLoadingState());
+    final result = await authRepo.logout();
+    result.fold(
+      (error) => emit(
+        LogoutFailureState(errorMessage: error),
+      ),
+      (logoutResponse) => emit(
+        LogoutSuccessState(logoutModel: logoutResponse),
+      ),
     );
   }
 }

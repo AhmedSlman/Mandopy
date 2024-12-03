@@ -46,3 +46,44 @@ final class VerifyEmailFailureState extends AuthState {
 
   VerifyEmailFailureState({required this.errorMessage});
 }
+
+final class ForgetPasswordLoadingState extends AuthState {}
+
+final class ForgetPasswordSuccessState extends AuthState {
+  final ForgetPasswordModel forgetPasswordModel;
+
+  ForgetPasswordSuccessState({required this.forgetPasswordModel});
+}
+
+final class ForgetPasswordFailureState extends AuthState {
+  final ErrorModel errorMessage;
+
+  ForgetPasswordFailureState({required this.errorMessage});
+}
+
+final class ResetPasswordLoadingState extends AuthState {}
+
+final class ResetPasswordSuccessState extends AuthState {
+  final ResetPasswordModel resetPasswordModel;
+
+  ResetPasswordSuccessState({required this.resetPasswordModel});
+}
+
+final class ResetPasswordFailureState extends AuthState {
+  final ErrorModel errorMessage;
+
+  ResetPasswordFailureState({required this.errorMessage});
+}
+final class LogoutLoadingState extends AuthState {}
+
+final class LogoutSuccessState extends AuthState {
+  final LogoutModel logoutModel;
+
+  LogoutSuccessState({required this.logoutModel});
+}
+
+final class LogoutFailureState extends AuthState {
+  final ErrorModel errorMessage;
+
+  LogoutFailureState({required this.errorMessage});
+}
