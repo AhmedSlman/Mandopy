@@ -9,8 +9,16 @@ class LocationModel {
 
   factory LocationModel.fromJson(Map<String, dynamic> json) {
     return LocationModel(
-      latitude: json['latitude'] != null ? json['latitude'] as double : 0.0,
-      longitude: json['longitude'] != null ? json['longitude'] as double : 0.0,
+      latitude: json['latitude'] != null
+          ? (json['latitude'] is int
+              ? (json['latitude'] as int).toDouble()
+              : json['latitude'] as double)
+          : 0.0,
+      longitude: json['longitude'] != null
+          ? (json['longitude'] is int
+              ? (json['longitude'] as int).toDouble()
+              : json['longitude'] as double)
+          : 0.0,
     );
   }
 

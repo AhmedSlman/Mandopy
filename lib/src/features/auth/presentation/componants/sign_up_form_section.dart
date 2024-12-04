@@ -1,6 +1,5 @@
 import 'dart:io';
 
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
@@ -12,10 +11,8 @@ import '../../../../../core/services/service_locator.dart';
 import '../../../../../core/utils/app_strings.dart';
 import '../../cubit/auth_cubit.dart';
 import '../widgets/auth_text_form_field.dart';
-import '../widgets/repersentative_type_widget.dart';
-import 'package:path/path.dart' as path;
-
 import '../../../../../core/functions/show_toast.dart';
+import 'package:path/path.dart' as path;
 
 class SignUpFormSection extends StatefulWidget {
   const SignUpFormSection({super.key});
@@ -25,6 +22,8 @@ class SignUpFormSection extends StatefulWidget {
 }
 
 class _SignUpFormSectionState extends State<SignUpFormSection> {
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+
   final nameController = TextEditingController();
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
@@ -84,82 +83,88 @@ class _SignUpFormSectionState extends State<SignUpFormSection> {
               message: state.errorMessage.message, state: ToastStates.ERROR);
         }
       },
-      child: Column(
-        children: [
-          GestureDetector(
-            onTap: _pickImage,
-            child: CircleAvatar(
-              radius: 50,
-              backgroundColor: Colors.grey[200],
-              backgroundImage:
-                  _imageFile == null ? null : FileImage(_imageFile!),
-              child: _imageFile == null
-                  ? Icon(
-                      Icons.camera_alt,
-                      size: 40,
-                      color: Colors.grey[600],
-                    )
-                  : null,
+      child: Form(
+        key: _formKey,
+        child: Column(
+          children: [
+            GestureDetector(
+              onTap: _pickImage,
+              child: CircleAvatar(
+                radius: 50,
+                backgroundColor: Colors.grey[200],
+                backgroundImage:
+                    _imageFile == null ? null : FileImage(_imageFile!),
+                child: _imageFile == null
+                    ? Icon(
+                        Icons.camera_alt,
+                        size: 40,
+                        color: Colors.grey[600],
+                      )
+                    : null,
+              ),
             ),
-          ),
-          const SizedBox(height: 20),
-          AuthTextFormField(
-            titleOfField: AppStrings.name,
-            hintText: AppStrings.hintName,
-            controller: nameController,
-            validator: Validator.validateName,
-          ),
-          AuthTextFormField(
-            titleOfField: AppStrings.email,
-            hintText: AppStrings.emailHint,
-            controller: emailController,
-            validator: Validator.validateEmail,
-          ),
-          AuthTextFormField(
-            titleOfField: AppStrings.password,
-            hintText: AppStrings.hintPassword,
-            controller: passwordController,
-            validator: Validator.validatePassword,
-            isPassword: true,
-          ),
-          AuthTextFormField(
-            titleOfField: AppStrings.confirmPassword,
-            hintText: AppStrings.hintPassword,
-            controller: passwordConfirmController,
-            validator: Validator.validatePassword,
-            isPassword: true,
-          ),
-          AuthTextFormField(
-            titleOfField: AppStrings.confirmationCode,
-            hintText: AppStrings.hintConfirmationCode,
-            controller: adminCodeController,
-            validator: Validator.validateManagerCode,
-          ),
-          RepresentativeType(
-            initialSelectedType: selectedRole,
-            onTypeChanged: (String? newType) {
-              if (kDebugMode) {
-                print('نوع المندوب تم تغييره إلى: $newType');
-              }
-              selectedRole = newType ?? 'commercial';
-            },
-          ),
-          CustomButton(
-            text: AppStrings.creatAccount,
-            onPressed: () {
-              final authCubit = context.read<AuthCubit>();
-              authCubit.register(
-                email: emailController.text,
-                name: nameController.text,
-                password: passwordController.text,
-                passwordConfirmation: passwordConfirmController.text,
-                role: selectedRole,
-                admincode: adminCodeController.text,
-                image: _imageFile,
-              );
-            },
-          ),
-        ],
+            const SizedBox(height: 20),
+            AuthTextFormField(
+              titleOfField: AppStrings.name,
+              hintText: AppStrings.hintName,
+              controller: nameController,
+              validator: Validator.validateName,
+            ),
+            AuthTextFormField(
+              titleOfField: AppStrings.email,
+              hintText: AppStrings.emailHint,
+              controller: emailController,
+              validator: Validator.validateEmail,
+            ),
+            AuthTextFormField(
+              titleOfField: AppStrings.password,
+              hintText: AppStrings.hintPassword,
+              controller: passwordController,
+              validator: Validator.validatePassword,
+              isPassword: true,
+            ),
+            AuthTextFormField(
+              titleOfField: AppStrings.confirmPassword,
+              hintText: AppStrings.hintPassword,
+              controller: passwordConfirmController,
+              validator: (value) {
+                if (value != passwordController.text) {
+                  return AppStrings.passwordMismatch;
+                }
+                return null;
+              },
+              isPassword: true,
+            ),
+            AuthTextFormField(
+              titleOfField: AppStrings.confirmationCode,
+              hintText: AppStrings.hintConfirmationCode,
+              controller: adminCodeController,
+              validator: Validator.validateManagerCode,
+            ),
+            CustomButton(
+              text: AppStrings.creatAccount,
+              onPressed: () {
+                if (_formKey.currentState?.validate() ?? false) {
+                  final authCubit = context.read<AuthCubit>();
+                  authCubit.register(
+                    email: emailController.text,
+                    name: nameController.text,
+                    password: passwordController.text,
+                    passwordConfirmation: passwordConfirmController.text,
+                    role: selectedRole,
+                    admincode: adminCodeController.text,
+                    image: _imageFile,
+                  );
+                } else {
+                  showToast(
+                    message: AppStrings.invalidForm,
+                    state: ToastStates.ERROR,
+                  );
+                }
+              },
+            ),
+          ],
+        ),
       ),
     );
   }

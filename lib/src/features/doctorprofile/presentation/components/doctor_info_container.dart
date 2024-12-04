@@ -8,11 +8,15 @@ import '../../../location/cubit/location_cubit.dart';
 import '../../../../../core/common/widgets/custom_btn.dart';
 import '../../../../../core/theme/app_colors.dart';
 import '../../../../../core/utils/app_assets.dart';
-import '../../../doctorprofile/presentation/widgets/info_row.dart'; // التأكد من أن هذه الوحدة تمثل معلومات الطبيب
+import '../../../doctorprofile/presentation/widgets/info_row.dart';
 
 class DoctorInfoContainer extends StatefulWidget {
-  const DoctorInfoContainer(
-      {super.key, required this.doctorId, required this.visitId});
+  const DoctorInfoContainer({
+    super.key,
+    required this.doctorId,
+    required this.visitId,
+  });
+
   final String doctorId;
   final String visitId;
 
@@ -21,15 +25,12 @@ class DoctorInfoContainer extends StatefulWidget {
 }
 
 class _DoctorInfoContainerState extends State<DoctorInfoContainer> {
-  // Flag to control the loading dialog
   bool isCheckingLocation = false;
 
-  // Function to show the loading message while checking location
   Future<void> _showLoadingDialog(BuildContext context) async {
     showDialog(
       context: context,
-      barrierDismissible:
-          false, // Don't allow closing the dialog by tapping outside
+      barrierDismissible: false,
       builder: (BuildContext context) {
         return const AlertDialog(
           content: Row(
@@ -45,9 +46,26 @@ class _DoctorInfoContainerState extends State<DoctorInfoContainer> {
     );
   }
 
-  // Function to close the loading dialog
   void _dismissLoadingDialog(BuildContext context) {
     Navigator.of(context).pop();
+  }
+
+  Future<void> _showMessage(BuildContext context, String message) async {
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          content: Text(message),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.of(context).pop(),
+              child: const Text("موافق"),
+            ),
+          ],
+        );
+      },
+    );
   }
 
   @override
@@ -64,7 +82,6 @@ class _DoctorInfoContainerState extends State<DoctorInfoContainer> {
           setState(() {
             isCheckingLocation = false;
           });
-
           await _showMessage(
             context,
             state.isInCorrectLocation
@@ -233,24 +250,6 @@ class _DoctorInfoContainerState extends State<DoctorInfoContainer> {
           },
         ),
       ),
-    );
-  }
-
-  Future<void> _showMessage(BuildContext context, String message) async {
-    showDialog(
-      context: context,
-      barrierDismissible: false,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          content: Text(message),
-          actions: [
-            TextButton(
-              onPressed: () => Navigator.of(context).pop(),
-              child: const Text("موافق"),
-            ),
-          ],
-        );
-      },
     );
   }
 }

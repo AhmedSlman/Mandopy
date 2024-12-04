@@ -56,7 +56,7 @@ class PerformanceDetailsSection extends StatelessWidget {
                 List<PerformanceData> performanceData = [
                   PerformanceData(
                     iconPath: AppAssets.visitsIcon,
-                    title: 'عدد الزيارات المكتملة هذا الشهر',
+                    title: 'عدد الزيارات الكلية هذا الشهر',
                     value: state.statisticsModel.allVisits.toString(),
                   ),
                   PerformanceData(

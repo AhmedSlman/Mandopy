@@ -70,26 +70,28 @@ class RewardCard extends StatelessWidget {
                     color: AppColors.accentColor,
                   ),
                 ),
-                CustomButton(
-                  textStyle: AppStyles.s8.copyWith(
-                    color: Colors.white,
-                    fontWeight: FontWeight.w600,
-                  ),
-                  text: 'استرداد المكافأة',
-                  backgroundColor: AppColors.accentColor,
-                  onPressed: onButtonPressed,
-                  borderRadius: BorderRadius.circular(
-                    7,
-                  ),
-                  width: 73.w,
-                  height: 25.h,
-                ),
+                // CustomButton(
+                //   textStyle: AppStyles.s8.copyWith(
+                //     color: Colors.white,
+                //     fontWeight: FontWeight.w600,
+                //   ),
+                //   text: 'استرداد المكافأة',
+                //   backgroundColor: AppColors.accentColor,
+                //   onPressed: onButtonPressed,
+                //   borderRadius: BorderRadius.circular(
+                //     7,
+                //   ),
+                //   width: 73.w,
+                //   height: 25.h,
+                // ),
               ],
             ),
             Text(
               'للحصول علي $rewardName يجب ان تمتلك بحد ادني $rewardPoints مكتسبة',
               style: AppStyles.s8.copyWith(
                 color: AppColors.grey,
+                fontWeight: FontWeight.w500,
+                fontSize: 12.sp,
               ),
             ),
           ],

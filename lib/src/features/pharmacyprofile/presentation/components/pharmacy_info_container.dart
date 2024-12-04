@@ -57,11 +57,29 @@ class _PharmacyInfoContainerState extends State<PharmacyInfoContainer> {
         } else {
           _dismissLoadingDialog(context);
 
-          if (state is LocationSuccess) {
-            await _showMessage(context, state.message);
+          if (state is LocationSuccess || state is LocationCheckSuccess) {
+            // print the location state to debug
+            print("Location Check Success:");
+
+            if (state is LocationCheckSuccess) {
+              if (state.isInCorrectLocation) {
+                // Location is correct, proceed with starting the visit
+                final visitCubit = context.read<VisitCubit>();
+                if (!visitCubit.isVisitStarted) {
+                  visitCubit.startVisit(widget.visitId);
+                  await _showMessage(context, 'تم بدء الزيارة بنجاح!');
+                } else {
+                  await _showMessage(context, 'الزيارة قد بدأت بالفعل!');
+                }
+              } else {
+                // If the location is incorrect, show the distance
+                await _showMessage(
+                  context,
+                  "أنت بعيد عن الموقع بمقدار ${state.distance.toStringAsFixed(2)} متر.",
+                );
+              }
+            }
           } else if (state is LocationFailure) {
-            await _showMessage(context, state.message);
-          } else if (state is LocationCheckSuccess) {
             await _showMessage(context, state.message);
           }
         }
@@ -133,10 +151,15 @@ class _PharmacyInfoContainerState extends State<PharmacyInfoContainer> {
                               .checkPharmacyLocation(widget.pharmacyId);
                           final locationState = locationCubit.state;
 
+                          // Debug the location state
+                          print("Location State: $locationState");
+
                           if (locationState is LocationCheckSuccess) {
                             if (locationState.isInCorrectLocation) {
                               if (!visitCubit.isVisitStarted) {
                                 visitCubit.startVisit(widget.visitId);
+                                // بدء الزيارة
+                                print("Visit Started");
                                 await _showMessage(
                                     context, 'تم بدء الزيارة بنجاح!');
                               } else {
@@ -164,7 +187,8 @@ class _PharmacyInfoContainerState extends State<PharmacyInfoContainer> {
                           color: Colors.white,
                         ),
                         onPressed: () async {
-                          if (!context.read<VisitCubit>().isVisitStarted) {
+                          if (!context.read<VisitCubit>().isVisitStarted ==
+                              true) {
                             await _showMessage(
                                 context, "لا يمكنك إنهاء الزيارة قبل بدءها.");
                             return;

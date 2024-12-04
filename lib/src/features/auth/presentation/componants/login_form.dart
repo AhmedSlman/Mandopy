@@ -8,11 +8,12 @@ import '../../../../../core/utils/app_strings.dart';
 import '../../cubit/auth_cubit.dart';
 import '../widgets/auth_text_form_field.dart';
 import '../widgets/forget_password.dart';
-
 import '../../../../../core/functions/show_toast.dart';
 
 class LoginForm extends StatelessWidget {
   LoginForm({super.key});
+
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
 
@@ -39,38 +40,43 @@ class LoginForm extends StatelessWidget {
               message: state.errorMessage.message, state: ToastStates.ERROR);
         }
       },
-      child: Column(
-        children: [
-          AuthTextFormField(
-            titleOfField: AppStrings.email,
-            hintText: AppStrings.emailHint,
-            validator: Validator.validateEmail,
-            controller: emailController,
-          ),
-          AuthTextFormField(
-            titleOfField: AppStrings.password,
-            hintText: AppStrings.hintPassword,
-            validator: Validator.validatePassword,
-            controller: passwordController,
-            isPassword: true,
-          ),
-          CustomTextButton(
-            text: AppStrings.forgetPassword,
-            onPressed: () => GoRouter.of(context).push(
-              RouterNames.forgetPassword,
+      child: Form(
+        key: _formKey,
+        child: Column(
+          children: [
+            AuthTextFormField(
+              titleOfField: AppStrings.email,
+              hintText: AppStrings.emailHint,
+              validator: Validator.validateEmail,
+              controller: emailController,
             ),
-          ),
-          CustomButton(
-            text: AppStrings.signIn,
-            onPressed: () {
-              final authCubit = context.read<AuthCubit>();
-              authCubit.login(
-                email: emailController.text,
-                password: passwordController.text,
-              );
-            },
-          ),
-        ],
+            AuthTextFormField(
+              titleOfField: AppStrings.password,
+              hintText: AppStrings.hintPassword,
+              validator: Validator.validatePassword,
+              controller: passwordController,
+              isPassword: true,
+            ),
+            CustomTextButton(
+              text: AppStrings.forgetPassword,
+              onPressed: () => GoRouter.of(context).push(
+                RouterNames.forgetPassword,
+              ),
+            ),
+            CustomButton(
+              text: AppStrings.signIn,
+              onPressed: () {
+                if (_formKey.currentState?.validate() ?? false) {
+                  final authCubit = context.read<AuthCubit>();
+                  authCubit.login(
+                    email: emailController.text.trim(),
+                    password: passwordController.text.trim(),
+                  );
+                }
+              },
+            ),
+          ],
+        ),
       ),
     );
   }

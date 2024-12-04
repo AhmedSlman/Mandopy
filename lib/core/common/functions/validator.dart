@@ -78,12 +78,11 @@ class Validator {
     if (value == null || value.isEmpty) {
       return 'يرجى إدخال كود المدير';
     }
-    const pattern = r'^[0-9]{6}$';
-    final regex = RegExp(pattern);
 
-    if (!regex.hasMatch(value)) {
-      return 'يرجى إدخال كود مدير صالح (6 أرقام فقط)';
+    if (value.length <= 6) {
+      return 'يرجى إدخال كود مدير يحتوي على أكثر من 6 أحرف أو أرقام';
     }
+
     return null;
   }
 }

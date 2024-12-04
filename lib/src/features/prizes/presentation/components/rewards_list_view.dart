@@ -14,24 +14,26 @@ class RewardsListView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      height: 335.h,
-      child: ListView.separated(
-        itemCount: rewards.length,
-        itemBuilder: (context, index) {
-          final reward = rewards[index];
-          return RewardCard(
-            rewardName: reward.name,
-            rewardPrice: reward.price,
-            rewardPoints: reward.points,
-            onButtonPressed: () {},
-          );
-        },
-        separatorBuilder: (BuildContext context, int index) {
-          return SizedBox(
-            height: 10.h,
-          );
-        },
+    return Expanded(
+      child: SizedBox(
+        // height: 400.h,
+        child: ListView.separated(
+          itemCount: rewards.length,
+          itemBuilder: (context, index) {
+            final reward = rewards[index];
+            return RewardCard(
+              rewardName: reward.name,
+              rewardPrice: reward.price,
+              rewardPoints: reward.points,
+              onButtonPressed: () {},
+            );
+          },
+          separatorBuilder: (BuildContext context, int index) {
+            return SizedBox(
+              height: 10.h,
+            );
+          },
+        ),
       ),
     );
   }

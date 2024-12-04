@@ -7,7 +7,9 @@ abstract class AppColors {
   static const Color accentColor = Color(0xFFFBBC04);
   static const Color yellow = Color(0xFFFFFEE2);
   static const Color moreYellower = Color(0xFFfff9c4);
-  static const Color notificationCardColor = Color(0xFFFFFC97);
+  static const Color yellowReword = Color(0xFFFFFC97);
+  static const Color notificationCardColor = Color.fromARGB(255, 241, 240, 216);
+
   static const Color lightGreen = Color(0xFFD8ECD7);
   static const Color textColor = Color(0xFF333333);
   static const Color greyForBackground = Color(0xFFECEBEB);

@@ -1,3 +1,5 @@
+import 'package:flutter/src/widgets/framework.dart';
+
 abstract class AppStrings {
   static const mandopy = "مندوبي",
       creatNewAccount = "انشاء حساب جديد !",
@@ -36,6 +38,7 @@ abstract class AppStrings {
       confirmPassword = "تأكيد كلمة المرور",
       forgetPassword = "هل نسيت كلمة المرور ؟",
       confirmationCode = "كود التسجيل",
+      confirmationCodeemail = "رمز التحقق",
       typeOfRepersentative = "نوع المندوب",
       scienstific = "علمي",
       sales = "تجاري",
@@ -45,7 +48,6 @@ abstract class AppStrings {
       hintConfirmationCode = "ادخل كود التسجيل الخاص بك",
       selectPurpose = "حدد نوع الهدف",
       selectActiveIngredient = "حدد المادة الفعالة",
-      
       selectAppointment = "حدد الموعد",
       visitDate = "تاريخ الزيارة",
       time = "الوقت",
@@ -69,5 +71,7 @@ abstract class AppStrings {
       goalsHint = "ادخل عدد الاهداف المحققة",
       activeSubstanceHint = "ادخل افضل مادة فعالة",
       uncompletedVisitsHint = "ادخل عدد الزيارات الغير مكتملة",
-      save = "حفظ";
+      save = "حفظ",
+      invalidForm = "البيانات غير صحيحة",
+      passwordMismatch = "كلمة المرور غير متطابقة";
 }

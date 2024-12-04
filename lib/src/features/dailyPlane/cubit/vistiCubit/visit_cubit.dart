@@ -92,7 +92,9 @@ class VisitCubit extends Cubit<VisitState> {
   }
 
   Future<void> startVisit(String visitId) async {
+    print("Attempting to start visit with ID: $visitId");
     if (isVisitStarted) {
+      print("Visit already started.");
       emit(VisitError(
           ErrorModel(message: 'لا يمكنك بدء الزيارة لأنها قد بدأت بالفعل.')));
       return;
@@ -103,9 +105,13 @@ class VisitCubit extends Cubit<VisitState> {
     final result = await visitRepo.startVisit(visitId);
 
     result.fold(
-      (error) => emit(VisitError(error)),
+      (error) {
+        print("Error starting visit: ${error.message}");
+        emit(VisitError(error));
+      },
       (success) {
-        isVisitStarted = true; // تحديث الحالة عند بدء الزيارة
+        isVisitStarted = true;
+        print("Visit started successfully.");
         emit(VisitStarted(message: 'زيارة بدأت بنجاح'));
       },
     );

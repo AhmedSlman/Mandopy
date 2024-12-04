@@ -1,4 +1,4 @@
-package com.example.mandopy
+package com.mandopy.apc_sales
 
 import io.flutter.embedding.android.FlutterActivity
 

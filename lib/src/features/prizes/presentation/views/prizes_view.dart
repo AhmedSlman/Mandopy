@@ -62,13 +62,13 @@ class PrizesView extends StatelessWidget {
               ),
             ),
             RewardsListView(rewards: rewards),
-            Text(
-              AppStrings.previousRewards,
-              style: AppStyles.s16.copyWith(
-                fontWeight: FontWeight.w600,
-              ),
-            ),
-            const DeliveredRewardsListView(),
+            // Text(
+            //   AppStrings.previousRewards,
+            //   style: AppStyles.s16.copyWith(
+            //     fontWeight: FontWeight.w600,
+            //   ),
+            // ),
+            // const DeliveredRewardsListView(),
           ],
         ),
       ),

@@ -1,5 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.mandopy">
+    package="com.mandopy.apc_sales">
 
     <!-- أذونات الوصول إلى الموقع -->
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
@@ -8,10 +8,12 @@
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
     <uses-permission android:name="android.permission.CAMERA"/>
+    <uses-permission android:name="android.permission.INTERNET"/> <!-- Add this -->
+
 
 
     <application
-        android:label="mandopy"
+        android:label="APC Sales Connect"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         
