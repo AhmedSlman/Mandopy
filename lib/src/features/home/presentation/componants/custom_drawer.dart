@@ -72,30 +72,30 @@ class CustomDrawer extends StatelessWidget {
               ),
             ),
 
-            ListTile(
-              leading: const Icon(Icons.settings),
-              title: const Text('Settings'),
-              onTap: () {
-                Navigator.pop(context);
-              },
-            ),
+            // ListTile(
+            //   leading: const Icon(Icons.settings),
+            //   title: const Text('Settings'),
+            //   onTap: () {
+            //     Navigator.pop(context);
+            //   },
+            // ),
 
-            ListTile(
-              leading: const Icon(Icons.book),
-              title: const Text('Terms & Conditions'),
-              onTap: () {
-                Navigator.pop(context);
-              },
-            ),
+            // ListTile(
+            //   leading: const Icon(Icons.book),
+            //   title: const Text('Terms & Conditions'),
+            //   onTap: () {
+            //     Navigator.pop(context);
+            //   },
+            // ),
 
-            // Support or Help
-            ListTile(
-              leading: const Icon(Icons.help),
-              title: const Text('Support'),
-              onTap: () {
-                Navigator.pop(context);
-              },
-            ),
+            // // Support or Help
+            // ListTile(
+            //   leading: const Icon(Icons.help),
+            //   title: const Text('Support'),
+            //   onTap: () {
+            //     Navigator.pop(context);
+            //   },
+            // ),
 
             // Logout option
             const Divider(),
@@ -104,6 +104,7 @@ class CustomDrawer extends StatelessWidget {
               title: const Text('Logout'),
               onTap: () {
                 context.read<AuthCubit>().logout();
+                context.go(RouterNames.login);
               },
             ),
           ],
