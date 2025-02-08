@@ -9,3 +9,4 @@ Future<void> main() async {
   await getIt<CacheHelper>().init();
   runApp(const Mandopy());
 }
+// 1
