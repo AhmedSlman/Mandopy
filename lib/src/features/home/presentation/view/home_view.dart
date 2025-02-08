@@ -53,7 +53,7 @@ class HomeView extends StatelessWidget {
               BlocProvider(
                 create: (context) =>
                     VisitCubit(getIt<VisitRepoAbstract>())..getAllVisits(),
-                child: DailyPlaneSection(),
+                child: const DailyPlaneSection(),
               )
             ],
           ),
