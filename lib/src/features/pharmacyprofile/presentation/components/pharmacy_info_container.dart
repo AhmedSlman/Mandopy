@@ -22,22 +22,74 @@ class PharmacyInfoContainer extends StatefulWidget {
   _PharmacyInfoContainerState createState() => _PharmacyInfoContainerState();
 }
 
-class _PharmacyInfoContainerState extends State<PharmacyInfoContainer> {
+class _PharmacyInfoContainerState extends State<PharmacyInfoContainer>
+    with SingleTickerProviderStateMixin {
   bool isCheckingLocation = false;
+  late AnimationController _animationController;
+  late Animation<double> _scaleAnimation;
+
+  @override
+  void initState() {
+    super.initState();
+    _animationController = AnimationController(
+      duration: const Duration(milliseconds: 200),
+      vsync: this,
+    );
+    _scaleAnimation = Tween<double>(begin: 1.0, end: 0.95).animate(
+      CurvedAnimation(parent: _animationController, curve: Curves.easeInOut),
+    );
+  }
+
+  @override
+  void dispose() {
+    _animationController.dispose();
+    super.dispose();
+  }
 
   Future<void> _showLoadingDialog(BuildContext context) async {
     showDialog(
       context: context,
       barrierDismissible: false,
+      barrierColor: Colors.black.withOpacity(0.3),
       builder: (BuildContext context) {
-        return const AlertDialog(
-          content: Row(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              CircularProgressIndicator(),
-              SizedBox(width: 16),
-              Text("جارٍ التحقق من الموقع..."),
-            ],
+        return Dialog(
+          backgroundColor: Colors.transparent,
+          elevation: 0,
+          child: Container(
+            padding: EdgeInsets.all(24.w),
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(16.r),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.black.withOpacity(0.1),
+                  blurRadius: 10,
+                  offset: const Offset(0, 4),
+                ),
+              ],
+            ),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                SizedBox(
+                  width: 40.w,
+                  height: 40.w,
+                  child: CircularProgressIndicator(
+                    strokeWidth: 3,
+                    valueColor:
+                        AlwaysStoppedAnimation<Color>(AppColors.primaryColor),
+                  ),
+                ),
+                SizedBox(height: 16.h),
+                Text(
+                  "جارٍ التحقق من الموقع...",
+                  style: AppStyles.s14.copyWith(
+                    fontWeight: FontWeight.w500,
+                    color: Colors.black87,
+                  ),
+                ),
+              ],
+            ),
           ),
         );
       },
@@ -48,40 +100,108 @@ class _PharmacyInfoContainerState extends State<PharmacyInfoContainer> {
     Navigator.of(context).pop();
   }
 
+  Future<void> _showMessage(BuildContext context, String message) async {
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (BuildContext context) {
+        return Dialog(
+          backgroundColor: Colors.transparent,
+          elevation: 0,
+          child: Container(
+            padding: EdgeInsets.all(24.w),
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(16.r),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.black.withOpacity(0.1),
+                  blurRadius: 10,
+                  offset: const Offset(0, 4),
+                ),
+              ],
+            ),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Icon(
+                  Icons.info_outline,
+                  size: 40.w,
+                  color: AppColors.primaryColor,
+                ),
+                SizedBox(height: 16.h),
+                Text(
+                  message,
+                  textAlign: TextAlign.center,
+                  style: AppStyles.s14.copyWith(
+                    color: Colors.black87,
+                    height: 1.5,
+                  ),
+                ),
+                SizedBox(height: 24.h),
+                TextButton(
+                  onPressed: () => Navigator.of(context).pop(),
+                  style: TextButton.styleFrom(
+                    backgroundColor: AppColors.primaryColor,
+                    foregroundColor: Colors.white,
+                    padding: EdgeInsets.symmetric(
+                      horizontal: 24.w,
+                      vertical: 12.h,
+                    ),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(8.r),
+                    ),
+                  ),
+                  child: Text(
+                    "موافق",
+                    style: AppStyles.s14.copyWith(
+                      color: Colors.white,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        );
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return BlocListener<LocationCubit, LocationState>(
       listener: (context, state) async {
-        if (state is LocationLoading) {
+        if (state is LocationLoading && !isCheckingLocation) {
+          setState(() {
+            isCheckingLocation = true;
+          });
           await _showLoadingDialog(context);
-        } else {
+        } else if (state is LocationCheckSuccess) {
           _dismissLoadingDialog(context);
-
-          if (state is LocationSuccess || state is LocationCheckSuccess) {
-            // print the location state to debug
-            print("Location Check Success:");
-
-            if (state is LocationCheckSuccess) {
-              if (state.isInCorrectLocation) {
-                // Location is correct, proceed with starting the visit
-                final visitCubit = context.read<VisitCubit>();
-                if (!visitCubit.isVisitStarted) {
-                  visitCubit.startVisit(widget.visitId);
-                  await _showMessage(context, 'تم بدء الزيارة بنجاح!');
-                } else {
-                  await _showMessage(context, 'الزيارة قد بدأت بالفعل!');
-                }
-              } else {
-                // If the location is incorrect, show the distance
-                await _showMessage(
-                  context,
-                  "أنت بعيد عن الموقع بمقدار ${state.distance.toStringAsFixed(2)} متر.",
-                );
-              }
+          setState(() {
+            isCheckingLocation = false;
+          });
+          if (state.isInCorrectLocation) {
+            final visitCubit = context.read<VisitCubit>();
+            if (!visitCubit.isVisitStarted) {
+              visitCubit.startVisit(widget.visitId);
+              await _showMessage(context, 'تم بدء الزيارة بنجاح!');
+            } else {
+              await _showMessage(context, 'الزيارة قد بدأت بالفعل!');
             }
-          } else if (state is LocationFailure) {
-            await _showMessage(context, state.message);
+          } else {
+            await _showMessage(
+              context,
+              "أنت بعيد عن الموقع بمقدار ${state.distance.toStringAsFixed(2)} متر.",
+            );
           }
+        } else if (state is LocationFailure) {
+          _dismissLoadingDialog(context);
+          setState(() {
+            isCheckingLocation = false;
+          });
+          await _showMessage(context, state.message);
         }
       },
       child: Container(
@@ -98,8 +218,8 @@ class _PharmacyInfoContainerState extends State<PharmacyInfoContainer> {
           ),
           boxShadow: [
             BoxShadow(
-              color: Colors.black12,
-              blurRadius: 2.h,
+              color: Colors.black.withOpacity(0.05),
+              blurRadius: 10,
               offset: const Offset(0, 4),
             ),
           ],
@@ -107,88 +227,66 @@ class _PharmacyInfoContainerState extends State<PharmacyInfoContainer> {
         child: BlocBuilder<PharmacyProfileCubit, PharmacyProfileState>(
           builder: (context, state) {
             if (state is PharmacyProfileLoading) {
-              return const Center(child: CircularProgressIndicator());
+              return Center(
+                child: CircularProgressIndicator(
+                  strokeWidth: 3,
+                  valueColor:
+                      AlwaysStoppedAnimation<Color>(AppColors.primaryColor),
+                ),
+              );
             }
             if (state is PharmacyProfileLoaded) {
               return Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  InfoRow(
-                    infoIcon: AppAssets.inVisit,
-                    infoText: state.pharmacyProfileModel.name ?? 'N/A',
+                  _buildInfoSection(
+                    icon: Icons.store_outlined,
+                    title: 'اسم الصيدلية',
+                    content: state.pharmacyProfileModel.name ?? 'N/A',
                   ),
-                  const SizedBox(height: 15),
-                  InfoRow(
-                    infoIcon: AppAssets.inVisit,
-                    infoText: state.pharmacyProfileModel.address ?? 'N/A',
+                  SizedBox(height: 16.h),
+                  _buildInfoSection(
+                    icon: Icons.location_on_outlined,
+                    title: 'العنوان',
+                    content: state.pharmacyProfileModel.address ?? 'N/A',
                   ),
-                  const SizedBox(height: 15),
-                  InfoRow(
-                    infoIcon: AppAssets.inVisit,
-                    infoText: state.pharmacyProfileModel.phone ?? 'N/A',
+                  SizedBox(height: 16.h),
+                  _buildInfoSection(
+                    icon: Icons.phone_outlined,
+                    title: 'رقم الهاتف',
+                    content: state.pharmacyProfileModel.phone ?? 'N/A',
                   ),
-                  const SizedBox(height: 15),
-                  const InfoRow(
-                    infoIcon: AppAssets.inVisit,
-                    infoText: 'طوال الاسبوع',
+                  SizedBox(height: 16.h),
+                  _buildInfoSection(
+                    icon: Icons.calendar_today_outlined,
+                    title: 'مواعيد العمل',
+                    content: 'طوال الاسبوع',
                   ),
-                  const SizedBox(height: 21),
+                  SizedBox(height: 24.h),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
-                      CustomButton(
-                        width: 100.w,
-                        height: 30.h,
+                      _buildActionButton(
                         text: 'بدء الزيارة',
-                        textStyle: AppStyles.s12.copyWith(
-                          color: Colors.white,
-                        ),
+                        backgroundColor: AppColors.primaryColor,
                         onPressed: () async {
+                          _animationController.forward().then((_) {
+                            _animationController.reverse();
+                          });
                           final locationCubit = context.read<LocationCubit>();
-                          final visitCubit = context.read<VisitCubit>();
-
                           await locationCubit
                               .checkPharmacyLocation(widget.pharmacyId);
-                          final locationState = locationCubit.state;
-
-                          // Debug the location state
-                          print("Location State: $locationState");
-
-                          if (locationState is LocationCheckSuccess) {
-                            if (locationState.isInCorrectLocation) {
-                              if (!visitCubit.isVisitStarted) {
-                                visitCubit.startVisit(widget.visitId);
-                                // بدء الزيارة
-                                print("Visit Started");
-                                await _showMessage(
-                                    context, 'تم بدء الزيارة بنجاح!');
-                              } else {
-                                await _showMessage(
-                                    context, 'الزيارة قد بدأت بالفعل!');
-                              }
-                            } else {
-                              await _showMessage(
-                                context,
-                                "أنت بعيد عن الموقع بمقدار ${locationState.distance.toStringAsFixed(2)} متر.",
-                              );
-                            }
-                          } else if (locationState is LocationFailure) {
-                            await _showMessage(context, locationState.message);
-                          }
                         },
                       ),
-                      const SizedBox(width: 16),
-                      CustomButton(
-                        backgroundColor: AppColors.accentColor,
-                        width: 100.w,
-                        height: 30.h,
+                      SizedBox(width: 16.w),
+                      _buildActionButton(
                         text: 'انهاء الزيارة',
-                        textStyle: AppStyles.s12.copyWith(
-                          color: Colors.white,
-                        ),
+                        backgroundColor: AppColors.accentColor,
                         onPressed: () async {
-                          if (!context.read<VisitCubit>().isVisitStarted ==
-                              true) {
+                          _animationController.forward().then((_) {
+                            _animationController.reverse();
+                          });
+                          if (!context.read<VisitCubit>().isVisitStarted) {
                             await _showMessage(
                                 context, "لا يمكنك إنهاء الزيارة قبل بدءها.");
                             return;
@@ -197,28 +295,105 @@ class _PharmacyInfoContainerState extends State<PharmacyInfoContainer> {
                           bool? saleMade = await showDialog(
                             context: context,
                             builder: (BuildContext context) {
-                              return AlertDialog(
-                                title: const Text("بيع المنتج"),
-                                content: const Text("هل قمت ببيع المنتج؟"),
-                                actions: [
-                                  TextButton(
-                                    onPressed: () =>
-                                        Navigator.of(context).pop(false),
-                                    child: const Text("لا"),
+                              return Dialog(
+                                backgroundColor: Colors.transparent,
+                                elevation: 0,
+                                child: Container(
+                                  padding: EdgeInsets.all(24.w),
+                                  decoration: BoxDecoration(
+                                    color: Colors.white,
+                                    borderRadius: BorderRadius.circular(16.r),
+                                    boxShadow: [
+                                      BoxShadow(
+                                        color: Colors.black.withOpacity(0.1),
+                                        blurRadius: 10,
+                                        offset: const Offset(0, 4),
+                                      ),
+                                    ],
                                   ),
-                                  TextButton(
-                                    onPressed: () =>
-                                        Navigator.of(context).pop(true),
-                                    child: const Text("نعم"),
+                                  child: Column(
+                                    mainAxisSize: MainAxisSize.min,
+                                    children: [
+                                      Text(
+                                        "بيع المنتج",
+                                        style: AppStyles.s16.copyWith(
+                                          fontWeight: FontWeight.w600,
+                                          color: AppColors.primaryColor,
+                                        ),
+                                      ),
+                                      SizedBox(height: 16.h),
+                                      Text(
+                                        "هل قمت ببيع المنتج؟",
+                                        style: AppStyles.s14.copyWith(
+                                          color: Colors.black87,
+                                        ),
+                                      ),
+                                      SizedBox(height: 24.h),
+                                      Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        children: [
+                                          TextButton(
+                                            onPressed: () =>
+                                                Navigator.of(context)
+                                                    .pop(false),
+                                            style: TextButton.styleFrom(
+                                              backgroundColor: Colors.grey[200],
+                                              foregroundColor: Colors.black87,
+                                              padding: EdgeInsets.symmetric(
+                                                horizontal: 24.w,
+                                                vertical: 12.h,
+                                              ),
+                                              shape: RoundedRectangleBorder(
+                                                borderRadius:
+                                                    BorderRadius.circular(8.r),
+                                              ),
+                                            ),
+                                            child: Text(
+                                              "لا",
+                                              style: AppStyles.s14.copyWith(
+                                                fontWeight: FontWeight.w600,
+                                              ),
+                                            ),
+                                          ),
+                                          SizedBox(width: 16.w),
+                                          TextButton(
+                                            onPressed: () =>
+                                                Navigator.of(context).pop(true),
+                                            style: TextButton.styleFrom(
+                                              backgroundColor:
+                                                  AppColors.primaryColor,
+                                              foregroundColor: Colors.white,
+                                              padding: EdgeInsets.symmetric(
+                                                horizontal: 24.w,
+                                                vertical: 12.h,
+                                              ),
+                                              shape: RoundedRectangleBorder(
+                                                borderRadius:
+                                                    BorderRadius.circular(8.r),
+                                              ),
+                                            ),
+                                            child: Text(
+                                              "نعم",
+                                              style: AppStyles.s14.copyWith(
+                                                color: Colors.white,
+                                                fontWeight: FontWeight.w600,
+                                              ),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ],
                                   ),
-                                ],
+                                ),
                               );
                             },
                           );
                           if (saleMade != null) {
-                            context
-                                .read<VisitCubit>()
-                                .endVisit(widget.visitId, saleMade ? "1" : "0");
+                            context.read<VisitCubit>().endVisit(
+                                  widget.visitId,
+                                  saleMade ? "1" : "0",
+                                );
                             await _showMessage(
                               context,
                               saleMade
@@ -229,7 +404,7 @@ class _PharmacyInfoContainerState extends State<PharmacyInfoContainer> {
                         },
                       ),
                     ],
-                  )
+                  ),
                 ],
               );
             } else {
@@ -241,21 +416,93 @@ class _PharmacyInfoContainerState extends State<PharmacyInfoContainer> {
     );
   }
 
-  Future<void> _showMessage(BuildContext context, String message) async {
-    showDialog(
-      context: context,
-      barrierDismissible: false,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          content: Text(message),
-          actions: [
-            TextButton(
-              onPressed: () => Navigator.of(context).pop(),
-              child: const Text("موافق"),
+  Widget _buildInfoSection({
+    required IconData icon,
+    required String title,
+    required String content,
+  }) {
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Container(
+          padding: EdgeInsets.all(8.w),
+          decoration: BoxDecoration(
+            color: AppColors.primaryColor.withOpacity(0.1),
+            borderRadius: BorderRadius.circular(8.r),
+          ),
+          child: Icon(
+            icon,
+            size: 20.w,
+            color: AppColors.primaryColor,
+          ),
+        ),
+        SizedBox(width: 12.w),
+        Expanded(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                title,
+                style: AppStyles.s12.copyWith(
+                  color: Colors.grey[600],
+                  fontWeight: FontWeight.w500,
+                ),
+              ),
+              SizedBox(height: 4.h),
+              Text(
+                content,
+                style: AppStyles.s14.copyWith(
+                  color: Colors.black87,
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
+            ],
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildActionButton({
+    required String text,
+    required Color backgroundColor,
+    required VoidCallback onPressed,
+  }) {
+    return ScaleTransition(
+      scale: _scaleAnimation,
+      child: Material(
+        color: Colors.transparent,
+        child: InkWell(
+          onTap: onPressed,
+          borderRadius: BorderRadius.circular(8.r),
+          child: Ink(
+            decoration: BoxDecoration(
+              color: backgroundColor,
+              borderRadius: BorderRadius.circular(8.r),
+              boxShadow: [
+                BoxShadow(
+                  color: backgroundColor.withOpacity(0.3),
+                  blurRadius: 8,
+                  offset: const Offset(0, 4),
+                ),
+              ],
             ),
-          ],
-        );
-      },
+            child: Padding(
+              padding: EdgeInsets.symmetric(
+                horizontal: 16.w,
+                vertical: 8.h,
+              ),
+              child: Text(
+                text,
+                style: AppStyles.s14.copyWith(
+                  color: Colors.white,
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
+            ),
+          ),
+        ),
+      ),
     );
   }
 }

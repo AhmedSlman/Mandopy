@@ -2,6 +2,7 @@ import 'package:bloc/bloc.dart';
 import '../../../../../core/errors/error_model.dart';
 import '../../data/repo/visitRepo/vistit_repo.dart';
 import 'visit_state.dart';
+import 'package:flutter/material.dart';
 
 class VisitCubit extends Cubit<VisitState> {
   final VisitRepoAbstract visitRepo;
@@ -135,5 +136,11 @@ class VisitCubit extends Cubit<VisitState> {
         emit(VisitEnded(endVisitResponse));
       },
     );
+  }
+
+  Future<void> _dismissLoadingDialog(BuildContext context) async {
+    if (Navigator.canPop(context)) {
+      Navigator.of(context).pop();
+    }
   }
 }

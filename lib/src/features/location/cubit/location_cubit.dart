@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:flutter/foundation.dart';
 import 'package:geolocator/geolocator.dart';
@@ -8,14 +9,20 @@ part 'location_state.dart';
 
 class LocationCubit extends Cubit<LocationState> {
   final LocationRepoAbstract locationRepo;
-  final double tolerance = 20.0;
+  final double doctorTolerance = 20.0; // meters
+  final double pharmacyTolerance = 30.0; // meters
+  StreamSubscription<Position>? _positionStreamSubscription;
+  String? currentEntityId;
+  bool isDoctor = false;
+  bool isVisitStarted = false;
 
   LocationCubit(this.locationRepo) : super(LocationInitial());
 
   Future<bool> checkLocationServices() async {
     bool serviceEnabled = await Geolocator.isLocationServiceEnabled();
     if (!serviceEnabled) {
-      emit(LocationFailure(message: "خدمات الموقع غير مفعلة"));
+      emit(LocationFailure(
+          message: "خدمات الموقع غير مفعلة. برجاء تفعيلها من إعدادات الجهاز"));
       return false;
     }
     return true;
@@ -26,15 +33,76 @@ class LocationCubit extends Cubit<LocationState> {
     if (permission == LocationPermission.denied) {
       permission = await Geolocator.requestPermission();
       if (permission == LocationPermission.denied) {
-        emit(LocationFailure(message: "تم رفض إذن الموقع"));
+        emit(LocationFailure(
+            message: "برجاء السماح بالوصول إلى الموقع لاستخدام هذه الخاصية"));
         return false;
       }
     }
     if (permission == LocationPermission.deniedForever) {
-      emit(LocationFailure(message: "تم رفض إذن الموقع بشكل دائم"));
+      emit(LocationFailure(
+          message:
+              "تم رفض إذن الموقع بشكل دائم. برجاء تفعيله من إعدادات التطبيق"));
       return false;
     }
     return true;
+  }
+
+  Future<void> checkLocationWithRetry({
+    required String entityId,
+    required bool isDoctor,
+    int maxRetries = 3,
+  }) async {
+    this.currentEntityId = entityId;
+    this.isDoctor = isDoctor;
+    int retryCount = 0;
+
+    while (retryCount < maxRetries) {
+      try {
+        if (isDoctor) {
+          await checkDoctorLocation(entityId);
+        } else {
+          await checkPharmacyLocation(entityId);
+        }
+        break;
+      } catch (e) {
+        retryCount++;
+        if (retryCount == maxRetries) {
+          emit(LocationFailure(
+              message: "فشل في التحقق من الموقع بعد عدة محاولات"));
+        }
+        await Future.delayed(const Duration(seconds: 1));
+      }
+    }
+  }
+
+  Future<void> startLocationUpdates() async {
+    try {
+      if (!await checkLocationServices() || !await checkLocationPermission()) {
+        return;
+      }
+
+      _positionStreamSubscription?.cancel();
+      _positionStreamSubscription = Geolocator.getPositionStream(
+        locationSettings: const LocationSettings(
+          accuracy: LocationAccuracy.high,
+          distanceFilter: 10, // Update every 10 meters
+        ),
+      ).listen((Position position) {
+        if (isVisitStarted && currentEntityId != null) {
+          checkLocationWithRetry(
+            entityId: currentEntityId!,
+            isDoctor: isDoctor,
+          );
+        }
+      });
+    } catch (e) {
+      emit(LocationFailure(message: "فشل في بدء تحديثات الموقع"));
+    }
+  }
+
+  void stopLocationUpdates() {
+    _positionStreamSubscription?.cancel();
+    _positionStreamSubscription = null;
   }
 
   Future<void> checkAndSaveLocation({
@@ -143,7 +211,7 @@ class LocationCubit extends Cubit<LocationState> {
             currentPosition.longitude,
           );
 
-          bool isInCorrectLocation = distanceInMeters <= tolerance;
+          bool isInCorrectLocation = distanceInMeters <= pharmacyTolerance;
           String message = isInCorrectLocation
               ? "أنت في الموقع الصحيح للصيدلية"
               : "أنت بعيد عن الموقع بمقدار ${distanceInMeters.toStringAsFixed(2)} متر";
@@ -185,7 +253,7 @@ class LocationCubit extends Cubit<LocationState> {
             currentPosition.longitude,
           );
 
-          bool isInCorrectLocation = distanceInMeters <= tolerance;
+          bool isInCorrectLocation = distanceInMeters <= doctorTolerance;
           String message = isInCorrectLocation
               ? "أنت في الموقع الصحيح للطبيب"
               : "أنت بعيد عن الموقع بمقدار ${distanceInMeters.toStringAsFixed(2)} متر";
@@ -201,5 +269,11 @@ class LocationCubit extends Cubit<LocationState> {
       emit(LocationFailure(
           message: "فشل في التحقق من موقع الطبيب: ${e.toString()}"));
     }
+  }
+
+  @override
+  Future<void> close() {
+    stopLocationUpdates();
+    return super.close();
   }
 }

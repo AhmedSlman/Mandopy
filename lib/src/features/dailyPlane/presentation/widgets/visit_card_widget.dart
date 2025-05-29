@@ -77,114 +77,197 @@ class VisitCardWidget extends StatelessWidget {
                     'doctorId': doctorId,
                   },
                 ),
-          child: Container(
+          child: AnimatedContainer(
+            duration: const Duration(milliseconds: 200),
+            curve: Curves.easeInOut,
             height: 300.h,
             width: 389.w,
             decoration: BoxDecoration(
-              color: isCompleated ? AppColors.dailyPlaneItem : AppColors.yellow,
-              borderRadius: BorderRadius.circular(10),
+              gradient: isCompleated
+                  ? LinearGradient(
+                      colors: [
+                        AppColors.dailyPlaneItem.withOpacity(0.98),
+                        Colors.white.withOpacity(0.98),
+                      ],
+                      begin: Alignment.topLeft,
+                      end: Alignment.bottomRight,
+                    )
+                  : LinearGradient(
+                      colors: [
+                        AppColors.yellow.withOpacity(0.98),
+                        Colors.white.withOpacity(0.98),
+                      ],
+                      begin: Alignment.topLeft,
+                      end: Alignment.bottomRight,
+                    ),
+              borderRadius: BorderRadius.circular(20.r),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.black.withOpacity(0.07),
+                  blurRadius: 16,
+                  spreadRadius: 2,
+                  offset: const Offset(0, 6),
+                ),
+              ],
+              border: Border.all(
+                color: isCompleated
+                    ? AppColors.primaryColor.withOpacity(0.15)
+                    : AppColors.yellow.withOpacity(0.15),
+                width: 1.2,
+              ),
             ),
             child: Padding(
-              padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 8.h),
+              padding: EdgeInsets.symmetric(horizontal: 18.w, vertical: 14.h),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  NumberOfVisitRow(visitNumber: visitNumber),
-                  VisitItemRowWidget(
-                    title: nameOfGoal,
-                    icon: Icons.local_pharmacy_rounded,
-                  ),
-                  VisitItemRowWidget(
-                    title: address,
-                    icon: Icons.location_pin,
-                  ),
-                  VisitItemRowWidget(
-                    title: item,
-                    icon: Icons.medical_services_rounded,
-                  ),
-                  VisitItemRowWidget(
-                    title: time,
-                    icon: Icons.timer_rounded,
-                  ),
-                  isCompleated
-                      ? const VisitItemRowWidget(
-                          title: "انتهت الساعة 3:20 AM",
-                          icon: Icons.done_rounded,
-                        )
-                      : Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Expanded(
+                        child: NumberOfVisitRow(visitNumber: visitNumber),
+                      ),
+                      Container(
+                        padding: EdgeInsets.symmetric(
+                            horizontal: 12.w, vertical: 4.h),
+                        decoration: BoxDecoration(
+                          color: isCompleated
+                              ? Colors.green[100]
+                              : Colors.orange[100],
+                          borderRadius: BorderRadius.circular(12.r),
+                        ),
+                        child: Row(
+                          mainAxisSize: MainAxisSize.min,
                           children: [
-                            CustomButton(
-                              height: 40.h,
-                              width: 120.w,
-                              text: 'تفاصيل الزياره',
-                              textStyle: AppStyles.s12.copyWith(
-                                color: AppColors.white,
-                                fontSize: 14,
-                              ),
-                              onPressed: () {
-                                isPharmacy
-                                    ? GoRouter.of(context).push(
-                                        RouterNames.pharmacyProfile,
-                                        extra: {
-                                          'visitId': visitId,
-                                          'pharmacyId': pharmacyid,
-                                        },
-                                      )
-                                    : GoRouter.of(context).push(
-                                        RouterNames.doctorProfile,
-                                        extra: {
-                                          'visitId': visitId,
-                                          'doctorId': doctorId,
-                                        },
-                                      );
-                              },
+                            Icon(
+                              isCompleated
+                                  ? Icons.check_circle
+                                  : Icons.timelapse,
+                              color:
+                                  isCompleated ? Colors.green : Colors.orange,
+                              size: 16.r,
                             ),
-                            SizedBox(width: 8.w),
-                            // CustomButton(
-                            //   height: 30.h,
-                            //   width: 100.w,
-                            //   backgroundColor: AppColors.accentColor,
-                            //   text: 'انهاء الزياره',
-                            //   textStyle: AppStyles.s12.copyWith(
-                            //     color: AppColors.white,
-                            //   ),
-                            //   onPressed: () async {
-                            //     bool? saleMade = await showDialog(
-                            //       context: context,
-                            //       builder: (BuildContext context) {
-                            //         return AlertDialog(
-                            //           title: const Text("بيع المنتج"),
-                            //           content: const Text("هل قمت ببيع المنتج"),
-                            //           actions: [
-                            //             TextButton(
-                            //               onPressed: () =>
-                            //                   Navigator.of(context).pop(false),
-                            //               child: const Text("No"),
-                            //             ),
-                            //             TextButton(
-                            //               onPressed: () =>
-                            //                   Navigator.of(context).pop(true),
-                            //               child: const Text("Yes"),
-                            //             ),
-                            //           ],
-                            //         );
-                            //       },
-                            //     );
-                            //     if (saleMade != null) {
-                            //       context
-                            //           .read<VisitCubit>()
-                            //           .endVisit(visitId, saleMade ? "1" : "0");
-                            //     }
-                            //   },
-                            // ),
+                            SizedBox(width: 4.w),
+                            Text(
+                              isCompleated ? 'مكتملة' : 'قيد الانتظار',
+                              style: TextStyle(
+                                color: isCompleated
+                                    ? Colors.green[800]
+                                    : Colors.orange[800],
+                                fontWeight: FontWeight.w600,
+                                fontSize: 12.sp,
+                              ),
+                            ),
                           ],
+                        ),
+                      ),
+                    ],
+                  ),
+                  SizedBox(height: 10.h),
+                  _VisitInfoRow(
+                    icon: Icons.local_pharmacy_rounded,
+                    label: nameOfGoal,
+                    color: AppColors.primaryColor,
+                  ),
+                  _VisitInfoRow(
+                    icon: Icons.location_pin,
+                    label: address,
+                    color: Colors.redAccent,
+                  ),
+                  _VisitInfoRow(
+                    icon: Icons.medical_services_rounded,
+                    label: item,
+                    color: Colors.blueAccent,
+                  ),
+                  _VisitInfoRow(
+                    icon: Icons.timer_rounded,
+                    label: time,
+                    color: Colors.deepPurple,
+                  ),
+                  SizedBox(height: 10.h),
+                  isCompleated
+                      ? _VisitInfoRow(
+                          icon: Icons.done_rounded,
+                          label: "انتهت الساعة 3:20 AM",
+                          color: Colors.green,
+                        )
+                      : Center(
+                          child: CustomButton(
+                            height: 44.h,
+                            width: 160.w,
+                            backgroundColor: AppColors.primaryColor,
+                            text: 'تفاصيل الزياره',
+                            textStyle: AppStyles.s12.copyWith(
+                              color: AppColors.white,
+                              fontSize: 15.sp,
+                              fontWeight: FontWeight.bold,
+                            ),
+                            onPressed: () {
+                              isPharmacy
+                                  ? GoRouter.of(context).push(
+                                      RouterNames.pharmacyProfile,
+                                      extra: {
+                                        'visitId': visitId,
+                                        'pharmacyId': pharmacyid,
+                                      },
+                                    )
+                                  : GoRouter.of(context).push(
+                                      RouterNames.doctorProfile,
+                                      extra: {
+                                        'visitId': visitId,
+                                        'doctorId': doctorId,
+                                      },
+                                    );
+                            },
+                          ),
                         ),
                 ],
               ),
             ),
           ),
         ),
+      ),
+    );
+  }
+}
+
+class _VisitInfoRow extends StatelessWidget {
+  final IconData icon;
+  final String label;
+  final Color color;
+  const _VisitInfoRow(
+      {required this.icon, required this.label, required this.color});
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: EdgeInsets.symmetric(vertical: 3.h),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Container(
+            decoration: BoxDecoration(
+              color: color.withOpacity(0.12),
+              borderRadius: BorderRadius.circular(8.r),
+            ),
+            padding: EdgeInsets.all(6.r),
+            child: Icon(icon, color: color, size: 18.r),
+          ),
+          SizedBox(width: 10.w),
+          Expanded(
+            child: Text(
+              label,
+              style: TextStyle(
+                fontSize: 13.5.sp,
+                color: Colors.black87,
+                fontWeight: FontWeight.w500,
+              ),
+              maxLines: 2,
+              overflow: TextOverflow.ellipsis,
+            ),
+          ),
+        ],
       ),
     );
   }

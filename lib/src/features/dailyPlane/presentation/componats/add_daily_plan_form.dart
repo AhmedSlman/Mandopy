@@ -61,7 +61,10 @@ class _AddDailyPlanFormState extends State<AddDailyPlanForm> {
           );
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text("Please fill all required fields")),
+        const SnackBar(
+          content: Text("Please fill all required fields"),
+          behavior: SnackBarBehavior.floating,
+        ),
       );
     }
   }
@@ -72,18 +75,75 @@ class _AddDailyPlanFormState extends State<AddDailyPlanForm> {
     return '$hours:$minutes';
   }
 
+  void _showLoadingDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      barrierColor: Colors.black.withOpacity(0.3),
+      builder: (context) => Dialog(
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+        child: Container(
+          padding: EdgeInsets.all(24.r),
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(16.r),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.black.withOpacity(0.1),
+                blurRadius: 10,
+                spreadRadius: 2,
+              ),
+            ],
+          ),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Container(
+                padding: EdgeInsets.all(16.r),
+                decoration: BoxDecoration(
+                  color: AppColors.primaryColor.withOpacity(0.1),
+                  shape: BoxShape.circle,
+                ),
+                child: const CircularProgressIndicator(
+                  valueColor:
+                      AlwaysStoppedAnimation<Color>(AppColors.primaryColor),
+                  strokeWidth: 3,
+                ),
+              ),
+              SizedBox(height: 16.h),
+              Text(
+                'Adding to plan...',
+                style: TextStyle(
+                  fontSize: 14.sp,
+                  fontWeight: FontWeight.w600,
+                  color: Colors.black87,
+                  letterSpacing: 0.3,
+                ),
+              ),
+              SizedBox(height: 4.h),
+              Text(
+                'Please wait while we process your request',
+                style: TextStyle(
+                  fontSize: 12.sp,
+                  color: Colors.grey[600],
+                  letterSpacing: 0.2,
+                ),
+                textAlign: TextAlign.center,
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return BlocListener<VisitCubit, VisitState>(
       listener: (context, state) {
         if (state is VisitLoading) {
-          showDialog(
-            context: context,
-            barrierDismissible: false,
-            builder: (context) => const Center(
-              child: CircularProgressIndicator(),
-            ),
-          );
+          _showLoadingDialog(context);
         }
         if (state is VisitError) {
           GoRouter.of(context).pop();
@@ -98,93 +158,157 @@ class _AddDailyPlanFormState extends State<AddDailyPlanForm> {
         }
       },
       child: Container(
-        margin: const EdgeInsets.symmetric(horizontal: 16),
-        padding: const EdgeInsets.all(10.0),
+        margin: EdgeInsets.symmetric(horizontal: 16.w),
+        padding: EdgeInsets.all(20.r),
         decoration: BoxDecoration(
-          color: AppColors.dailyPlaneItem,
-          borderRadius: BorderRadius.circular(10),
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(16.r),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.grey.withOpacity(0.1),
+              spreadRadius: 1,
+              blurRadius: 4,
+              offset: const Offset(0, 2),
+            ),
+          ],
         ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            SizedBox(height: 17.0.h),
-            const Text(AppStrings.selectActiveIngredient),
-            SizedBox(height: 5.h),
+            _buildSectionTitle(AppStrings.selectActiveIngredient),
+            SizedBox(height: 8.h),
             BlocProvider(
               create: (context) => getIt<TargetsCubit>()..fetchMedications(),
-              child: DropDownTextField(
-                isMultiSelect: true,
-                onSelect: (List<String> ids) {
-                  setState(() {
-                    _selectedMedicationIds = ids;
-                  });
-                },
-              ),
-            ),
-            SizedBox(height: 15.h),
-            const Text(AppStrings.selectAppointment),
-            SizedBox(height: 5.h),
-            Row(
-              children: [
-                DatePicker(
-                  onDateSelected: (DateTime? date) {
+              child: Container(
+                decoration: BoxDecoration(
+                  color: Colors.grey[50],
+                  borderRadius: BorderRadius.circular(12.r),
+                  border: Border.all(color: Colors.grey.shade200),
+                ),
+                child: DropDownTextField(
+                  isMultiSelect: true,
+                  onSelect: (List<String> ids) {
                     setState(() {
-                      _selectedDate = date;
-                      debugPrint("Selected date: ${_selectedDate.toString()}");
+                      _selectedMedicationIds = ids;
                     });
                   },
                 ),
-                SizedBox(width: 13.w),
-                TimePicker(
-                  onTimeSelected: (TimeOfDay? time) {
-                    setState(() {
-                      _selectedTime = time;
-                    });
-                    debugPrint(
-                        "Selected time: ${_selectedTime?.format(context)}");
-                  },
+              ),
+            ),
+            SizedBox(height: 20.h),
+            _buildSectionTitle(AppStrings.selectAppointment),
+            SizedBox(height: 8.h),
+            Row(
+              children: [
+                Expanded(
+                  child: Container(
+                    decoration: BoxDecoration(
+                      color: Colors.grey[50],
+                      borderRadius: BorderRadius.circular(12.r),
+                      border: Border.all(color: Colors.grey.shade200),
+                    ),
+                    child: DatePicker(
+                      onDateSelected: (DateTime? date) {
+                        setState(() {
+                          _selectedDate = date;
+                        });
+                      },
+                    ),
+                  ),
+                ),
+                SizedBox(width: 12.w),
+                Expanded(
+                  child: Container(
+                    decoration: BoxDecoration(
+                      color: Colors.grey[50],
+                      borderRadius: BorderRadius.circular(12.r),
+                      border: Border.all(color: Colors.grey.shade200),
+                    ),
+                    child: TimePicker(
+                      onTimeSelected: (TimeOfDay? time) {
+                        setState(() {
+                          _selectedTime = time;
+                        });
+                      },
+                    ),
+                  ),
                 ),
               ],
             ),
-            SizedBox(height: 15.h),
-            const Text(AppStrings.addPurposeOfplan),
-            SizedBox(height: 5.h),
-            AddPurposeCustomTextField(
-              controller: addPurposeTextEditingController,
-              hintText: AppStrings.addPurposeOfplan,
-            ),
-            SizedBox(height: 15.h),
-            const Text(AppStrings.choosePlans),
-            SizedBox(height: 5.h),
-            BlocProvider(
-              create: (context) => getIt<TargetsCubit>(),
-              child: SearchableTextField(
-                hintText: AppStrings.choosePlans,
-                onDoctorSelected: (String id) {
-                  setState(() {
-                    _selectedDoctorId = id;
-                  });
-                },
-                onPharmacySelected: (String id) {
-                  setState(() {
-                    _selectedPharmacyId = id;
-                  });
-                },
+            SizedBox(height: 20.h),
+            _buildSectionTitle(AppStrings.addPurposeOfplan),
+            SizedBox(height: 8.h),
+            Container(
+              decoration: BoxDecoration(
+                color: Colors.grey[50],
+                borderRadius: BorderRadius.circular(12.r),
+                border: Border.all(color: Colors.grey.shade200),
+              ),
+              child: AddPurposeCustomTextField(
+                controller: addPurposeTextEditingController,
+                hintText: AppStrings.addPurposeOfplan,
               ),
             ),
-            SizedBox(height: 15.h),
+            SizedBox(height: 20.h),
+            _buildSectionTitle(AppStrings.choosePlans),
+            SizedBox(height: 8.h),
+            Container(
+              decoration: BoxDecoration(
+                color: Colors.grey[50],
+                borderRadius: BorderRadius.circular(12.r),
+                border: Border.all(color: Colors.grey.shade200),
+              ),
+              child: BlocProvider(
+                create: (context) => getIt<TargetsCubit>(),
+                child: SearchableTextField(
+                  hintText: AppStrings.choosePlans,
+                  onDoctorSelected: (String id) {
+                    setState(() {
+                      _selectedDoctorId = id;
+                    });
+                  },
+                  onPharmacySelected: (String id) {
+                    setState(() {
+                      _selectedPharmacyId = id;
+                    });
+                  },
+                ),
+              ),
+            ),
+            SizedBox(height: 24.h),
             Center(
               child: CustomButton(
                 width: 275.w,
-                height: 33.h,
+                height: 45.h,
                 text: AppStrings.addToPlan,
                 onPressed: () => _onAddToPlanPressed(context),
               ),
             ),
-            SizedBox(height: 20.h),
+            SizedBox(height: 16.h),
           ],
         ),
       ),
+    );
+  }
+
+  Widget _buildSectionTitle(String title) {
+    return Row(
+      children: [
+        Icon(
+          Icons.circle,
+          size: 8.r,
+          color: AppColors.primaryColor,
+        ),
+        SizedBox(width: 8.w),
+        Text(
+          title,
+          style: TextStyle(
+            fontSize: 14.sp,
+            fontWeight: FontWeight.w600,
+            color: Colors.black87,
+          ),
+        ),
+      ],
     );
   }
 }

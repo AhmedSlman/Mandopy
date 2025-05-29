@@ -14,22 +14,26 @@ class GoalsTitle extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: EdgeInsets.symmetric(vertical: 16.h),
-      child: Row(
-        children: [
-          Text(
-            title,
-            style: AppStyles.s18,
-          ),
-          const Spacer(),
-          Text(
-            hent ?? "",
-            style: AppStyles.s16.copyWith(
-              color: AppColors.accentColor,
+    return SizedBox(
+      width: double.infinity,
+      child: Padding(
+        padding: EdgeInsets.symmetric(vertical: 8.h),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Text(
+              title,
+              style: AppStyles.s18,
             ),
-          ),
-        ],
+            if (hent != null)
+              Text(
+                hent!,
+                style: AppStyles.s16.copyWith(
+                  color: AppColors.accentColor,
+                ),
+              ),
+          ],
+        ),
       ),
     );
   }
