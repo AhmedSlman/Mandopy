@@ -8,13 +8,11 @@ import '../widgets/daily_plane_list_view.dart';
 class DailyPlaneSection extends StatelessWidget {
   DailyPlaneSection({super.key});
 
-  
-
   @override
   Widget build(BuildContext context) {
-    return Column(
+    return const Column(
       children: [
-        const GoalsTitle(title: AppStrings.dailuPlane),
+        GoalsTitle(title: AppStrings.dailuPlane),
         DailyPlanListView(),
       ],
     );

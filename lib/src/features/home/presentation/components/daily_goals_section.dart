@@ -51,7 +51,7 @@ class DailyGoalsSection extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    'Daily Progress',
+                    'التقدم اليومي',
                     style: TextStyle(
                       fontSize: 14.sp,
                       fontWeight: FontWeight.w500,
@@ -62,7 +62,7 @@ class DailyGoalsSection extends StatelessWidget {
                   ProgressBarWidget(progress: state.value / 100),
                   SizedBox(height: 8.h),
                   Text(
-                    '${state.value.toStringAsFixed(0)}% completed',
+                    '${state.value.toStringAsFixed(0)}% مكتمل',
                     style: TextStyle(
                       fontSize: 12.sp,
                       color: AppColors.primaryColor,

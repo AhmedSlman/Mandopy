@@ -47,7 +47,7 @@ class DailyPlanListView extends StatelessWidget {
               if (state.visits.isEmpty) {
                 return Center(
                   child: Text(
-                    'No visits available',
+                    'لا توجد زيارات متاحه',
                     style: AppStyles.s16,
                   ),
                 );
