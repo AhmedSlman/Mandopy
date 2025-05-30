@@ -22,70 +22,85 @@ class TotalRewardedPrizesContainer extends StatelessWidget {
         if (state is PointsLoading) {
           return Skeletonizer(
             child: Container(
-              width: 404.w,
-              height: 150.h,
-              color: Colors.grey,
+              width: double.infinity,
+              height: 200.h,
+              decoration: BoxDecoration(
+                color: Colors.grey[300],
+                borderRadius: BorderRadius.circular(16.r),
+              ),
             ),
           );
         } else if (state is PointsLoaded) {
           final int progressPercentage = (state.progress * 100).toInt();
           return Container(
-            width: 404.w,
-            height: 160.h,
+            width: double.infinity,
+            height: 205.h,
             decoration: BoxDecoration(
-              color: AppColors.primaryColor,
-              borderRadius: BorderRadius.circular(5),
+              borderRadius: BorderRadius.circular(16.r),
+              gradient: LinearGradient(
+                colors: [
+                  AppColors.primaryColor.withOpacity(0.9),
+                  AppColors.accentColor.withOpacity(0.8),
+                ],
+                begin: Alignment.topLeft,
+                end: Alignment.bottomRight,
+              ),
+              boxShadow: [
+                BoxShadow(
+                  color: AppColors.primaryColor.withOpacity(0.3),
+                  blurRadius: 15,
+                  offset: const Offset(0, 8),
+                ),
+              ],
             ),
             child: Padding(
-              padding: EdgeInsets.only(
-                top: 5.h,
-                right: 8.w,
-              ),
+              padding: EdgeInsets.all(20.w),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
                         AppStrings.rewardedPrizes,
-                        style: AppStyles.s10.copyWith(
-                          color: AppColors.accentColor,
+                        style: AppStyles.s16.copyWith(
+                          color: Colors.white,
+                          fontWeight: FontWeight.w600,
                         ),
                       ),
-                      const Icon(
-                        Icons.emoji_events,
-                        color: AppColors.accentColor,
+                      Icon(
+                        Icons.emoji_events_outlined,
+                        color: Colors.white,
+                        size: 30.w,
                       ),
                     ],
                   ),
-                  Padding(
-                    padding: EdgeInsets.only(
-                      right: 6.w,
+                  SizedBox(height: 8.h),
+                  Text(
+                    "${state.points.totalPoints} نقاط",
+                    style: AppStyles.s24.copyWith(
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold,
                     ),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          "${state.points.totalPoints} نقاط",
-                          style: AppStyles.s16.copyWith(
-                            color: AppColors.grey,
-                            fontWeight: FontWeight.w600,
-                          ),
-                        ),
-                        RichText(
+                  ),
+                  SizedBox(height: 4.h),
+                  Row(
+                    children: [
+                      SvgPicture.asset(
+                        AppAssets.medalIcon,
+                        width: 18.w,
+                        height: 18.h,
+                      ),
+                      SizedBox(width: 8.w),
+                      Expanded(
+                        child: RichText(
                           text: TextSpan(
                             children: [
                               TextSpan(
                                 text: state.medal,
-                                style: AppStyles.s10.copyWith(
+                                style: AppStyles.s14.copyWith(
+                                  color: Colors.white70,
                                   fontWeight: FontWeight.w500,
-                                ),
-                              ),
-                              WidgetSpan(
-                                child: SvgPicture.asset(
-                                  AppAssets.medalIcon,
-                                  width: 13.w,
-                                  height: 12.h,
                                 ),
                               ),
                               // TextSpan(
@@ -97,37 +112,30 @@ class TotalRewardedPrizesContainer extends StatelessWidget {
                             ],
                           ),
                         ),
-                      ],
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 14,
-                  ),
-                  Align(
-                    alignment: Alignment.center,
-                    child: SizedBox(
-                      width: 279.w,
-                      child: LinearProgressIndicator(
-                        borderRadius: BorderRadius.circular(
-                          4,
-                        ),
-                        value: state.progress,
-                        backgroundColor: AppColors.white,
-                        valueColor: const AlwaysStoppedAnimation<Color>(
-                            AppColors.accentColor),
-                        minHeight: 9.h,
                       ),
+                    ],
+                  ),
+                  const Expanded(child: SizedBox()), // Spacer
+                  SizedBox(
+                    height: 10.h,
+                    child: LinearProgressIndicator(
+                      borderRadius: BorderRadius.circular(
+                        4,
+                      ),
+                      value: state.progress,
+                      backgroundColor: Colors.white54,
+                      valueColor:
+                          const AlwaysStoppedAnimation<Color>(Colors.white),
+                      minHeight: 10.h,
                     ),
                   ),
-                  SizedBox(
-                    height: 7.h,
-                  ),
+                  SizedBox(height: 8.h),
                   Align(
-                    alignment: Alignment.center,
+                    alignment: Alignment.centerRight,
                     child: Text(
                       'لقد حققت $progressPercentage% من الهدف',
-                      style: AppStyles.s10.copyWith(
-                        color: AppColors.grey,
+                      style: AppStyles.s12.copyWith(
+                        color: Colors.white70,
                         fontWeight: FontWeight.w600,
                       ),
                     ),

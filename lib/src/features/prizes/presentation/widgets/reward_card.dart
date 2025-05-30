@@ -21,80 +21,123 @@ class RewardCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: 404.w,
-      height: 110.h,
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(22),
-        color: AppColors.lightGreen,
-      ),
-      child: Padding(
-        padding: EdgeInsets.symmetric(
-          horizontal: 12.w,
-          vertical: 4.h,
-        ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            RichText(
-              textHeightBehavior: const TextHeightBehavior(
-                applyHeightToFirstAscent: false,
-                applyHeightToLastDescent: false,
-              ),
-              text: TextSpan(
-                children: [
-                  TextSpan(
-                    text: rewardName,
-                    style: AppStyles.s14.copyWith(
-                      color: AppColors.primaryColor,
-                      fontWeight: FontWeight.w600,
-                    ),
-                  ),
-                  const TextSpan(text: '\u00A0\u00A0'),
-                  TextSpan(
-                    text: 'قدرها $rewardPrice',
-                    style: AppStyles.s12.copyWith(
-                      color: AppColors.greyForText,
-                      fontWeight: FontWeight.w500,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  rewardPoints,
-                  style: AppStyles.s16.copyWith(
-                    color: AppColors.accentColor,
-                  ),
+    return Padding(
+      padding: EdgeInsets.symmetric(horizontal: 0.w, vertical: 8.h),
+      child: Material(
+        color: Colors.transparent,
+        borderRadius: BorderRadius.circular(16.r),
+        child: InkWell(
+          borderRadius: BorderRadius.circular(16.r),
+          onTap: () {}, // يمكن ربطها لاحقاً
+          child: Container(
+            width: double.infinity,
+            padding: EdgeInsets.only(
+                top: 16.h, left: 16.w, right: 16.w, bottom: 12.h),
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(16.r),
+              color: Colors.white,
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.black.withOpacity(0.08),
+                  blurRadius: 10,
+                  offset: const Offset(0, 4),
                 ),
-                // CustomButton(
-                //   textStyle: AppStyles.s8.copyWith(
-                //     color: Colors.white,
-                //     fontWeight: FontWeight.w600,
+              ],
+            ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    // Reward Info (Name and Price)
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            rewardName,
+                            style: AppStyles.s16.copyWith(
+                              color: AppColors.primaryColor,
+                              fontWeight: FontWeight.bold,
+                            ),
+                            maxLines: 2,
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                          SizedBox(height: 4.h),
+                          Text(
+                            'قدرها $rewardPrice',
+                            style: AppStyles.s14.copyWith(
+                              color: AppColors.greyForText,
+                              fontWeight: FontWeight.w500,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    SizedBox(width: 16.w),
+                    // Points Display
+                    Container(
+                      padding:
+                          EdgeInsets.symmetric(horizontal: 10.w, vertical: 6.h),
+                      decoration: BoxDecoration(
+                          color: AppColors.accentColor.withOpacity(0.1),
+                          borderRadius: BorderRadius.circular(12.r),
+                          border: Border.all(
+                              color: AppColors.accentColor.withOpacity(0.2))),
+                      child: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Icon(Icons.star_border_outlined,
+                              color: AppColors.accentColor, size: 18.w),
+                          SizedBox(width: 4.w),
+                          Text(
+                            rewardPoints,
+                            style: AppStyles.s14.copyWith(
+                              color: AppColors.accentColor,
+                              fontWeight: FontWeight.w600,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+                Divider(
+                    height: 24.h,
+                    thickness: 1,
+                    color: Colors.grey[200]), // Styled Divider
+                // Requirement Text
+                Text(
+                  'للحصول علي $rewardName يجب ان تمتلك بحد ادني $rewardPoints مكتسبة',
+                  style: AppStyles.s12.copyWith(
+                    color: Colors.grey[600],
+                    fontWeight: FontWeight.w500,
+                  ),
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
+                ),
+                // يمكن إضافة زر الاسترداد هنا عند تفعيله
+                // SizedBox(height: 12.h),
+                // Align(
+                //   alignment: Alignment.centerRight,
+                //   child: CustomButton(
+                //     textStyle: AppStyles.s12.copyWith(
+                //       color: Colors.white,
+                //       fontWeight: FontWeight.w600,
+                //     ),
+                //     text: 'استرداد المكافأة',
+                //     backgroundColor: AppColors.accentColor,
+                //     onPressed: onButtonPressed,
+                //     borderRadius: BorderRadius.circular(8.r),
+                //     width: 100.w,
+                //     height: 35.h,
                 //   ),
-                //   text: 'استرداد المكافأة',
-                //   backgroundColor: AppColors.accentColor,
-                //   onPressed: onButtonPressed,
-                //   borderRadius: BorderRadius.circular(
-                //     7,
-                //   ),
-                //   width: 73.w,
-                //   height: 25.h,
                 // ),
               ],
             ),
-            Text(
-              'للحصول علي $rewardName يجب ان تمتلك بحد ادني $rewardPoints مكتسبة',
-              style: AppStyles.s8.copyWith(
-                color: AppColors.grey,
-                fontWeight: FontWeight.w500,
-                fontSize: 12.sp,
-              ),
-            ),
-          ],
+          ),
         ),
       ),
     );

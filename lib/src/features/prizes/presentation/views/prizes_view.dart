@@ -48,12 +48,13 @@ class PrizesView extends StatelessWidget {
             const CustomAppBar(
               title: AppStrings.prizes,
             ),
+            SizedBox(height: 16.h),
             BlocProvider(
               create: (context) => getIt<PointsCubit>()..fetchPoints(),
               child: const TotalRewardedPrizesContainer(),
             ),
             SizedBox(
-              height: 5.h,
+              height: 20.h,
             ),
             Text(
               AppStrings.viewRewards,
@@ -61,7 +62,10 @@ class PrizesView extends StatelessWidget {
                 fontWeight: FontWeight.w600,
               ),
             ),
-            RewardsListView(rewards: rewards),
+            SizedBox(height: 10.h),
+            Expanded(
+              child: RewardsListView(rewards: rewards),
+            ),
             // Text(
             //   AppStrings.previousRewards,
             //   style: AppStyles.s16.copyWith(

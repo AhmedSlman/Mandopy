@@ -38,12 +38,12 @@ class PerformanceDetailsSection extends StatelessWidget {
                       crossAxisCount: 2,
                       mainAxisSpacing: 16.h,
                       crossAxisSpacing: 16.w,
-                      childAspectRatio: 1.65,
+                      childAspectRatio: 1.4,
                     ),
                     itemCount: 4,
                     itemBuilder: (context, index) {
                       return SizedBox(
-                        height: 120,
+                        height: 130,
                         width: 100,
                         child: Card(
                           color: Colors.grey.shade300,
@@ -83,7 +83,7 @@ class PerformanceDetailsSection extends StatelessWidget {
                     crossAxisCount: 2,
                     mainAxisSpacing: 16.h,
                     crossAxisSpacing: 16.w,
-                    childAspectRatio: 1.65,
+                    childAspectRatio: 1.45,
                   ),
                   children: performanceData.map((data) {
                     return PerformanceDataItemCard(data: data);

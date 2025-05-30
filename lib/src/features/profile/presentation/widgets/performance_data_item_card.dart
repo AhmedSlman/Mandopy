@@ -17,41 +17,69 @@ class PerformanceDataItemCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.all(
-        4.sp,
-      ),
-      width: 188.w,
-      height: 108.h,
+      height: 200.h,
       decoration: BoxDecoration(
-        color: AppColors.lightGreen,
-        borderRadius: BorderRadius.circular(11),
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(16.r),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.05),
+            blurRadius: 8,
+            offset: const Offset(0, 4),
+          ),
+        ],
       ),
+      padding: EdgeInsets.symmetric(horizontal: 16, vertical: 16),
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.start,
         children: [
-          SizedBox(height: 19.h),
-          SvgPicture.asset(
-            data.iconPath,
-            width: 21.w,
-            height: 20.h,
-          ),
-          SizedBox(height: 6.h),
-          Text(
-            data.title,
-            style: AppStyles.s10.copyWith(
-              color: AppColors.greyForText,
+          // Icon
+          Container(
+            padding: EdgeInsets.all(10.w),
+            decoration: BoxDecoration(
+              color: AppColors.primaryColor.withOpacity(0.1),
+              borderRadius: BorderRadius.circular(10.r),
+            ),
+            child: SvgPicture.asset(
+              data.iconPath,
+              width: 24.w,
+              height: 25.h,
+              colorFilter:
+                  ColorFilter.mode(AppColors.primaryColor, BlendMode.srcIn),
             ),
           ),
-          SizedBox(height: 4.h),
-          FittedBox(
-            child: Text(
-              data.value,
-              maxLines: 1,
-              style: AppStyles.s20.copyWith(
-                fontWeight: FontWeight.w600,
-                color: data.valueColor ?? AppColors.accentColor,
-              ),
+          // Title and Value
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                SizedBox(
+                  height: 2.h,
+                ),
+                Text(
+                  data.title,
+                  style: AppStyles.s12.copyWith(
+                    color: Colors.grey[700],
+                    fontWeight: FontWeight.w500,
+                  ),
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                ),
+                SizedBox(height: 2.h),
+                Text(
+                  data.value,
+                  style: AppStyles.s16.copyWith(
+                    color: data.valueColor ?? AppColors.primaryColor,
+                    fontWeight: FontWeight.bold,
+                  ),
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                ),
+              ],
             ),
           ),
+          SizedBox(height: 8.h),
         ],
       ),
     );
